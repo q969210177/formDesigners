@@ -34,6 +34,46 @@ export default {
             rules: [],
           },
         },
+        {
+          name: "单选框",
+          activeValue: "radio",
+          data: {
+            type: "select",
+            value: "",
+            props: {},
+            rules: [],
+          },
+        },
+        {
+          name: "复选框",
+          activeValue: "checkbox",
+          data: {
+            type: "checkbox",
+            value: "",
+            props: {},
+            rules: [],
+          },
+        },
+        {
+          name: "时间选择器",
+          activeValue: "datePick",
+          data: {
+            type: "datePick",
+            value: "",
+            props: {},
+            rules: [],
+          },
+        },
+        {
+          name: "开关",
+          activeValue: "switch",
+          data: {
+            type: "switch",
+            value: "",
+            props: {},
+            rules: [],
+          },
+        },
       ];
 
       return menuArr.map((i) => {
@@ -41,6 +81,7 @@ export default {
         const itemClass = {
           componentsMenuItem: true,
           active_Item: i.activeValue === this.value,
+          //   "mt-20": k > 1,
         };
         return (
           <div
@@ -56,6 +97,19 @@ export default {
     },
   },
   render() {
-    return <div class="componentsMenu">{this.setCompoentsItem()}</div>;
+    const cardStyle = {
+      width: "100%",
+    };
+    return (
+      <div class="componentsMenu">
+        {this.setCompoentsItem()}
+
+        <a-card
+          class="width-100"
+          style={cardStyle}
+          title="Default size card"
+        ></a-card>
+      </div>
+    );
   },
 };

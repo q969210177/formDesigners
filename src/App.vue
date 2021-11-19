@@ -1,90 +1,63 @@
 <template>
   <div id="app">
-    <cForm :rule="rule"></cForm>
+    <header class="header">查看json{{ ComponentsModelValue }}</header>
+    <aside class="asdie">
+      <ComponentsMenu v-model="ComponentsModelValue" />
+    </aside>
+    <main class="main"></main>
+    <aside class="operational_aside">
+      <OperationalZone />
+    </aside>
+    <!-- <cForm :rule="rule"></cForm> -->
   </div>
 </template>
 <script>
-import cForm from "./form/cForm.jsx";
+import componentsMenu from "@/components/componentsMenu.jsx";
+import operationalZone from "@/components/operationalZone.jsx";
+// import cForm from "./form/cForm.jsx";
 export default {
   name: "App",
   components: {
-    cForm: cForm,
+    OperationalZone: operationalZone,
+    ComponentsMenu: componentsMenu,
   },
   data() {
     return {
-      啊: {
-        type: "",
-        span: "",
-        attrCode: "",
-      },
-      rule: [
-        {
-          value: "",
-          type: "input",
-          paramsId: "a",
-          label: "测试1",
-          layout: {
-            span: 24,
-          },
-          rules: [],
-        },
-        {
-          value: "",
-          type: "select",
-          paramsId: "b",
-          label: "测试1",
-
-          layout: {
-            span: 24,
-          },
-          rules: [],
-        },
-        {
-          type: "input",
-          span: 4,
-          label: "测试1",
-
-          paramsId: "c",
-          value: "",
-          props: {
-            placeholder: "请输入1111",
-            maxLength: 16,
-            size: "small",
-          },
-          rules: [
-            {
-              required: true,
-              message: "你没有填写",
-              trigger: "blur",
-            },
-            {
-              min: 3,
-              max: 5,
-              message: "Length should be 3 to 5",
-              trigger: "blur",
-            },
-          ],
-        },
-        {
-          type: "datePicker",
-          paramsId: "d",
-          value: "",
-          label: "测试1",
-
-          rules: [],
-          layout: {
-            span: 4,
-          },
-        },
-      ],
+      ComponentsModelValue: "",
     };
   },
 };
 </script>
 <style lang="scss" scoped>
+@import "~@/assets/layOut.scss";
 #app {
   width: 100%;
   height: 100%;
-  padding: 5%;
+  @include flex-row-s-c;
+  flex-wrap: wrap;
+  .header {
+    width: 100%;
+    height: 40px;
+    @include flex-row-s-c;
+    border: 1px solid red;
+  }
+  .asdie {
+    width: 20%;
+    height: calc(100% - 40px);
+    border: 1px solid red;
+  }
+  .main {
+    width: 60%;
+    height: calc(100% - 40px);
+    @include flex-row-s-c;
+    border: 1px solid red;
+  }
+  .operational_aside {
+    width: 20%;
+    height: calc(100% - 40px);
+    @include flex-row-s-c;
+    border: 1px solid red;
+  }
+  // padding: 5%;
 }
 </style>

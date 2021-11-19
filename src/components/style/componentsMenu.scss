@@ -1,0 +1,18 @@
+@import "~@/assets/layOut.scss";
+.componentsMenu {
+  width: 100%;
+  height: 100%;
+  @include flex-row-sa-s;
+  padding: 10px 5px 5px 5px;
+  .componentsMenuItem {
+    width: 40%;
+    height: 60px;
+    @include flex-row-c-c;
+    border: 3px solid #333333;
+    cursor: pointer;
+    border-radius: 8px;
+  }
+  .active_Item {
+    border: 3px solid #409eff;
+  }
+}

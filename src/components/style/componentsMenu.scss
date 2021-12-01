@@ -2,22 +2,36 @@
 .componentsMenu {
   width: 100%;
   height: 100%;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: repeat(auto-fill, 50px);
-  grid-gap: 15px;
-  padding: 10px 5px 5px 5px;
-  //   flex-wrap: wrap;
-  //   align-content: flex-start;
-  .componentsMenuItem {
+  border-radius: 5px;
+  border: 2px solid #c4bfbf;
+  box-shadow: #c4bfbf 1px 0 5px 1px;
+
+  .card_header {
+    height: 50px;
     width: 100%;
-    height: 100%;
-    @include flex-row-c-c;
-    border: 3px solid #333333;
-    cursor: pointer;
-    border-radius: 8px;
+    @include flex-row-sb-c;
+    padding: 0 10px;
+    border-bottom: 2px solid #c4bfbf;
   }
-  .active_Item {
-    border: 3px solid #409eff;
+  .card_body {
+    margin-top: 10px;
+    width: 100%;
+    height: calc(100% - 60px);
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(auto-fill, 50px);
+    grid-gap: 15px;
+    padding: 10px 5px 5px 5px;
+    .componentsMenuItem {
+      width: 100%;
+      height: 100%;
+      @include flex-row-c-c;
+      border: 3px solid #333333;
+      cursor: pointer;
+      border-radius: 8px;
+    }
+    .active_Item {
+      border: 3px solid #409eff;
+    }
   }
 }

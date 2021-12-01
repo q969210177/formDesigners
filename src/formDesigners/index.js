@@ -1,8 +1,8 @@
-import Pagination from "./cForm.jsx";
+import zFormDesigners from "./zFormDesigners.jsx";
 
 /* istanbul ignore next */
-Pagination.install = function (Vue) {
-  Vue.component(Pagination.name, Pagination);
+zFormDesigners.install = function (Vue) {
+  Vue.component(zFormDesigners.name, zFormDesigners);
 };
 
-export default Pagination;
+export default zFormDesigners;

@@ -97,18 +97,18 @@ export default {
     },
   },
   render() {
-    const cardStyle = {
-      width: "100%",
-    };
+    // const cardStyle = {
+    //   width: "100%",
+    // };
     return (
       <div class="componentsMenu">
-        {this.setCompoentsItem()}
-
-        <a-card
-          class="width-100"
-          style={cardStyle}
-          title="Default size card"
-        ></a-card>
+        <div class="card_header">
+          <div class="header_title"></div>
+          <div class="header_btn">
+            <a-button type="primary">确定</a-button>
+          </div>
+        </div>
+        <div class="card_body">{this.setCompoentsItem()}</div>
       </div>
     );
   },

@@ -1,15 +1,59 @@
 <template>
-  <div class="cCheckbox">cCheckbox</div>
+  <div class="cCheckbox">
+    <a-checkbox-group v-model="checkBoxValue" @change="handleChange">
+      <a-checkbox
+        :value="v[valueKey]"
+        v-for="(v, k) in options"
+        :key="v[valueKey] + k"
+      >
+        {{ v[labelKey] }}
+      </a-checkbox>
+    </a-checkbox-group>
+  </div>
 </template>
 <script>
 export default {
   name: "cCheckbox",
+  props: {
+    value: {
+      type: [Array, String],
+      default: () => {
+        return [];
+      },
+    },
+    options: {
+      type: Array,
+      default: () => {
+        return [];
+      },
+    },
+    labelKey: {
+      type: String,
+      default: "label",
+    },
+    valueKey: {
+      type: String,
+      default: "value",
+    },
+    isStringValue: {
+      type: Boolean,
+      default: false,
+    },
+  },
   data() {
-    return {};
+    return {
+      checkBoxValue: [],
+    };
+  },
+  mounted() {
+    if (this.isStringValue) {
+      console.log(111);
+    }
   },
   methods: {
+    //多选框的change事件
     handleChange() {
-      this.$emit("input", 11);
+      this.$emit("input", this.checkBoxValue);
     },
   },
 };

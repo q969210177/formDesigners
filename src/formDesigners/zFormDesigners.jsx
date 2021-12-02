@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import { componentsObj } from "./data/compoents";
-import { validatorOption, getDataType } from "./utils/utils";
-
+import { validatorOption, getDataType,setCompoentId } from "./utils/utils";
+import "./style/zFormDesigners.scss";
 export default {
   name: "zFormDesigners",
   props: {
@@ -9,6 +9,18 @@ export default {
       type: Array,
       default: () => {
         return [];
+      },
+    },
+    formConfig: {
+      type: Object,
+      default: () => {
+        return {
+          labelCol: { span: 4 },
+          wrapperCol: {
+            span: 20,
+          },
+          labelAlign: "left",
+        };
       },
     },
     value: {
@@ -28,6 +40,7 @@ export default {
           return {
             props: {
               options: i.options,
+              value: i.value,
             },
             attrs: {
               ...i.props,
@@ -37,6 +50,7 @@ export default {
       } else {
         return {
           props: {
+            value: i.value,
             ...i.props,
           },
         };
@@ -62,9 +76,9 @@ export default {
         on: {
           input: (v) => {
             const value = this.validatorIsEvent(getDataType(v), v);
-            console.log(value, "value");
             i.value = value;
           },
+          ...i.on,
         },
       });
     },
@@ -81,12 +95,26 @@ export default {
     this.$emit("input", { getFormData: this.getFormData });
   },
   render(h) {
+    //
     return (
       <div class="zFormDesigners">
-        <a-form-model props={{ model: this.formData }}>
+        <a-form-model props={{ model: this.formData, ...this.formConfig }}>
           <a-row>
             {this.rule.map((i) => {
-              return this.renderCompoents(i, h);
+              return (
+                <a-col {...i.col}>
+                  <div
+                    class="div_item"
+                    onClick={() => {
+                      console.log(i);
+                    }}
+                  >
+                    <a-form-model-item label={i.label}>
+                      {this.renderCompoents(i, h)}
+                    </a-form-model-item>
+                  </div>
+                </a-col>
+              );
             })}
           </a-row>
         </a-form-model>

@@ -1,4 +1,5 @@
 import "./style/componentsMenu.scss";
+import { setCompoentId } from "@/formDesigners/utils/utils";
 export default {
   name: "componentsMenu",
   props: {
@@ -8,7 +9,9 @@ export default {
     },
   },
   data() {
-    return {};
+    return {
+      activeValue: {},
+    };
   },
   methods: {
     //设置组件的item
@@ -20,6 +23,7 @@ export default {
           data: {
             type: "input",
             value: "",
+            label: "",
             props: {},
             rules: [],
           },
@@ -30,8 +34,10 @@ export default {
           data: {
             type: "select",
             value: "",
+            label: "",
             props: {},
             rules: [],
+            col: {},
           },
         },
         {
@@ -40,8 +46,10 @@ export default {
           data: {
             type: "select",
             value: "",
+            label: "",
             props: {},
             rules: [],
+            col: {},
           },
         },
         {
@@ -50,18 +58,22 @@ export default {
           data: {
             type: "checkbox",
             value: "",
+            label: "",
             props: {},
             rules: [],
+            col: {},
           },
         },
         {
           name: "时间选择器",
-          activeValue: "datePick",
+          activeValue: "datePicker",
           data: {
-            type: "datePick",
+            type: "datePicker",
             value: "",
+            label: "",
             props: {},
             rules: [],
+            col: {},
           },
         },
         {
@@ -69,7 +81,8 @@ export default {
           activeValue: "switch",
           data: {
             type: "switch",
-            value: "",
+            value: false,
+            label: "",
             props: {},
             rules: [],
           },
@@ -77,7 +90,6 @@ export default {
       ];
 
       return menuArr.map((i) => {
-        // active_Item
         const itemClass = {
           componentsMenuItem: true,
           active_Item: i.activeValue === this.value,
@@ -88,6 +100,9 @@ export default {
             class={itemClass}
             onClick={() => {
               this.$emit("input", i.activeValue);
+              const compoentId = setCompoentId();
+              this.activeValue = i;
+              this.activeValue.data.compoentId = compoentId;
             }}
           >
             {i.name}
@@ -105,7 +120,14 @@ export default {
         <div class="card_header">
           <div class="header_title"></div>
           <div class="header_btn">
-            <a-button type="primary">确定</a-button>
+            <a-button
+              onClick={() => {
+                this.$emit("confirmClick", this.activeValue);
+              }}
+              type="primary"
+            >
+              确定
+            </a-button>
           </div>
         </div>
         <div class="card_body">{this.setCompoentsItem()}</div>

@@ -10,6 +10,8 @@ import {
   Card,
   Button,
   Switch,
+  Checkbox,
+  Radio,
 } from "ant-design-vue";
 // import * as Antd from "ant-design-vue";
 // console.log(Select);
@@ -24,6 +26,8 @@ const componentsArr = [
   Card,
   Button,
   Switch,
+  Checkbox,
+  Radio,
 ];
 componentsArr.forEach((i) => {
   Vue.use(i);

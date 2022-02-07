@@ -15,23 +15,45 @@ export default {
   },
   methods: {
     //根据formType设置不同的rule
+    // select
+    //input
+    //radio
+    //datePicker
+    //switch
+    // checkbox
+    //
     setShowRule() {
-      const allCompoent = {
-        type: "input",
-        label: "字段名",
-        fileId: "label",
-        on: {
-          change: (event) => {
-            const {
-              target: { value },
-            } = event;
-            this.$emit("handleLabelChange", value);
-            console.log(value, "字段名change");
+      const allCompoent = [
+        {
+          type: "input",
+          label: "字段名",
+          fileId: "label",
+          on: {
+            change: (event) => {
+              const {
+                target: { value },
+              } = event;
+              this.$emit("handleLabelChange", value);
+            },
           },
+          attrformTypeArr: [],
         },
-      };
-      console.log(this.formType, "formType");
-      return [allCompoent];
+        {
+          type: "input",
+          label: "表单label",
+          fileId: "fileId",
+          on: {
+            change: (event) => {
+              const {
+                target: { value },
+              } = event;
+              this.$emit("handleLabelChange", value);
+            },
+          },
+          attrformTypeArr: [],
+        },
+      ];
+      return allCompoent;
     },
   },
   render() {

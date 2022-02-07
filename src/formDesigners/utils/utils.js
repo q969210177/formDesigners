@@ -11,8 +11,9 @@ export const getDataType = (data) => {
 //设置一个动态id
 export const setCompoentId = () => {
   const randomLength = Math.ceil(Math.random() * 36);
+  const index = Math.ceil(Math.random() * 5);
   return Number(
-    Math.random().toString().substr(2, randomLength) + Date.now()
+    Math.random().toString().substring(index, randomLength) + Date.now()
   ).toString(36);
 };
 //返回初始默认值

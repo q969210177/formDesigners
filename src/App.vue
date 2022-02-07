@@ -1,17 +1,19 @@
 <template>
   <div id="app">
     <header class="header">
-      查看json{{ ComponentsModelValue }}
-      <a-button @click="test">111</a-button>
+      {{ ComponentsModelValue }}
+      <a-button @click="test">预览</a-button>
     </header>
     <aside class="asdie">
-      <ComponentsMenu
-        @confirmClick="handleConfirmClick"
-        v-model="ComponentsModelValue"
-      />
+      <ComponentsMenu v-model="ComponentsModelValue" />
     </aside>
     <main class="main">
-      <div class="form_box">
+      <div
+        class="form_box"
+        @drop="handleDropEvent"
+        @dragover="handleDragoverEvent"
+      >
+        <!-- 做个是用来渲染的 -->
         <zFormDesigners v-model="formApi" :rule="rule"></zFormDesigners>
       </div>
     </main>
@@ -25,12 +27,6 @@
   </div>
 </template>
 <script>
-// const testOptions = [
-//   { label: "111", value: "11" },
-//   { label: "2", value: "3" },
-//   { label: "4", value: "6" },
-//   { label: "5", value: "7" },
-// ];
 import componentsMenu from "@/components/componentsMenu.jsx";
 import operationalZone from "@/components/operationalZone.jsx";
 export default {
@@ -80,12 +76,36 @@ export default {
       ],
     };
   },
+  mounted() {
+    const rule = localStorage.getItem("rule");
+    if (rule) {
+      this.rule = JSON.parse(rule);
+    }
+  },
   methods: {
     //选择组件的确认事件
     handleConfirmClick(v) {
       if (v.name) {
         this.rule.push(v.data);
       }
+    },
+    //把数据存到 locas
+    storageRule() {
+      localStorage.removeItem("rule");
+      localStorage.setItem("rule", JSON.stringify(this.rule));
+    },
+    //释放区域的拖拽结束事件
+    handleDropEvent($event) {
+      $event.preventDefault();
+      $event.dataTransfer.dropEffect = "move";
+      const data = $event.dataTransfer.getData("text/plain");
+      this.rule.push(JSON.parse(data));
+      console.log(this.rule, "this.rule");
+      this.storageRule();
+    },
+    //拖拽中的事件
+    handleDragoverEvent($event) {
+      $event.preventDefault();
     },
     test() {
       const { getFormData } = this.formApi;

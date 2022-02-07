@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import "./style/componentsMenu.scss";
 import { setCompoentId } from "@/formDesigners/utils/utils";
 export default {
@@ -9,9 +10,7 @@ export default {
     },
   },
   data() {
-    return {
-      activeValue: {},
-    };
+    return {};
   },
   methods: {
     //设置组件的item
@@ -36,6 +35,7 @@ export default {
             value: "",
             label: "",
             props: {},
+            options: [{ label: "这是一个简单的表单设计器", value: "22" }],
             rules: [],
             col: {},
           },
@@ -49,6 +49,7 @@ export default {
             label: "",
             props: {},
             rules: [],
+            options: [{ label: "这是一个简单的表单设计器", value: "22" }],
             col: {},
           },
         },
@@ -62,6 +63,7 @@ export default {
             props: {},
             rules: [],
             col: {},
+            options: [{ label: "这是一个简单的表单设计器", value: "22" }],
           },
         },
         {
@@ -98,11 +100,17 @@ export default {
         return (
           <div
             class={itemClass}
+            draggable
+            onDragstart={($event) => {
+              i.data.compoentId = setCompoentId();
+              //
+              $event.dataTransfer.setData("text/plain", JSON.stringify(i.data));
+            }}
             onClick={() => {
               this.$emit("input", i.activeValue);
-              const compoentId = setCompoentId();
-              this.activeValue = i;
-              this.activeValue.data.compoentId = compoentId;
+              // const compoentId = setCompoentId();
+              // this.activeValue = i;
+              // this.activeValue.data.compoentId = compoentId;
             }}
           >
             {i.name}

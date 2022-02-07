@@ -27,13 +27,13 @@ export default {
         {
           type: "input",
           label: "字段名",
-          fileId: "label",
+          fileId: "fileId",
           on: {
             change: (event) => {
               const {
                 target: { value },
               } = event;
-              this.$emit("handleLabelChange", value);
+              this.$emit("handleLabelChange", "fileId", value);
             },
           },
           attrformTypeArr: [],
@@ -41,13 +41,13 @@ export default {
         {
           type: "input",
           label: "表单label",
-          fileId: "fileId",
+          fileId: "label",
           on: {
             change: (event) => {
               const {
                 target: { value },
               } = event;
-              this.$emit("handleLabelChange", value);
+              this.$emit("handleLabelChange", "label", value);
             },
           },
           attrformTypeArr: [],

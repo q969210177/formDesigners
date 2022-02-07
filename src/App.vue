@@ -14,12 +14,17 @@
         @dragover="handleDragoverEvent"
       >
         <!-- 做个是用来渲染的 -->
-        <zFormDesigners v-model="formApi" :rule="rule"></zFormDesigners>
+        <zFormDesigners
+          @rowClick="handleRowClick"
+          v-model="formApi"
+          :rule="rule"
+        ></zFormDesigners>
       </div>
     </main>
     <aside class="operational_aside">
       <OperationalZone
-        @handleLabelChange="() => {}"
+        v-if="clickActive"
+        @handleLabelChange="handleOperationalZoneChange"
         :formType="ComponentsModelValue"
       />
     </aside>
@@ -39,41 +44,8 @@ export default {
     return {
       ComponentsModelValue: "",
       formApi: {},
-      rule: [
-        // {
-        //   type: "input",
-        //   value: "",
-        //   fileId: "input",
-        // },
-        // {
-        //   type: "datePicker",
-        //   value: "",
-        //   fileId: "datePicker",
-        // },
-        // {
-        //   type: "select",
-        //   options: testOptions,
-        //   value: "",
-        //   fileId: "select",
-        // },
-        // {
-        //   type: "radio",
-        //   options: testOptions,
-        //   value: "",
-        //   fileId: "radio",
-        // },
-        // {
-        //   type: "checkbox",
-        //   value: [],
-        //   fileId: "checkbox",
-        //   options: testOptions,
-        // },
-        // {
-        //   type: "switch",
-        //   value: "",
-        //   fileId: "switch",
-        // },
-      ],
+      rule: [],
+      clickActive: null,
     };
   },
   mounted() {
@@ -83,6 +55,25 @@ export default {
     }
   },
   methods: {
+    //表单的row点击事件
+    handleRowClick(clickActive) {
+      this.clickActive = clickActive;
+    },
+    //右侧的列表选项的改变事件
+    //第一个参数是对象的key 第二个是对象的value
+    // eslint-disable-next-line no-unused-vars
+    handleOperationalZoneChange(key, value) {
+      this.returnRuleItem(this.clickActive)[key] = value;
+    },
+    //根据comId来返回rule里面的子项
+    returnRuleItem(fileId) {
+      for (let index = 0; index < this.rule.length; index++) {
+        const item = this.rule[index];
+        if (item.fileId === fileId) {
+          return item;
+        }
+      }
+    },
     //选择组件的确认事件
     handleConfirmClick(v) {
       if (v.name) {
@@ -100,7 +91,6 @@ export default {
       $event.dataTransfer.dropEffect = "move";
       const data = $event.dataTransfer.getData("text/plain");
       this.rule.push(JSON.parse(data));
-      console.log(this.rule, "this.rule");
       this.storageRule();
     },
     //拖拽中的事件

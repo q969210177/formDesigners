@@ -95,22 +95,17 @@ export default {
         const itemClass = {
           componentsMenuItem: true,
           active_Item: i.activeValue === this.value,
-          //   "mt-20": k > 1,
         };
         return (
           <div
             class={itemClass}
             draggable
             onDragstart={($event) => {
-              i.data.compoentId = setCompoentId();
-              //
+              i.data.fileId = setCompoentId();
               $event.dataTransfer.setData("text/plain", JSON.stringify(i.data));
             }}
             onClick={() => {
               this.$emit("input", i.activeValue);
-              // const compoentId = setCompoentId();
-              // this.activeValue = i;
-              // this.activeValue.data.compoentId = compoentId;
             }}
           >
             {i.name}

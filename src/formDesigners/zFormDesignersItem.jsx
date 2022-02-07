@@ -81,7 +81,7 @@ export default {
             // class="div_item"
             class={{
               div_item: true,
-              active_item: this.clickActiveValue === this.formItem.compoentId,
+              active_item: this.clickActiveValue === this.formItem.fileId,
             }}
             onClick={() => {
               //   this.clickActive = this.formItem.compoentId;

@@ -62,7 +62,7 @@ export default {
               return (
                 <zFormDesignersItem
                   onRowClick={() => {
-                    this.clickActive = i.compoentId;
+                    this.clickActive = i.fileId;
                     this.$emit("rowClick", this.clickActive);
                   }}
                   formItem={i}

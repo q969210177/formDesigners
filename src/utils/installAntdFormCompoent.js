@@ -12,6 +12,9 @@ import {
   Switch,
   Checkbox,
   Radio,
+  Tabs,
+  Icon,
+  Slider,
 } from "ant-design-vue";
 // import * as Antd from "ant-design-vue";
 // console.log(Select);
@@ -28,6 +31,9 @@ const componentsArr = [
   Switch,
   Checkbox,
   Radio,
+  Tabs,
+  Icon,
+  Slider,
 ];
 componentsArr.forEach((i) => {
   Vue.use(i);

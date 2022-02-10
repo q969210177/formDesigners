@@ -13,9 +13,11 @@
         @drop="handleDropEvent"
         @dragover="handleDragoverEvent"
       >
-        <!-- 做个是用来渲染的 -->
+        <!-- 做个是用来渲染的 @rowClick="handleRowClick" -->
         <zFormDesigners
-          @rowClick="handleRowClick"
+          :clickActive.sync="clickActive"
+          @handleRowDelect="handleRowDelectClick"
+          @handleRowCopy="handleRowCopyClick"
           v-model="formApi"
           :rule="rule"
         ></zFormDesigners>
@@ -23,8 +25,9 @@
     </main>
     <aside class="operational_aside">
       <OperationalZone
-        v-if="clickActive"
-        @handleLabelChange="handleOperationalZoneChange"
+        :rule="rule"
+        :clickActive="clickActive"
+        @handleRetuenForm="handleOperationalZoneChange"
         :formType="ComponentsModelValue"
       />
     </aside>
@@ -33,7 +36,8 @@
 </template>
 <script>
 import componentsMenu from "@/components/componentsMenu.jsx";
-import operationalZone from "@/components/operationalZone.jsx";
+import operationalZone from "@/components/operationalZone.vue";
+import { getRuleItem, setCompoentId } from "@/formDesigners/utils/utils.js";
 export default {
   name: "App",
   components: {
@@ -55,24 +59,32 @@ export default {
     }
   },
   methods: {
-    //表单的row点击事件
-    handleRowClick(clickActive) {
-      this.clickActive = clickActive;
+    //表单的点击删除事件
+    handleRowDelectClick({ fileId }) {
+      if (fileId) {
+        const { index } = getRuleItem(this.rule, fileId);
+        this.rule.splice(index, 1);
+        this.clickActive = null;
+        this.storageRule();
+      }
+    },
+    //点击复制当前行
+    handleRowCopyClick(ruleItem, index) {
+      const newRuleItem = JSON.parse(JSON.stringify(ruleItem));
+      newRuleItem.fileId = setCompoentId();
+      this.rule.splice(index, 0, newRuleItem);
+      this.storageRule();
     },
     //右侧的列表选项的改变事件
-    //第一个参数是对象的key 第二个是对象的value
-    // eslint-disable-next-line no-unused-vars
-    handleOperationalZoneChange(key, value) {
-      this.returnRuleItem(this.clickActive)[key] = value;
-    },
-    //根据comId来返回rule里面的子项
-    returnRuleItem(fileId) {
-      for (let index = 0; index < this.rule.length; index++) {
-        const item = this.rule[index];
-        if (item.fileId === fileId) {
-          return item;
-        }
-      }
+    //第一个参数是对象的key 第二个是对象的value 这个是配置表单属性的方法
+    handleOperationalZoneChange() {
+      /**
+       * 根据key的不同 拿到字段里面的key
+       */
+      // const { ruleItem, index } = getRuleItem(this.rule, this.clickActive);
+      // ruleItem.formProps[key] = value;
+      // console.log(ruleItem, "ruleItem");
+      // this.rule.splice(index, ruleItem);
     },
     //选择组件的确认事件
     handleConfirmClick(v) {
@@ -107,15 +119,14 @@ export default {
 <style lang="scss" scoped>
 @import "~@/assets/layOut.scss";
 #app {
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
   @include flex-row-s-c;
   flex-wrap: wrap;
   .header {
     width: 100%;
     height: 40px;
     @include flex-row-s-c;
-    border: 1px solid red;
   }
   .asdie {
     width: 20%;
@@ -134,6 +145,7 @@ export default {
       box-shadow: #c4bfbf 1px 0 5px 1px;
       border-radius: 5px;
       padding: 10px;
+      overflow-y: auto;
     }
     // @include flex-row-s-c;
   }
@@ -141,7 +153,6 @@ export default {
     width: 20%;
     height: calc(100% - 40px);
     padding: 10px;
-
     // @include flex-row-s-c;
   }
   // padding: 5%;

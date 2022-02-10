@@ -15,6 +15,7 @@ export default {
         return [];
       },
     },
+    clickActive: {},
     formConfig: {
       type: Object,
       default: () => {
@@ -34,7 +35,8 @@ export default {
   },
   data() {
     return {
-      clickActive: null,
+      copyRule: [],
+      // clickActive: null,
     };
   },
   methods: {
@@ -53,21 +55,55 @@ export default {
     this.$emit("input", { getFormData: this.getFormData });
   },
   render(h) {
-    //
+    this.copyRule = this.rule;
     return (
       <div class="zFormDesigners">
         <a-form-model props={{ model: this.formData, ...this.formConfig }}>
-          <a-row>
-            {this.rule.map((i) => {
+          <a-row gutter={20}>
+            {this.copyRule.map((i, k) => {
+              const status = this.clickActive === i.fileId;
               return (
-                <zFormDesignersItem
-                  onRowClick={() => {
-                    this.clickActive = i.fileId;
-                    this.$emit("rowClick", this.clickActive);
-                  }}
-                  formItem={i}
-                  clickActiveValue={this.clickActive}
-                ></zFormDesignersItem>
+                <a-col span={i.col.span}>
+                  <div
+                    class={{
+                      rule_item: true,
+                      active_item: status,
+                    }}
+                    onClick={() => {
+                      // this.clickActive = i.fileId;
+                      this.$emit("rowClick", i.fileId);
+                      this.$emit("update:clickActive", i.fileId);
+                    }}
+                  >
+                    <div class="rule_item_form">
+                      <zFormDesignersItem formItem={i}></zFormDesignersItem>
+                    </div>
+                    <div class="rule_item_edit">
+                      {status ? (
+                        <div>
+                          <a-icon
+                            title="删除"
+                            onClick={() => {
+                              this.$emit("handleRowDelect", i);
+                            }}
+                            type="delete"
+                            style={{ color: "#ff4d4f" }}
+                          />
+                          <a-icon
+                            title="复制"
+                            onClick={() => {
+                              this.$emit("handleRowCopy", i, k);
+                            }}
+                            type="copy"
+                            style={{ color: "#1890ff" }}
+                          />
+                        </div>
+                      ) : (
+                        ""
+                      )}
+                    </div>
+                  </div>
+                </a-col>
               );
             })}
           </a-row>

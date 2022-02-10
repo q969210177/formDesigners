@@ -1,4 +1,31 @@
-.zFormDesigners{
+@import "~@/assets/layOut.scss";
+.zFormDesigners {
+  width: 100%;
+  height: 100%;
+  .active_item {
     width: 100%;
-    height: 100%;
+    box-shadow: #c4bfbf 1px 0 5px 1px;
+    border: 1px dashed red;
+  }
+  .rule_item {
+    width: 100%;
+    height: 120px;
+    border-radius: 5px;
+    // padding: 12px 8px;
+    .rule_item_form {
+      width: 100%;
+      height: 60%;
+      @include flex-row-c-c;
+      padding-top: 12px;
+    }
+    .rule_item_edit {
+      width: 100%;
+      height: 40%;
+      @include flex-row-e-c;
+
+      .anticon + .anticon {
+        margin-left: 4px;
+      }
+    }
+  }
 }

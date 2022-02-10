@@ -74,25 +74,38 @@ export default {
     },
   },
   render(h) {
+    const divItemAbsDom =
+      this.clickActiveValue === this.formItem.fileId ? (
+        <div>
+          <a-button
+            onClick={() => {
+              this.$emit("handleRowDelect", this.formItem);
+            }}
+            type="danger"
+            shape="circle"
+            icon="delete"
+          />
+          <a-button type="link" shape="circle" icon="check" />
+        </div>
+      ) : (
+        ""
+      );
+    const divItemActiveDom =
+      this.clickActiveValue === this.formItem.fileId ? (
+        <a-button type="link" shape="circle" icon="check" />
+      ) : (
+        ""
+      );
     return (
       <div class="zFormDesignersItem">
-        <a-col {...this.formItem.col}>
-          <div
-            // class="div_item"
-            class={{
-              div_item: true,
-              active_item: this.clickActiveValue === this.formItem.fileId,
-            }}
-            onClick={() => {
-              //   this.clickActive = this.formItem.compoentId;
-              this.$emit("rowClick", this.formItem);
-            }}
-          >
-            <a-form-model-item label={this.formItem.label}>
-              {this.renderCompoents(this.formItem, h)}
-            </a-form-model-item>
-          </div>
-        </a-col>
+        <a-form-model-item
+          label={this.formItem.label}
+          prop={this.formItem.fileId}
+          labelAlign={this.formItem.formProps.labelAlign}
+          required={this.formItem.formProps.isRequired}
+        >
+          {this.renderCompoents(this.formItem, h)}
+        </a-form-model-item>
       </div>
     );
   },

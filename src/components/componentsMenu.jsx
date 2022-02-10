@@ -22,9 +22,13 @@ export default {
           data: {
             type: "input",
             value: "",
-            label: "",
+            label: "111",
             props: {},
             rules: [],
+            col: {
+              span: 24,
+            },
+            formProps: { isRequired: false, labelAlign: "left" },
           },
         },
         {
@@ -37,7 +41,10 @@ export default {
             props: {},
             options: [{ label: "这是一个简单的表单设计器", value: "22" }],
             rules: [],
-            col: {},
+            col: {
+              span: 24,
+            },
+            formProps: { isRequired: false, labelAlign: "left" },
           },
         },
         {
@@ -50,7 +57,10 @@ export default {
             props: {},
             rules: [],
             options: [{ label: "这是一个简单的表单设计器", value: "22" }],
-            col: {},
+            col: {
+              span: 24,
+            },
+            formProps: { isRequired: false, labelAlign: "left" },
           },
         },
         {
@@ -62,8 +72,11 @@ export default {
             label: "",
             props: {},
             rules: [],
-            col: {},
-            options: [{ label: "这是一个简单的表单设计器", value: "22" }],
+            col: {
+              span: 24,
+            },
+            formProps: { isRequired: false, labelAlign: "left" },
+            options: [],
           },
         },
         {
@@ -75,7 +88,10 @@ export default {
             label: "",
             props: {},
             rules: [],
-            col: {},
+            col: {
+              span: 24,
+            },
+            formProps: { isRequired: false, labelAlign: "left" },
           },
         },
         {
@@ -85,8 +101,14 @@ export default {
             type: "switch",
             value: false,
             label: "",
-            props: {},
+            props: {
+              size: "small",
+            },
             rules: [],
+            col: {
+              span: 24,
+            },
+            formProps: { isRequired: false, labelAlign: "left" },
           },
         },
       ];
@@ -120,19 +142,6 @@ export default {
     // };
     return (
       <div class="componentsMenu">
-        <div class="card_header">
-          <div class="header_title"></div>
-          <div class="header_btn">
-            <a-button
-              onClick={() => {
-                this.$emit("confirmClick", this.activeValue);
-              }}
-              type="primary"
-            >
-              确定
-            </a-button>
-          </div>
-        </div>
         <div class="card_body">{this.setCompoentsItem()}</div>
       </div>
     );

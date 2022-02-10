@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 //验证option
 export const validatorOption = (option) => {
   getDataType(option);
@@ -30,4 +31,31 @@ export const returnDefaultData = (type) => {
     return typeObj[type];
   }
   return console.error("returnDefaultData 方法报错了");
+};
+//根据 filedId 查询rule的数据
+export const getRuleItem = (rule, fileId, returnKey) => {
+  const ruleType = getDataType(rule);
+  const returnObj = {};
+  if (ruleType === "Array") {
+    for (let index = 0; index < rule.length; index++) {
+      const item = rule[index];
+      if (item.fileId === fileId) {
+        returnObj.index = index;
+        returnObj.ruleItem = item;
+        return returnObj;
+      }
+    }
+  }
+};
+
+//根据配置的value 给表单的子项赋值
+export const setRuleItem = (ruleItem, ruleKey, value, ruleItemKey) => {
+  //当需要给ruleItem 里面的子项赋值的情况
+  if (ruleItemKey) {
+    ruleItem[ruleItemKey][ruleKey] = value;
+  } else {
+    ruleItem[ruleKey] = value;
+  }
+  console.log(ruleItem);
+  return ruleItem;
 };

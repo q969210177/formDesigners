@@ -1,10 +1,13 @@
 <template>
   <div class="cRadio">
-    <a-radio-group v-model="value" @change="handleChange">
-      <a-radio :value="1"> A </a-radio>
-      <a-radio :value="2"> B </a-radio>
-      <a-radio :value="3"> C </a-radio>
-      <a-radio :value="4"> D </a-radio>
+    <a-radio-group v-model="radioValue" @change="handleChange">
+      <a-radio
+        :value="v[valueKey]"
+        v-for="(v, k) in options"
+        :key="v.value + k"
+      >
+        {{ v[labelKey] }}
+      </a-radio>
     </a-radio-group>
   </div>
 </template>
@@ -31,9 +34,18 @@ export default {
       default: "value",
     },
   },
-
+  watch: {
+    value(newV) {
+      this.radioValue = newV;
+    },
+  },
   data() {
-    return {};
+    return {
+      radioValue: null,
+    };
+  },
+  mounted() {
+    this.radioValue = this.value;
   },
   methods: {
     handleChange(v) {
@@ -43,6 +55,7 @@ export default {
       console.log(value, "radio");
 
       this.$emit("input", value);
+      this.$emit("change", value);
     },
   },
 };

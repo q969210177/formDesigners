@@ -50,6 +50,7 @@ export default {
     },
     //设置组件的rule
     setFormRule(fileId, rule) {},
+    //拖拽表单进行排序
   },
   mounted() {
     this.$emit("input", { getFormData: this.getFormData });
@@ -63,7 +64,7 @@ export default {
             {this.copyRule.map((i, k) => {
               const status = this.clickActive === i.fileId;
               return (
-                <a-col span={i.col.span}>
+                <a-col span={i.col.span} draggable>
                   <div
                     class={{
                       rule_item: true,

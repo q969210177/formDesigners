@@ -13,7 +13,6 @@
         @drop="handleDropEvent"
         @dragover="handleDragoverEvent"
       >
-        <!-- 做个是用来渲染的 @rowClick="handleRowClick" -->
         <zFormDesigners
           :clickActive.sync="clickActive"
           @handleRowDelect="handleRowDelectClick"
@@ -27,11 +26,10 @@
       <OperationalZone
         :rule="rule"
         :clickActive="clickActive"
-        @handleRetuenForm="handleOperationalZoneChange"
+        @handleRetuenForm="storageRule"
         :formType="ComponentsModelValue"
       />
     </aside>
-    <!-- <cForm :rule="rule"></cForm> -->
   </div>
 </template>
 <script>
@@ -74,17 +72,6 @@ export default {
       newRuleItem.fileId = setCompoentId();
       this.rule.splice(index, 0, newRuleItem);
       this.storageRule();
-    },
-    //右侧的列表选项的改变事件
-    //第一个参数是对象的key 第二个是对象的value 这个是配置表单属性的方法
-    handleOperationalZoneChange() {
-      /**
-       * 根据key的不同 拿到字段里面的key
-       */
-      // const { ruleItem, index } = getRuleItem(this.rule, this.clickActive);
-      // ruleItem.formProps[key] = value;
-      // console.log(ruleItem, "ruleItem");
-      // this.rule.splice(index, ruleItem);
     },
     //选择组件的确认事件
     handleConfirmClick(v) {

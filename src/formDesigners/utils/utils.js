@@ -52,11 +52,10 @@ export const getRuleItem = (rule, fileId, returnKey) => {
 export const setRuleItem = (ruleItem, ruleKey, value, ruleItemKey) => {
   //当需要给ruleItem 里面的子项赋值的情况
   if (ruleItemKey) {
-    ruleItem[ruleItemKey][ruleKey] = value;
+    ruleItem[ruleKey][ruleItemKey] = value;
   } else {
     ruleItem[ruleKey] = value;
   }
-  console.log(ruleItem);
   return ruleItem;
 };
 // 获取表单子项的值

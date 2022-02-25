@@ -7,12 +7,10 @@
     <aside class="asdie">
       <ComponentsMenu v-model="ComponentsModelValue" />
     </aside>
+    <!--    @drop="handleDropEvent"
+        @dragover="handleDragoverEvent" -->
     <main class="main">
-      <div
-        class="form_box"
-        @drop="handleDropEvent"
-        @dragover="handleDragoverEvent"
-      >
+      <div class="form_box">
         <zFormDesigners
           :clickActive.sync="clickActive"
           @handleRowDelect="handleRowDelectClick"
@@ -97,8 +95,7 @@ export default {
       $event.preventDefault();
     },
     test() {
-      const { getFormData } = this.formApi;
-      console.log(getFormData());
+      // const { getFormData } = this.formApi;
     },
   },
 };

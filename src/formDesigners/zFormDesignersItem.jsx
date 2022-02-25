@@ -25,8 +25,8 @@ export default {
       return h(com, {
         ...this.returnCompoentsProps(i),
         on: {
-          input: (v) => {
-            const value = this.validatorIsEvent(getDataType(v), v);
+          input: ($event) => {
+            const value = this.validatorIsEvent(getDataType($event), $event);
             i.value = value;
           },
           ...i.on,
@@ -35,12 +35,16 @@ export default {
     },
     //分发input事件的默认值
     validatorIsEvent(type, event) {
-      const typeArr = ["InputEvent"];
+      const typeArr = ["InputEvent", "PointerEvent"];
       if (typeArr.includes(type)) {
         const {
           target: { value },
         } = event;
-        return value;
+        if (value) {
+          return value;
+        }
+        console.log(event, "event");
+        return "";
       } else {
         return event;
       }

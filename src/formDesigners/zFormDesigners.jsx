@@ -58,13 +58,43 @@ export default {
   render(h) {
     this.copyRule = this.rule;
     return (
-      <div class="zFormDesigners">
+      <div
+        class="zFormDesigners"
+        onClick={($event) => {
+          const {
+            target: { className },
+          } = $event;
+          if (className === "zFormDesigners") {
+            this.$emit("update:clickActive", false);
+          }
+          console.log(className);
+        }}
+      >
         <a-form-model props={{ model: this.formData, ...this.formConfig }}>
           <a-row gutter={20}>
             {this.copyRule.map((i, k) => {
               const status = this.clickActive === i.fileId;
               return (
-                <a-col span={i.col.span} draggable>
+                <a-col
+                  draggable
+                  span={i.col.span}
+                  onDrop={($event) => {
+                    $event.preventDefault();
+                    const data = $event.dataTransfer.getData("text/plain");
+                    console.log(data, "drop");
+                  }}
+                  onDragstart={($event) => {
+                    $event.preventDefault();
+                    // i.data.fileId = setCompoentId();
+                    $event.dataTransfer.setData(
+                      "text/plain",
+                      JSON.stringify(i)
+                    );
+                  }}
+                  onDragover={($event) => {
+                    $event.preventDefault();
+                  }}
+                >
                   <div
                     class={{
                       rule_item: true,

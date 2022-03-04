@@ -2,7 +2,7 @@
   <div class="operationalZone">
     <div>
       {{ formConfingModel }}
-      <a-tabs type="card" v-if="clickActive">
+      <a-tabs type="card" v-if="clickActive" default-active-key="2">
         <a-tab-pane key="1" tab="表单配置">
           <a-form-model :model="formConfingModel">
             <a-form-model-item label="设置表单的字段名">
@@ -49,23 +49,13 @@
           </a-form-model>
         </a-tab-pane>
         <a-tab-pane key="2" tab="组件配置">
-          <zCreateForm></zCreateForm>
-          <!-- <a-form-model :model="formConfingModel">
-            <a-form-model-item label="设置提示话语">
-              <a-input
-                v-model="formConfingModel.props.placeholder"
-                @blur="
-                  (event) => handleInputBlur(event, 'props', 'placeholder')
-                "
-              />
-            </a-form-model-item>
-            <a-form-model-item label="是否开启快速清除">
-              <a-switch
-                v-model="formConfingModel.allowClear"
-                @change="(v) => handleRetuenForm('props', v, 'allowClear')"
-              ></a-switch>
-            </a-form-model-item>
-          </a-form-model> -->
+          {{ formType }}
+          <zCreateForm
+            @allowClear-change="allowClearChange"
+            @disabled-change="allowClearChange"
+            :rule="componentsRule"
+            v-model="zCreateFormModel"
+          ></zCreateForm>
         </a-tab-pane>
       </a-tabs>
     </div>
@@ -96,6 +86,10 @@ export default {
     cSwitch,
   },
   props: {
+    formType: {
+      type: String,
+      default: "",
+    },
     rule: {
       type: Array,
       require: true,
@@ -115,8 +109,48 @@ export default {
       }
     },
   },
+  computed: {
+    componentsRule() {
+      const componentsRule = [
+        {
+          type: "switch",
+          value: false,
+          label: "禁用",
+          props: {
+            size: "small",
+          },
+          fileId: "disabled",
+          rules: [],
+          col: {
+            span: 24,
+          },
+          formProps: { isRequired: false, labelAlign: "left" },
+          attrs: ["input", "select", "radio", "datePicker"],
+        },
+        {
+          type: "switch",
+          value: false,
+          label: "清除图标",
+          props: {
+            size: "small",
+          },
+          fileId: "allowClear",
+          rules: [],
+          col: {
+            span: 24,
+          },
+          formProps: { isRequired: false, labelAlign: "left" },
+          attrs: ["input", "select", "datePicker"],
+        },
+      ];
+      return componentsRule.filter((v) => {
+        return v.attrs.includes(this.formType);
+      });
+    },
+  },
   data() {
     return {
+      zCreateFormModel: {},
       formConfingModel: {
         formProps: {
           labelAlign: "left",
@@ -134,12 +168,18 @@ export default {
         fileId: "",
       },
       copyRule: [], //点击复制的rule
+      optionModelConfig: {
+        show: false,
+      },
     };
   },
   mounted() {
     this.copyRule = this.rule;
   },
   methods: {
+    allowClearChange(v) {
+      console.log(v, "v");
+    },
     // //初始化赋值
     initializeFormData() {
       this.copyRule = this.rule;
@@ -150,7 +190,6 @@ export default {
           if (ruleItemObjKey.includes(ruleKey)) {
             //取出ruleItem[ruleKey]的key集合 然后进行 赋值
             Object.keys(ruleItem[ruleKey]).forEach((ruleItemKey) => {
-              console.log(ruleItemKey, "ruleItemKey");
               this.setFormConfingModel(
                 ruleKey,
                 getRuleItemValue(ruleItem, ruleKey, ruleItemKey),

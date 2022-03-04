@@ -116,7 +116,7 @@ export default {
       return menuArr.map((i) => {
         const itemClass = {
           componentsMenuItem: true,
-          active_Item: i.activeValue === this.value,
+          // active_Item: i.activeValue === this.value,
         };
         return (
           <div
@@ -130,6 +130,7 @@ export default {
               this.$emit("input", i.activeValue);
             }}
           >
+            {i.activeValue}
             {i.name}
           </div>
         );

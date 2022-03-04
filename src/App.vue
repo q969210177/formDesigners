@@ -1,18 +1,21 @@
 <template>
   <div id="app">
     <header class="header">
-      {{ ComponentsModelValue }}
       <a-button @click="test">预览</a-button>
     </header>
     <aside class="asdie">
       <ComponentsMenu v-model="ComponentsModelValue" />
     </aside>
-    <!--    @drop="handleDropEvent"
-        @dragover="handleDragoverEvent" -->
+
     <main class="main">
-      <div class="form_box">
+      <div
+        class="form_box"
+        @drop="handleDropEvent"
+        @dragover="handleDragoverEvent"
+      >
         <zFormDesigners
           :clickActive.sync="clickActive"
+          @rowClick="handleRowClick"
           @handleRowDelect="handleRowDelectClick"
           @handleRowCopy="handleRowCopyClick"
           v-model="formApi"
@@ -31,17 +34,21 @@
   </div>
 </template>
 <script>
+/* eslint-disable vue/no-unused-components */
 import componentsMenu from "@/components/componentsMenu.jsx";
 import operationalZone from "@/components/operationalZone.vue";
 import { getRuleItem, setCompoentId } from "@/formDesigners/utils/utils.js";
+// import testddd from "./com";
 export default {
   name: "App",
   components: {
     OperationalZone: operationalZone,
     ComponentsMenu: componentsMenu,
+    // ddd: testddd(),
   },
   data() {
     return {
+      // vis: false,
       ComponentsModelValue: "",
       formApi: {},
       rule: [],
@@ -72,10 +79,12 @@ export default {
       this.storageRule();
     },
     //选择组件的确认事件
-    handleConfirmClick(v) {
-      if (v.name) {
-        this.rule.push(v.data);
-      }
+    handleRowClick(fileId) {
+      const { ruleItem } = getRuleItem(this.rule, fileId);
+      this.ComponentsModelValue = ruleItem.type;
+      // if (v.name) {
+      //   this.rule.push(v.data);
+      // }
     },
     //把数据存到 locas
     storageRule() {
@@ -87,6 +96,7 @@ export default {
       $event.preventDefault();
       $event.dataTransfer.dropEffect = "move";
       const data = $event.dataTransfer.getData("text/plain");
+      console.log(data, "data");
       this.rule.push(JSON.parse(data));
       this.storageRule();
     },

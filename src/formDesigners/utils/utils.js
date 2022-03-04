@@ -67,3 +67,22 @@ export const getRuleItemValue = (ruleItem, ruleKey, ruleItemKey) => {
     return ruleItem[ruleKey];
   }
 };
+
+//抛出事件
+export const returnEvent = ($listeners, fileId) => {
+  const ruleType = getDataType($listeners);
+  if (ruleType !== "Object") return;
+  for (const key in $listeners) {
+    if (Object.hasOwnProperty.call($listeners, key)) {
+      const newEvent = {};
+      const element = $listeners[key];
+      console.log(key, "key");
+      if (key.includes(fileId)) {
+        const eventName = key.split("-");
+        newEvent[eventName[eventName.length - 1]] = element;
+        return newEvent;
+      }
+    }
+  }
+  return {};
+};

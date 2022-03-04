@@ -67,7 +67,6 @@ export default {
           if (className === "zFormDesigners") {
             this.$emit("update:clickActive", false);
           }
-          console.log(className);
         }}
       >
         <a-form-model props={{ model: this.formData, ...this.formConfig }}>
@@ -76,24 +75,23 @@ export default {
               const status = this.clickActive === i.fileId;
               return (
                 <a-col
-                  draggable
                   span={i.col.span}
-                  onDrop={($event) => {
-                    $event.preventDefault();
-                    const data = $event.dataTransfer.getData("text/plain");
-                    console.log(data, "drop");
-                  }}
-                  onDragstart={($event) => {
-                    $event.preventDefault();
-                    // i.data.fileId = setCompoentId();
-                    $event.dataTransfer.setData(
-                      "text/plain",
-                      JSON.stringify(i)
-                    );
-                  }}
-                  onDragover={($event) => {
-                    $event.preventDefault();
-                  }}
+                  // onDrop={($event) => {
+                  //   $event.preventDefault();
+                  //   const data = $event.dataTransfer.getData("text/plain");
+                  //   console.log(data, "drop");
+                  // }}
+                  // onDragstart={($event) => {
+                  //   $event.preventDefault();
+                  //   // i.data.fileId = setCompoentId();
+                  //   $event.dataTransfer.setData(
+                  //     "text/plain",
+                  //     JSON.stringify(i)
+                  //   );
+                  // }}
+                  // onDragover={($event) => {
+                  //   $event.preventDefault();
+                  // }}
                 >
                   <div
                     class={{

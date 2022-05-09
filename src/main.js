@@ -1,10 +1,12 @@
 import Vue from "vue";
 import App from "./App.vue";
 import "@/utils/installAntdFormCompoent.js";
-import "@/utils/autoCompoents.js";
-import formDesigners from "@/formDesigners/index.js";
-Vue.use(formDesigners);
-import CreateForm from "@/createForm/index.js";
+import zformDesigners from "@/zformDesigners/index.js";
+Vue.use(zformDesigners);
+
+import CreateForm from "@/zformcreate/index.js";
+// import createForm from "../ccc/formCreate.common.js";
+// // import CreateForm from "@/createForm/index.js";
 Vue.use(CreateForm);
 Vue.config.productionTip = false;
 new Vue({

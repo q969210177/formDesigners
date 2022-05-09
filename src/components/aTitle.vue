@@ -17,31 +17,31 @@
 </template>
 <script>
 export default {
-  name: "aTitle",
+  name: 'aTitle',
   props: {
     title: {
       type: String,
-      default: "",
-    },
+      default: ''
+    }
   },
   data() {
-    return {};
+    return {}
   },
   methods: {
     // 设置class
     setClass() {
-      const { className } = this.$attrs;
+      const { className } = this.$attrs
       if (className) {
-        return className;
+        return className
       }
       // console.log(attr)
-      return "width-100 height-100";
-    },
-  },
-};
+      return 'width-100 height-100'
+    }
+  }
+}
 </script>
 <style lang="scss" scoped>
-@import "~@/assets/layOut.scss";
+@import '~@/assets/layout.scss';
 .aTitle {
   .title_header {
     width: 100%;
@@ -55,7 +55,7 @@ export default {
       @include flex-col-c-c;
       &::after {
         position: absolute;
-        content: "";
+        content: '';
         width: 5px;
         border-radius: 2px;
         background: #0084ff;

@@ -5,62 +5,61 @@
         :value="v[valueKey]"
         v-for="(v, k) in options"
         :key="v[valueKey] + k"
-      >
-        {{ v[labelKey] }}
-      </a-checkbox>
+      >{{ v[labelKey] }}</a-checkbox>
     </a-checkbox-group>
   </div>
 </template>
 <script>
 export default {
-  name: "cCheckbox",
+  name: 'CCheckbox',
   props: {
     value: {
       type: [Array, String],
       default: () => {
-        return [];
-      },
+        return []
+      }
     },
     options: {
       type: Array,
       default: () => {
-        return [];
-      },
+        return []
+      }
     },
     labelKey: {
       type: String,
-      default: "label",
+      default: 'label'
     },
     valueKey: {
       type: String,
-      default: "value",
+      default: 'value'
     },
     isStringValue: {
       type: Boolean,
-      default: false,
-    },
+      default: false
+    }
   },
   data() {
     return {
-      checkBoxValue: [],
-    };
+      checkBoxValue: []
+    }
   },
   mounted() {
     if (this.isStringValue) {
-      console.log(111);
+      console.log(111)
     }
   },
   methods: {
     //多选框的change事件
     handleChange() {
-      this.$emit("input", this.checkBoxValue);
-    },
-  },
-};
+      this.$emit('input', this.checkBoxValue)
+    }
+  }
+}
 </script>
 <style lang="scss" scoped>
 .cCheckbox {
   width: 100%;
   height: 100%;
+  text-align: left;
 }
 </style>

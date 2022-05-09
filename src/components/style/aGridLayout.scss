@@ -1,0 +1,11 @@
+@import "~@/assets/layout.scss";
+.aGridLayout {
+  width: 100%;
+  height: 100%;
+  @include flex-row-s-s;
+  align-content: flex-start;
+  flex-wrap: wrap;
+  // display: grid;
+  // grid-template-columns: repeat(24, 1fr);
+  // grid-template-rows: repeat(10, 1fr);
+}

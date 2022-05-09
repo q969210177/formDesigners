@@ -1,0 +1,24 @@
+@import "~@/assets/layout.scss";
+.aDetailContentItem {
+  width: 100%;
+  cursor: default;
+  @include flex-row-s-c;
+  // .flex-row-s-c(); //   height: 100%;;
+  .white_space {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    // border: 1px solid red;
+  }
+  .item_label {
+    padding: 5px 10px;
+    @include flex-row-s-c;
+
+    color: #999;
+  }
+  .item_value {
+    @include flex-row-s-c;
+
+    // padding: 5px 10px;
+  }
+}

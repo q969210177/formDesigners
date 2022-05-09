@@ -1,17 +1,21 @@
 /* eslint-disable no-unused-vars */
 import zformDemoItem from "./zformDemoItem";
+import aGridLayout from "@/components/aGridLayout";
+import aGridLayoutItem from "@/components/aGridLayoutItem";
 import {
   returnEvent,
   getRuleItem,
   returnSlots,
 } from "@/zformcreate/utils/utils";
-// import "./style/zFormCreate.scss";
+import "./style/zformDemo.scss";
 import _ from "lodash";
 
 export default {
-  name: "ZFormCreate",
+  name: "zformDemo",
   components: {
     zformDemoItem,
+    aGridLayout,
+    aGridLayoutItem,
   },
   props: {
     rule: {
@@ -37,6 +41,17 @@ export default {
     value: {
       type: Object,
       require: true,
+    },
+    activeValue: {
+      type: [String, Number],
+    },
+    ruleItemType: {
+      type: [String, Number],
+    },
+  },
+  watch: {
+    rule(newV) {
+      this.copyRule = _.cloneDeep(this.rule);
     },
   },
   data() {
@@ -100,6 +115,7 @@ export default {
       return {};
       // this.updateRule()
     },
+
     //设置组件的rule
     // setFormRule(fileId, rule) {},
   },
@@ -117,14 +133,14 @@ export default {
     );
     this.getFormData();
     return (
-      <div class="zCreateForm" {...{ style: { ...this.$attrs.style } }}>
+      <div class="zformDemo" {...{ style: { ...this.$attrs.style } }}>
         <a-form-model
           ref="zCreateForm"
           props={{ model: this.formData, ...formConfig }}
           colon={false}
         >
-          <a-row gutter={20}>
-            {this.copyRule.map((i) => {
+          <a-row>
+            {this.copyRule.map((i, k) => {
               let eventLoop = {};
               if (i.on) {
                 eventLoop = {
@@ -143,16 +159,30 @@ export default {
                       }}
                       onClick={() => {
                         this.$emit("rowClick", i.fileId);
-                        this.$emit("update:clickActive", i.fileId);
+                        this.$emit("update:activeValue", i.fileId);
+                        this.$emit("update:ruleItemType", i.type);
                       }}
                     >
-                      <div class="rule_item_form">
+                      <div
+                        class={{
+                          rule_item_form: true,
+                        }}
+                        style={{ "margin-bottom": "2px" }}
+                      >
                         <slot name={i.fileId} data={i}>
                           <zformDemoItem
+                            onHandleZformDemoItemCopyClick={(formItem) => {
+                              this.$emit(
+                                "handleZformDemoCopyClick",
+                                formItem,
+                                k
+                              );
+                            }}
                             // onValueChange={() => this.getFormData()}
                             formConfig={formConfig}
                             formItem={i}
                             eventLoop={eventLoop}
+                            activeValue={i.fileId === this.activeValue}
                           >
                             {returnSlots(this.$slots, i.fileId)
                               ? returnSlots(this.$slots, i.fileId)

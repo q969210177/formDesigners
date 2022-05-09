@@ -11,25 +11,32 @@
       <div class="main_content" @drop="handleDropEvent" @dragover="handleDragoverEvent">
         <div class="main_content_operating">
           <a-button size="small">预览</a-button>
-          <a-button size="small">清空</a-button>
+          <a-button size="small">清空{{ruleItemType}}</a-button>
         </div>
         <div class="main_content_form">
           <zformDemo
             style="  background: #fff;padding:4px"
             v-model="userInfoModel"
+            @handleZformDemoCopyClick="handleZformDemoCopyClick"
+            :activeValue.sync="activeValue"
+            :ruleItemType.sync="ruleItemType"
             :formConfig="formConfig"
             :rule="userInfoRule"
           ></zformDemo>
         </div>
       </div>
-      <div class="right_rule_config"></div>
+      <div class="right_rule_config">
+        <componentsConfig></componentsConfig>
+      </div>
     </div>
     <footer>4</footer>
   </div>
 </template>
 <script>
 import componentsMenu from './compoents/componentsMenu.vue'
-import zformDemo from './zformDemo.jsx'
+import componentsConfig from './compoents/componentsConfig.vue'
+
+import zformDemo from './zformDemo'
 import { defaultFormConfig } from './data/defaultData.js'
 import {
   setCompoentId,
@@ -40,40 +47,31 @@ export default {
   name: 'zformDesigners',
   components: {
     componentsMenu,
-    zformDemo
+    zformDemo,
+    componentsConfig
   },
   data() {
     return {
       userInfoModel: {},
       formConfig: defaultFormConfig,
-      userInfoRule: [
-        {
-          type: 'select',
-          label: '创建组织',
-          fileId: 'custType',
-          value: '',
-          props: {
-            valueKey: 'dictValue',
-            labelKey: 'dictName'
-          },
-          options: [],
-          span: 24
-        }
-      ]
+      userInfoRule: [],
+      activeValue: '',
+      ruleItemType: ''
+    }
+  },
+  mounted() {
+    const userInfoRule = localStorage.getItem('rule')
+    if (userInfoRule) {
+      this.userInfoRule = JSON.parse(userInfoRule)
     }
   },
   methods: {
-    init() {
-      const vaArr = [{ key: 'formKey', msg: '请输入formKey' }]
-      const formData = {
-        formKey: ''
-      }
-      for (let index = 0; index < vaArr.length; index++) {
-        const element = vaArr[index]
-        if (formData[element.key]) {
-          return element.msg
-        }
-      }
+    //点击复制表单
+    handleZformDemoCopyClick(ruleItem, index) {
+      const newRuleItem = JSON.parse(JSON.stringify(ruleItem))
+      newRuleItem.fileId = setCompoentId()
+      this.userInfoRule.splice(index, 0, newRuleItem)
+      this.storageRule()
     },
     //点击设置表单的默认配置
     handleSetFormConfigClick() {},
@@ -85,18 +83,6 @@ export default {
         // this.clickActive = null
         // this.storageRule()
       }
-    },
-    //   //点击复制当前行
-    handleRowCopyClick(ruleItem, index) {
-      const newRuleItem = JSON.parse(JSON.stringify(ruleItem))
-      newRuleItem.fileId = setCompoentId()
-      this.userInfoRule.splice(index, 0, newRuleItem)
-      this.storageRule()
-    },
-    //   //选择组件的确认事件
-    handleRowClick(fileId) {
-      const { ruleItem } = getRuleItem(this.userInfoRule, fileId)
-      this.ComponentsModelValue = ruleItem.type
     },
     handleRetuenForm(ruleKey, value, ruleItemKey) {
       const { ruleItem } = getRuleItem(this.userInfoRule, this.clickActive)
@@ -116,7 +102,7 @@ export default {
       data.fileId = setCompoentId()
       this.userInfoRule.push(data)
       this.storageRule()
-      this.userInfoModel.updateRule()
+      // this.userInfoModel.updateRule()
     },
     //   //拖拽中的事件
     handleDragoverEvent($event) {
@@ -166,6 +152,7 @@ export default {
         height: 40px;
         border-bottom: 1px solid #ececec;
         @include flex-row-e-c;
+        padding: 0 8px;
         // border-left: 1px solid #ececec;
       }
       .main_content_form {

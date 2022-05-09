@@ -16,7 +16,7 @@ export const defaultMenuArr = [
     {
         name: "输入框",
         activeValue: "input",
-        icon: "form",
+        icon: "icon-danhangshurukuang",
         data: {
             type: "input",
             value: "",
@@ -32,7 +32,7 @@ export const defaultMenuArr = [
     {
         name: "下拉框",
         activeValue: "select",
-        icon: "form",
+        icon: "icon-xialakuang",
         data: {
             type: "select",
             value: "",
@@ -49,7 +49,7 @@ export const defaultMenuArr = [
     {
         name: "单选框",
         activeValue: "radio",
-        icon: "form",
+        icon: "icon-danxuanfill",
         data: {
             type: "select",
             value: "",
@@ -66,7 +66,7 @@ export const defaultMenuArr = [
     {
         name: "复选框",
         activeValue: "checkbox",
-        icon: "form",
+        icon: "icon-duoxuan",
         data: {
             type: "checkbox",
             value: "",
@@ -83,7 +83,7 @@ export const defaultMenuArr = [
     {
         name: "时间选择器",
         activeValue: "datePicker",
-        icon: "form",
+        icon: "icon-Date",
         data: {
             type: "datePicker",
             value: "",
@@ -99,7 +99,7 @@ export const defaultMenuArr = [
     {
         name: "开关",
         activeValue: "switch",
-        icon: "form",
+        icon: "icon-kaiguanguan",
         data: {
             type: "switch",
             value: false,
@@ -117,7 +117,7 @@ export const defaultMenuArr = [
     {
         name: "字典",
         activeValue: "dic",
-        icon: "diff",
+        icon: "icon-ic_shenqingkaoqin",
         data: {
             type: "select",
             value: "",
@@ -135,3 +135,29 @@ export const defaultMenuArr = [
         },
     },
 ];
+
+
+
+/**
+ * @props
+ *  公用部分
+ *  isRequired:是否必填
+ * 
+ *  input
+ *  allowClear:boolean 可以点击清除图标删除内容
+ *  size:large default small 控件大小
+ *  maxLength:最大长度
+ * 
+ * radio
+ *  size:large default small 控件大小
+ * 
+ * 
+ * checkbox
+ *   size:large default small 控件大小
+ * 
+ * select
+ *  allowClear:boolean 可以点击清除图标删除内容
+ *  notFoundContent:string 当下拉列表为空时显示的内容
+ *  placeholder:string 选择框默认展示的内容
+ *  size:large default small 控件大小
+ */

@@ -1,7 +1,7 @@
 <template>
   <div class="aTitle" :class="setClass()">
-    <div class="title_header">
-      <div class="title_header_left">
+    <div class="title_header flex-row-sb-c">
+      <div class="title_header_left flex-col-c-c">
         <slot name="headerLeft">
           <span class="pl-10 font-size-18 font-weight-80">{{ title }}</span>
         </slot>
@@ -40,19 +40,17 @@ export default {
   }
 }
 </script>
-<style lang="scss" scoped>
-@import '~@/assets/layout.scss';
+<style lang="less" scoped>
+@import '~@/assets/less/layOut.less';
 .aTitle {
   .title_header {
     width: 100%;
     height: 42px;
-    @include flex-row-sb-c;
     // padding: 0 32px;
     // padding-left: 20px;
     .title_header_left {
       height: 100%;
       position: relative;
-      @include flex-col-c-c;
       &::after {
         position: absolute;
         content: '';
@@ -67,7 +65,7 @@ export default {
   }
   .title_body {
     width: 100%;
-    height: calc(100% - 42px);
+    height: calc(~'100% - 42px');
   }
 }
 </style>

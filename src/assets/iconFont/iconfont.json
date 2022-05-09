@@ -1,0 +1,352 @@
+{
+  "id": "",
+  "name": "",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "26592610",
+      "name": "question-circle",
+      "font_class": "question-circle",
+      "unicode": "e78c",
+      "unicode_decimal": 59276
+    },
+    {
+      "icon_id": "26592644",
+      "name": "layout",
+      "font_class": "layout",
+      "unicode": "e7ae",
+      "unicode_decimal": 59310
+    },
+    {
+      "icon_id": "26592680",
+      "name": "line chart",
+      "font_class": "linechart",
+      "unicode": "e7d2",
+      "unicode_decimal": 59346
+    },
+    {
+      "icon_id": "26592681",
+      "name": "bar chart",
+      "font_class": "barchart",
+      "unicode": "e7d3",
+      "unicode_decimal": 59347
+    },
+    {
+      "icon_id": "26592682",
+      "name": "point map",
+      "font_class": "pointmap",
+      "unicode": "e7d4",
+      "unicode_decimal": 59348
+    },
+    {
+      "icon_id": "26592683",
+      "name": "container",
+      "font_class": "container",
+      "unicode": "e7d5",
+      "unicode_decimal": 59349
+    },
+    {
+      "icon_id": "26593105",
+      "name": "question-circle-fill",
+      "font_class": "question-circle-fill",
+      "unicode": "e8a6",
+      "unicode_decimal": 59558
+    },
+    {
+      "icon_id": "26593118",
+      "name": "warning-circle-fill",
+      "font_class": "warning-circle-fill",
+      "unicode": "e8b3",
+      "unicode_decimal": 59571
+    },
+    {
+      "icon_id": "26593123",
+      "name": "pie chart-circle-fil",
+      "font_class": "piechart-circle-fil",
+      "unicode": "e8b8",
+      "unicode_decimal": 59576
+    },
+    {
+      "icon_id": "26593124",
+      "name": "dashboard-fill",
+      "font_class": "dashboard-fill",
+      "unicode": "e8b9",
+      "unicode_decimal": 59577
+    },
+    {
+      "icon_id": "26593125",
+      "name": "message-fill",
+      "font_class": "message-fill",
+      "unicode": "e8ba",
+      "unicode_decimal": 59578
+    },
+    {
+      "icon_id": "26593180",
+      "name": "image-fill",
+      "font_class": "image-fill",
+      "unicode": "e8f1",
+      "unicode_decimal": 59633
+    },
+    {
+      "icon_id": "46419569",
+      "name": "提示,标注",
+      "font_class": "weibiaoti-2",
+      "unicode": "e618",
+      "unicode_decimal": 58904
+    },
+    {
+      "icon_id": "49321812",
+      "name": "ic_右侧箭头",
+      "font_class": "ic_youcejiantou",
+      "unicode": "e67d",
+      "unicode_decimal": 59005
+    },
+    {
+      "icon_id": "49321824",
+      "name": "ic_查阅",
+      "font_class": "ic_chayue",
+      "unicode": "e689",
+      "unicode_decimal": 59017
+    },
+    {
+      "icon_id": "49321839",
+      "name": "ic_编辑-04",
+      "font_class": "ic_bianji-1",
+      "unicode": "e698",
+      "unicode_decimal": 59032
+    },
+    {
+      "icon_id": "49321840",
+      "name": "ic_方向",
+      "font_class": "ic_fangxiang",
+      "unicode": "e699",
+      "unicode_decimal": 59033
+    },
+    {
+      "icon_id": "49321855",
+      "name": "ic_经营02",
+      "font_class": "ic_jingying1",
+      "unicode": "e6a8",
+      "unicode_decimal": 59048
+    },
+    {
+      "icon_id": "49321860",
+      "name": "ic_客户",
+      "font_class": "ic_kehu",
+      "unicode": "e6ad",
+      "unicode_decimal": 59053
+    },
+    {
+      "icon_id": "49321864",
+      "name": "ic_秒表-35",
+      "font_class": "ic_miaobiao-",
+      "unicode": "e6b1",
+      "unicode_decimal": 59057
+    },
+    {
+      "icon_id": "49321873",
+      "name": "ic_日历-48",
+      "font_class": "ic_rili-",
+      "unicode": "e6ba",
+      "unicode_decimal": 59066
+    },
+    {
+      "icon_id": "49321875",
+      "name": "ic_审批",
+      "font_class": "ic_shenpi",
+      "unicode": "e6bc",
+      "unicode_decimal": 59068
+    },
+    {
+      "icon_id": "49321877",
+      "name": "ic_申请考勤",
+      "font_class": "ic_shenqingkaoqin",
+      "unicode": "e6be",
+      "unicode_decimal": 59070
+    },
+    {
+      "icon_id": "49321896",
+      "name": "ic_项目总数",
+      "font_class": "ic_xiangmuzongshu",
+      "unicode": "e6d1",
+      "unicode_decimal": 59089
+    },
+    {
+      "icon_id": "49411861",
+      "name": "ic_向左箭头",
+      "font_class": "ic_xiangzuojiantou",
+      "unicode": "e6d9",
+      "unicode_decimal": 59097
+    },
+    {
+      "icon_id": "49419830",
+      "name": "项目信息",
+      "font_class": "icon-test1",
+      "unicode": "e61a",
+      "unicode_decimal": 58906
+    },
+    {
+      "icon_id": "65266334",
+      "name": "星_描边",
+      "font_class": "xing_miaobian",
+      "unicode": "e753",
+      "unicode_decimal": 59219
+    },
+    {
+      "icon_id": "65266337",
+      "name": "星_填充",
+      "font_class": "xing_tianchong",
+      "unicode": "e756",
+      "unicode_decimal": 59222
+    },
+    {
+      "icon_id": "69493869",
+      "name": "复制",
+      "font_class": "fuzhi1",
+      "unicode": "e775",
+      "unicode_decimal": 59253
+    },
+    {
+      "icon_id": "69493874",
+      "name": "修改",
+      "font_class": "xiugai1",
+      "unicode": "e77a",
+      "unicode_decimal": 59258
+    },
+    {
+      "icon_id": "70706737",
+      "name": "待办",
+      "font_class": "daiban",
+      "unicode": "e8d7",
+      "unicode_decimal": 59607
+    },
+    {
+      "icon_id": "91863110",
+      "name": "运维人员",
+      "font_class": "yunweirenyuan",
+      "unicode": "e971",
+      "unicode_decimal": 59761
+    },
+    {
+      "icon_id": "97234326",
+      "name": "设备-更多操作",
+      "font_class": "a-bianzu37beifen",
+      "unicode": "e975",
+      "unicode_decimal": 59765
+    },
+    {
+      "icon_id": "44759674",
+      "name": "退出",
+      "font_class": "tuichu",
+      "unicode": "e629",
+      "unicode_decimal": 58921
+    },
+    {
+      "icon_id": "64540453",
+      "name": "上升",
+      "font_class": "xiajiang",
+      "unicode": "e63e",
+      "unicode_decimal": 58942
+    },
+    {
+      "icon_id": "64540454",
+      "name": "上升",
+      "font_class": "shangsheng",
+      "unicode": "e8d8",
+      "unicode_decimal": 59608
+    },
+    {
+      "icon_id": "80701561",
+      "name": "Add",
+      "font_class": "Add",
+      "unicode": "e62a",
+      "unicode_decimal": 58922
+    },
+    {
+      "icon_id": "80701562",
+      "name": "Edit",
+      "font_class": "Edit",
+      "unicode": "e62b",
+      "unicode_decimal": 58923
+    },
+    {
+      "icon_id": "80701563",
+      "name": "Delete",
+      "font_class": "Delete",
+      "unicode": "e62c",
+      "unicode_decimal": 58924
+    },
+    {
+      "icon_id": "80701566",
+      "name": "Show_Content",
+      "font_class": "Show_Content",
+      "unicode": "e62e",
+      "unicode_decimal": 58926
+    },
+    {
+      "icon_id": "80701568",
+      "name": "Search",
+      "font_class": "Search",
+      "unicode": "e630",
+      "unicode_decimal": 58928
+    },
+    {
+      "icon_id": "80701726",
+      "name": "Copy",
+      "font_class": "Copy",
+      "unicode": "e632",
+      "unicode_decimal": 58930
+    },
+    {
+      "icon_id": "80701727",
+      "name": "Date",
+      "font_class": "Date",
+      "unicode": "e633",
+      "unicode_decimal": 58931
+    },
+    {
+      "icon_id": "80702053",
+      "name": "Publish",
+      "font_class": "Publish",
+      "unicode": "e63a",
+      "unicode_decimal": 58938
+    },
+    {
+      "icon_id": "577302",
+      "name": "单选-fill",
+      "font_class": "danxuanfill",
+      "unicode": "e71e",
+      "unicode_decimal": 59166
+    },
+    {
+      "icon_id": "1766474",
+      "name": "符号-单行输入框",
+      "font_class": "danhangshurukuang",
+      "unicode": "e692",
+      "unicode_decimal": 59026
+    },
+    {
+      "icon_id": "6447168",
+      "name": "多选",
+      "font_class": "duoxuan",
+      "unicode": "e642",
+      "unicode_decimal": 58946
+    },
+    {
+      "icon_id": "8560318",
+      "name": "下拉框",
+      "font_class": "xialakuang",
+      "unicode": "e531",
+      "unicode_decimal": 58673
+    },
+    {
+      "icon_id": "18368044",
+      "name": "开关 关",
+      "font_class": "kaiguanguan",
+      "unicode": "e687",
+      "unicode_decimal": 59015
+    }
+  ]
+}

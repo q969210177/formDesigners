@@ -3,7 +3,7 @@ import {
   getWordsWidth,
 } from "@/zformcreate/utils/utils.js";
 import { componentsObj } from "@/zformcreate/data/compoents.js";
-// import "./style/zFormCreateItem.scss";
+import "./style/zformDemoItem.scss";
 export default {
   name: "zformDemoItem",
   props: {
@@ -17,6 +17,9 @@ export default {
     },
     // eslint-disable-next-line vue/require-prop-types
     value: {},
+    activeValue: {
+      type: Boolean,
+    },
     formConfig: {
       type: Object,
       default: () => {
@@ -87,6 +90,25 @@ export default {
         };
       }
     },
+    //返回操作区按钮
+    returnOperateDom() {
+      return (
+        <div class="operate_btn">
+          <span
+            onClick={() => {
+              this.$emit("handleZformDemoItemCopyClick", this.formItem);
+            }}
+            class="square_box_btn"
+            style={{ color: "#2e73ff" }}
+          >
+            <span class=" iconfont icon-fuzhi1"></span>
+          </span>
+          <span class="square_box_btn " style={{ color: "#ff2e2e" }}>
+            <span class=" iconfont icon-Delete"></span>
+          </span>
+        </div>
+      );
+    },
   },
   render(h) {
     const { labelAlign, colonStatus, labelWidth } = this.formConfig;
@@ -136,13 +158,19 @@ export default {
       },
     };
     return (
-      <div class="zCreateFormItem">
+      <div
+        class={{
+          zformDemoItem: true,
+          active: this.activeValue,
+        }}
+      >
         <a-form-model-item
           scopedSlots={labelSlot}
           props={{ ...formModelItemProps }}
         >
           {this.renderCompoents(this.formItem, h)}
         </a-form-model-item>
+        {this.activeValue ? this.returnOperateDom() : ""}
       </div>
     );
   },

@@ -2,6 +2,7 @@ import Vue from "vue";
 import App from "./App.vue";
 import "@/utils/installAntdFormCompoent.js";
 import zformDesigners from "@/zformDesigners/index.js";
+import "@/assets/iconFont/iconfont.css"
 Vue.use(zformDesigners);
 
 import CreateForm from "@/zformcreate/index.js";

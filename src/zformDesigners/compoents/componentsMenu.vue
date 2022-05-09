@@ -11,7 +11,7 @@
           :key="k"
         >
           <div class="menu_box_item_square">
-            <a-icon :type="v.icon" />
+            <span :class="['iconfont',v.icon]"></span>
           </div>
           <div class="menu_box_item_name">{{v.name}}</div>
         </div>

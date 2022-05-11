@@ -178,6 +178,13 @@ export default {
                                 k
                               );
                             }}
+                            onHandleZformDemoItemDelClick={(formItem) => {
+                              this.$emit(
+                                "handleZformDemoDelClick",
+                                formItem,
+                                k
+                              );
+                            }}
                             // onValueChange={() => this.getFormData()}
                             formConfig={formConfig}
                             formItem={i}

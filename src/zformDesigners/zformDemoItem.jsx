@@ -103,7 +103,13 @@ export default {
           >
             <span class=" iconfont icon-fuzhi1"></span>
           </span>
-          <span class="square_box_btn " style={{ color: "#ff2e2e" }}>
+          <span
+            onClick={() => {
+              this.$emit("handleZformDemoItemDelClick", this.formItem);
+            }}
+            class="square_box_btn "
+            style={{ color: "#ff2e2e" }}
+          >
             <span class=" iconfont icon-Delete"></span>
           </span>
         </div>
@@ -111,14 +117,14 @@ export default {
     },
   },
   render(h) {
-    const { labelAlign, colonStatus, labelWidth } = this.formConfig;
+    const { colonStatus, labelWidth } = this.formConfig;
     //设置 formItem的props 并给上默认值
     const formModelItemProps = {
-      labelAlign: isHaveDefaultValue(
-        this.formItem.formProps,
-        "labelAlign",
-        labelAlign
-      ),
+      // labelAlign: isHaveDefaultValue(
+      //   this.formItem.formProps,
+      //   "labelAlign",
+      //   labelAlign
+      // ),
       required: isHaveDefaultValue(this.formItem.formProps, "required", false),
       labelCol: isHaveDefaultValue(
         this.formItem.formProps,

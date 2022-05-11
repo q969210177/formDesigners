@@ -4,7 +4,6 @@ import "@/utils/installAntdFormCompoent.js";
 import zformDesigners from "@/zformDesigners/index.js";
 import "@/assets/iconFont/iconfont.css"
 Vue.use(zformDesigners);
-
 import CreateForm from "@/zformcreate/index.js";
 // import createForm from "../ccc/formCreate.common.js";
 // // import CreateForm from "@/createForm/index.js";

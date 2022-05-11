@@ -11,9 +11,9 @@ export const getDataType = data => {
 }
 //设置一个动态id
 export const setCompoentId = () => {
-  const randomLength = Math.ceil(Math.random() * 36)
-  const index = Math.ceil(Math.random() * 5)
-  return Number(Math.random().toString().substring(index, randomLength) + Date.now()).toString(36)
+  const randomLength = Math.ceil(Math.random() * 7200).toString(16)
+  return Date.now().toString(36) + randomLength
+
 }
 //返回初始默认值
 export const returnDefaultData = type => {
@@ -96,7 +96,7 @@ export const isHaveDefaultValue = (judgmentForm, judgmentKey, defaultValue) => {
   }
 }
 //获取字体的长度
-export function getWordsWidth(words, wordStyle = {font: '12px sans-serif'}) {
+export function getWordsWidth(words, wordStyle = { font: '12px sans-serif' }) {
   const canvas = document.createElement('canvas')
   const ctx = canvas.getContext('2d')
   if (ctx) {
@@ -113,3 +113,4 @@ export function returnSlots($slots, fileId) {
     return $slots[fileId]
   }
 }
+setCompoentId()

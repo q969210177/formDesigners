@@ -15,6 +15,8 @@ import {
   Tabs,
   Icon,
   Slider,
+  Modal,
+  InputNumber
 } from "ant-design-vue";
 // import * as Antd from "ant-design-vue";
 // console.log(Select);
@@ -34,6 +36,8 @@ const componentsArr = [
   Tabs,
   Icon,
   Slider,
+  Modal,
+  InputNumber
 ];
 componentsArr.forEach((i) => {
   Vue.use(i);

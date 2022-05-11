@@ -18,6 +18,7 @@
             style="  background: #fff;padding:4px"
             v-model="userInfoModel"
             @handleZformDemoCopyClick="handleZformDemoCopyClick"
+            @handleZformDemoDelClick="handleZformDemoDelClick"
             :activeValue.sync="activeValue"
             :ruleItemType.sync="ruleItemType"
             :formConfig="formConfig"
@@ -26,32 +27,47 @@
         </div>
       </div>
       <div class="right_rule_config">
-        <componentsConfig></componentsConfig>
+        <componentsConfig
+          @handleChangeConfig="handleChangeConfig"
+          :activeValue.sync="activeValue"
+          :rule="userInfoRule"
+        ></componentsConfig>
       </div>
     </div>
     <footer>4</footer>
+    <a-modal :footer="null" :destroyOnClose="true" title="设置表单默认配置" v-model="formModelConfig.show">
+      <defaultformConfig
+        @cancal="formModelConfig.show=false"
+        @handleSubmit="handleDefaultformConfigSubmitClick"
+        :formConfig="formConfig"
+      ></defaultformConfig>
+    </a-modal>
   </div>
 </template>
 <script>
 import componentsMenu from './compoents/componentsMenu.vue'
 import componentsConfig from './compoents/componentsConfig.vue'
-
+import defaultformConfig from './compoents/defaultformConfig.vue'
 import zformDemo from './zformDemo'
-import { defaultFormConfig } from './data/defaultData.js'
+import { defaultFormConfig, setDefaultFormConfig } from './data/defaultData.js'
 import {
   setCompoentId,
   getRuleItem,
   setRuleItem
-} from '@/formDesigners/utils/utils'
+} from '@/zformcreate/utils/utils'
 export default {
   name: 'zformDesigners',
   components: {
     componentsMenu,
     zformDemo,
-    componentsConfig
+    componentsConfig,
+    defaultformConfig
   },
   data() {
     return {
+      formModelConfig: {
+        show: false
+      },
       userInfoModel: {},
       formConfig: defaultFormConfig,
       userInfoRule: [],
@@ -74,19 +90,20 @@ export default {
       this.storageRule()
     },
     //点击设置表单的默认配置
-    handleSetFormConfigClick() {},
+    handleSetFormConfigClick() {
+      this.formModelConfig.show = true
+    },
     //表单的点击删除事件
-    handleRowDelectClick({ fileId }) {
+    handleZformDemoDelClick({ fileId }, index) {
       if (fileId) {
         // const { index } = getRuleItem(this.userInfoRule, fileId)
-        // this.userInfoRule.splice(index, 1)
+        this.userInfoRule.splice(index, 1)
         // this.clickActive = null
-        // this.storageRule()
+        this.storageRule()
       }
     },
     handleRetuenForm(ruleKey, value, ruleItemKey) {
       const { ruleItem } = getRuleItem(this.userInfoRule, this.clickActive)
-      console.log(ruleItem, 'ruleItem')
       setRuleItem(ruleItem, ruleKey, value, ruleItemKey)
     },
     //把数据存到 locas
@@ -107,6 +124,17 @@ export default {
     //   //拖拽中的事件
     handleDragoverEvent($event) {
       $event.preventDefault()
+    },
+    //设置表单config的弹窗确定事件
+    handleDefaultformConfigSubmitClick(newFormConfig) {
+      this.formConfig = newFormConfig
+      this.formModelConfig.show = false
+      setDefaultFormConfig(newFormConfig)
+    },
+    //当表单的配置项发生修改的时候
+    handleChangeConfig(newFormConfig, index) {
+      this.userInfoRule.splice(index, 1, newFormConfig)
+      this.storageRule()
     }
   }
 }

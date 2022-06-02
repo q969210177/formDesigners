@@ -34,6 +34,7 @@
 export default {
   name: 'setSelectOption',
   props: {
+    value: {},
     defaultOption: {
       type: Array,
       default: () => {
@@ -105,6 +106,10 @@ export default {
       this.formModelConfig.show = false
       this.$emit(
         'handleSubmitOptions',
+        this.options.filter(v => v.label && v.value)
+      )
+      this.$emit(
+        'input',
         this.options.filter(v => v.label && v.value)
       )
     },

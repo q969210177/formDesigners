@@ -57,7 +57,7 @@ export default {
             type: 'setSelectOption',
             label: '配置数据',
             fileId: 'options',
-            value: '',
+            value: [],
             options: [],
             span: 24,
             attts: ['select', 'checkbox']
@@ -84,12 +84,11 @@ export default {
           value: '',
           span: 24,
           on: {
-            blur: ($event, v) => {
-              const {
+            blur: $event => {
+              let {
                 target: { value }
               } = $event
-              console.log(v)
-              console.log(this.handleInputChange)
+              this.handleChangeModel(value, 'label')
             }
           }
         },
@@ -98,7 +97,19 @@ export default {
           label: 'fileId',
           fileId: 'fileId',
           value: '',
-          span: 24
+          span: 24,
+          on: {
+            blur: $event => {
+              let {
+                target: { value }
+              } = $event
+              if (!value) {
+                value = setCompoentId()
+              }
+
+              this.handleChangeModel(value, 'label')
+            }
+          }
         }
       ],
       api: {},
@@ -163,24 +174,29 @@ export default {
       delete this.formConfig.props
     },
     //点击修改组件options newOptions
-    optionsHandleSubmitOptions() {
+    optionsHandleSubmitOptions(newOptions) {
       // this.formConfig.options = newOptions
       // const { ruleItem, index } = getRuleItem(this.rule, this.activeValue)
       // const newRuleItem = Object.assign(clone(ruleItem), this.formConfig)
       // this.$emit('handleChangeConfig', newRuleItem, index)
       // this.$emit('update:activeValue', this.formConfig.fileId)
+      this.handleChangeModel(newOptions, 'newOptions')
     },
     //fileId label的change事件
     // eslint-disable-next-line no-unused-vars
-    handleInputChange(value, formKey) {
+    handleChangeModel(value, formKey) {
       // const {
       //   target: { value }
       // } = event
       // if (!value) {
       //   this.formConfig.fileId = setCompoentId()
       // }
-      const { ruleItem, index } = getRuleItem(this.rule, this.activeValue)
-      // const newRuleItem = Object.assign(clone(ruleItem), this.formConfig)
+      const defaultFormData = this.api.getFormData()
+      const componentsFormData = this.formModel.getFormData()
+      // const { ruleItem, index } = getRuleItem(this.rule, this.activeValue)
+      const newRuleItem = Object.assign(defaultFormData, componentsFormData)
+      console.log(newRuleItem, 'defaultFormData')
+
       // this.$emit('handleChangeConfig', newRuleItem, index)
       // this.$emit('update:activeValue', this.formConfig.fileId)
     }

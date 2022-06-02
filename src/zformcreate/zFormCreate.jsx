@@ -34,12 +34,29 @@ export default {
       type: Object,
       require: true,
     },
+    //外部改变了rule 需要内部也同步进行改变的时候
+    //比如说formCreate放在了弹窗里面 然后需要动态的设计option 给默认值回显 等等..
+    changeRule: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     return {
       formData: {},
       copyRule: [],
     };
+  },
+  watch: {
+    //当外界需要改变这个rule的时候 比如说弹窗 或者说在弹窗打开之前
+    changeRule(newV) {
+      if (newV) {
+        this.updateRule();
+      }
+    },
+    rule() {
+      this.updateRule();
+    },
   },
   beforeMount() {
     this.$emit("input", {

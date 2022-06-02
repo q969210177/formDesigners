@@ -1,8 +1,22 @@
 <template>
   <div class="defaultformConfig">
     <a-form-model :model="form" :label-col="labelCol" :wrapper-col="wrapperCol">
-      <a-form-model-item label="label长度"></a-form-model-item>
-      <a-form-model-item label="wrapper长度"></a-form-model-item>
+      <a-form-model-item label="label长度">
+        <a-slider
+          :max="24"
+          @afterChange="(v)=>
+          handleColChange(v,'label')"
+          v-model="form.labelCol.span"
+        />
+      </a-form-model-item>
+      <a-form-model-item label="wrapper长度">
+        <a-slider
+          @afterChange="(v)=>
+          handleColChange(v,'wrap')"
+          v-model="form.wrapperCol.span"
+          :max="24"
+        />
+      </a-form-model-item>
       <a-form-model-item label="label最长长度">
         <a-input-number id="inputNumber" v-model="form.labelWidth" :min="1" />
       </a-form-model-item>
@@ -35,7 +49,10 @@ export default {
     return {
       labelCol: { span: 6 },
       wrapperCol: { span: 18 },
-      form: {}
+      form: {
+        labelCol: { span: 0 },
+        wrapperCol: { span: 0 }
+      }
     }
   },
   mounted() {
@@ -44,6 +61,21 @@ export default {
   methods: {
     init() {
       this.form = clone(this.formConfig)
+    },
+    //lable和warap的change事件
+    handleColChange(v, type) {
+      if (type === 'label' && v + this.form.wrapperCol.span > 24) {
+        console.log(this.$message)
+        this.$message.warning('两者之和最大值为24')
+        this.form.wrapperCol.span = 24 - v
+        return
+      }
+      if (type === 'wrap' && v + this.form.labelCol.span > 24) {
+        console.log(this.$message)
+        this.$message.warning('两者之和最大值为24')
+        this.form.labelCol.span = 24 - v
+        return
+      }
     },
     //点击确定
     handleSubmitClick() {

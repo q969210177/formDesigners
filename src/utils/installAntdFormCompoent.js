@@ -16,11 +16,12 @@ import {
   Icon,
   Slider,
   Modal,
-  InputNumber
+  InputNumber,
+  message,
+  Table,
 } from "ant-design-vue";
-// import * as Antd from "ant-design-vue";
-// console.log(Select);
 import "ant-design-vue/dist/antd.css";
+Vue.prototype.$message = message;
 const componentsArr = [
   DatePicker,
   Input,
@@ -37,7 +38,8 @@ const componentsArr = [
   Icon,
   Slider,
   Modal,
-  InputNumber
+  InputNumber,
+  Table,
 ];
 componentsArr.forEach((i) => {
   Vue.use(i);

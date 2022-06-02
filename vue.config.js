@@ -5,6 +5,9 @@ module.exports = {
   configureWebpack: {
     output: { libraryExport: "default" },
   },
+  devServer: {
+    port: 9000,
+  },
   chainWebpack() {
     //修改htmlWebpackPlugin
   },

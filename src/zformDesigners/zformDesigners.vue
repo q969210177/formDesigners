@@ -15,7 +15,7 @@
         </div>
         <div class="main_content_form">
           <zformDemo
-            style="  background: #fff;padding:4px"
+            style="background: #fff;padding:4px"
             v-model="userInfoModel"
             @handleZformDemoCopyClick="handleZformDemoCopyClick"
             @handleZformDemoDelClick="handleZformDemoDelClick"

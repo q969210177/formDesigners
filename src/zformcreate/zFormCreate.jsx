@@ -12,9 +12,6 @@ export default {
   props: {
     rule: {
       type: Array,
-      default: () => {
-        return [];
-      },
     },
     formConfig: {
       type: Object,
@@ -54,7 +51,7 @@ export default {
         this.updateRule();
       }
     },
-    rule() {
+    rule(newV) {
       this.updateRule();
     },
   },

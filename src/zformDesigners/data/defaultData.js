@@ -23,10 +23,8 @@ export const defaultMenuArr = [
       label: "111",
       props: {},
       rules: [],
-      col: {
-        span: 24,
-      },
-      formProps: { isRequired: false, labelAlign: "left" },
+      span: 24,
+      formProps: { isRequired: false },
     },
   },
   {
@@ -40,10 +38,8 @@ export const defaultMenuArr = [
       props: {},
       options: [{ label: "这是一个简单的表单设计器", value: "22" }],
       rules: [],
-      col: {
-        span: 24,
-      },
-      formProps: { isRequired: false, labelAlign: "left" },
+      span: 24,
+      formProps: { isRequired: false },
     },
   },
   {
@@ -57,10 +53,8 @@ export const defaultMenuArr = [
       props: {},
       rules: [],
       options: [],
-      col: {
-        span: 24,
-      },
-      formProps: { isRequired: false, labelAlign: "left" },
+      span: 24,
+      formProps: { isRequired: false },
     },
   },
   {
@@ -73,10 +67,8 @@ export const defaultMenuArr = [
       label: "",
       props: {},
       rules: [],
-      col: {
-        span: 24,
-      },
-      formProps: { isRequired: false, labelAlign: "left" },
+      span: 24,
+      formProps: { isRequired: false },
       options: [],
     },
   },
@@ -90,10 +82,8 @@ export const defaultMenuArr = [
       label: "",
       props: {},
       rules: [],
-      col: {
-        span: 24,
-      },
-      formProps: { isRequired: false, labelAlign: "left" },
+      span: 24,
+      formProps: { isRequired: false },
     },
   },
   {
@@ -108,10 +98,24 @@ export const defaultMenuArr = [
         size: "small",
       },
       rules: [],
-      col: {
-        span: 24,
+      span: 24,
+      formProps: { isRequired: false },
+    },
+  },
+  {
+    name: "滑块",
+    activeValue: "slider",
+    icon: "icon-kaiguanguan",
+    data: {
+      type: "slider",
+      value: 0,
+      label: "",
+      props: {
+        size: "small",
       },
-      formProps: { isRequired: false, labelAlign: "left" },
+      rules: [],
+      span: 24,
+      formProps: { isRequired: false },
     },
   },
   {
@@ -128,10 +132,8 @@ export const defaultMenuArr = [
         { label: "女", value: "2" },
       ],
       rules: [],
-      col: {
-        span: 24,
-      },
-      formProps: { isRequired: false, labelAlign: "left" },
+      span: 24,
+      formProps: { isRequired: false },
     },
   },
 ];

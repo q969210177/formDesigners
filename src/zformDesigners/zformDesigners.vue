@@ -3,6 +3,7 @@
     <header class="header">
       <slot name="header"></slot>
       <a-button @click="handleSetFormConfigClick">设置表单默认配置</a-button>
+      <a-button @click="handleLookVueCode">下载vue文件</a-button>
     </header>
     <div class="main">
       <div class="left_menu_box">
@@ -10,8 +11,8 @@
       </div>
       <div class="main_content" @drop="handleDropEvent" @dragover="handleDragoverEvent">
         <div class="main_content_operating">
-          <a-button size="small">预览</a-button>
-          <a-button size="small">清空{{ruleItemType}}</a-button>
+          <a-button size="small" @click="handleOpenForm">预览</a-button>
+          <!-- <a-button size="small">清空{{ruleItemType}}</a-button> -->
         </div>
         <div class="main_content_form">
           <zformDemo
@@ -28,13 +29,15 @@
       </div>
       <div class="right_rule_config">
         <componentsConfig
+          :key="componentsKey"
           @handleChangeConfig="handleChangeConfig"
           :activeValue.sync="activeValue"
           :rule="userInfoRule"
+          :ruleItemType="ruleItemType"
         ></componentsConfig>
       </div>
     </div>
-    <footer>4</footer>
+    <footer></footer>
     <a-modal :footer="null" :destroyOnClose="true" title="设置表单默认配置" v-model="formModelConfig.show">
       <defaultformConfig
         @cancal="formModelConfig.show=false"
@@ -42,6 +45,14 @@
         :formConfig="formConfig"
       ></defaultformConfig>
     </a-modal>
+
+    <a-modal :footer="null" :destroyOnClose="true" title="查看vue的代码" v-model="vueCodeModel.show">
+      <div>{{vueCodeModel.value}}</div>
+    </a-modal>
+    <a-modal :footer="null" :destroyOnClose="true" title="预览" v-model="formModel.show">
+      <ZFormCreate v-model="userInfoModel" :formConfig="formConfig" :rule="userInfoRule"></ZFormCreate>
+    </a-modal>
+    <!--  -->
   </div>
 </template>
 <script>
@@ -68,11 +79,24 @@ export default {
       formModelConfig: {
         show: false
       },
+      vueCodeModel: {
+        show: false,
+        value: ''
+      },
+      formModel: {
+        show: false
+      },
+      componentsKey: 0,
       userInfoModel: {},
       formConfig: defaultFormConfig,
       userInfoRule: [],
       activeValue: '',
       ruleItemType: ''
+    }
+  },
+  watch: {
+    activeValue() {
+      this.componentsKey++
     }
   },
   mounted() {
@@ -103,7 +127,7 @@ export default {
       }
     },
     handleRetuenForm(ruleKey, value, ruleItemKey) {
-      const { ruleItem } = getRuleItem(this.userInfoRule, this.clickActive)
+      const { ruleItem } = getRuleItem(this.userInfoRule, this.activeValue)
       setRuleItem(ruleItem, ruleKey, value, ruleItemKey)
     },
     //把数据存到 locas
@@ -131,10 +155,71 @@ export default {
       this.formModelConfig.show = false
       setDefaultFormConfig(newFormConfig)
     },
-    //当表单的配置项发生修改的时候
-    handleChangeConfig(newFormConfig, index) {
-      this.userInfoRule.splice(index, 1, newFormConfig)
+    //当表单的配置项发生修改的时候 newFormConfig
+    handleChangeConfig(newFormConfig) {
+      const { ruleItem, index } = getRuleItem(
+        this.userInfoRule,
+        this.activeValue
+      )
+      for (const key in newFormConfig) {
+        if (Object.hasOwnProperty.call(newFormConfig, key)) {
+          const element = newFormConfig[key]
+          ruleItem[key] = element
+        }
+      }
+      this.userInfoRule.splice(index, 1, ruleItem)
       this.storageRule()
+    },
+    //打开预览的弹窗
+    handleOpenForm() {
+      this.formModel.show = true
+    },
+    //点击下载vue的文件
+    handleLookVueCode() {
+      function returnRuleStr(userInfoRule) {
+        let str = '['
+        userInfoRule.forEach(v => {
+          str += JSON.stringify(v).replaceAll('"', '')
+        })
+        return str + ']'
+      }
+      function returnFormConfigStr(defaultFormConfig) {
+        console.log(defaultFormConfig, 'defaultFormConfig')
+        const returnObj = {
+          ...defaultFormConfig
+        }
+        return JSON.stringify(returnObj).replaceAll('"', '')
+      }
+      const aTag = document.createElement('a')
+      const s = '<' + '/script' + '>'
+      const str =
+        `
+      <template>
+        <div class="zFormCreate">
+        <zFormCreate v-model="api" :formConfig="formConfig" :rule="rule"></zFormCreate>
+        </div>
+      </template>
+      <script>
+        export default {
+          data() {
+            api: {},
+            formConfig:${returnFormConfigStr(defaultFormConfig)},
+            rule: ${returnRuleStr(this.userInfoRule)}
+          }
+        }
+      ` +
+        s +
+        `<style lang="css" scoped>
+          .zFormCreate{
+            width:100%;
+            height:100%
+          }
+        </style>`
+      const blob = new Blob([str])
+      aTag.download = 'zFormCreate.vue'
+      aTag.href = URL.createObjectURL(blob)
+      aTag.click()
+      URL.revokeObjectURL(blob)
     }
   }
 }
@@ -144,6 +229,9 @@ export default {
 .zformDesigners {
   width: 100vw;
   height: 100vh;
+  .ant-btn + .ant-btn {
+    margin-left: 4px;
+  }
   .header {
     height: 50px;
     width: 100%;

@@ -1,10 +1,6 @@
 <template>
   <div id="app">
-    <zformDesigners>
-      <template v-slot:header>
-        <a-button>头部插槽按钮</a-button>
-      </template>
-    </zformDesigners>
+    <zformDesigners></zformDesigners>
   </div>
 </template>
 <script>

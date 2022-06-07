@@ -1,6 +1,6 @@
 <template>
   <div class="cRadio">
-    <a-radio-group v-model="radioValue" @change="handleChange">
+    <a-radio-group v-model="radioValue" @change="handleChange" v-bind="$attrs" v-on="$listeners">
       <a-radio :value="v[valueKey]" v-for="(v, k) in options" :key="v.value + k">{{ v[labelKey] }}</a-radio>
     </a-radio-group>
   </div>

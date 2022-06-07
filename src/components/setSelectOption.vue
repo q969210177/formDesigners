@@ -43,9 +43,12 @@ export default {
     }
   },
   watch: {
-    defaultOption(newV) {
+    value(newV) {
       this.options = newV
     }
+    // defaultOption(newV) {
+    //   this.options = newV
+    // }
   },
   data() {
     return {
@@ -86,7 +89,7 @@ export default {
     }
   },
   mounted() {
-    this.options = this.defaultOption
+    this.options = this.value
   },
   methods: {
     //点击新增一条表单的数据
@@ -114,7 +117,7 @@ export default {
       )
     },
     setOptionsValue() {
-      return this.options.map(v => v.label).join(',')
+      return `已有${this.options.length}条数据`
     }
   }
 }

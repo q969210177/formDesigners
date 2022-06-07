@@ -1,6 +1,11 @@
 <template>
   <div class="cRangePick">
-    <a-range-picker v-model="defaultValue" v-bind="$attrs" @change="handleChange" />
+    <a-range-picker
+      v-model="defaultValue"
+      v-bind="$attrs"
+      v-on="$listeners"
+      @change="handleChange"
+    />
   </div>
 </template>
 <script>

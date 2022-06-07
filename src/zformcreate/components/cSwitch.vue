@@ -1,6 +1,6 @@
 <template>
   <div class="cSwitch">
-    <a-switch v-model="activeValue" @change="handleSwitchChange" />
+    <a-switch v-bind="$attrs" v-on="$listeners" v-model="activeValue" @change="handleSwitchChange" />
   </div>
 </template>
 <script>

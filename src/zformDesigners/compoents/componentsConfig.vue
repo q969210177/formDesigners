@@ -1,6 +1,6 @@
 <template>
   <div class="componentsConfig">
-    <header class="header">组件配置</header>
+    <header class="header">组件配置{{ruleItemType}}</header>
     <main class="main" v-show="activeValue">
       <div class="form_config">
         <h3>表单项配置</h3>
@@ -8,18 +8,24 @@
       </div>
       <div class="components_config">
         <h3>组件配置</h3>
-        <ZFormCreate
-          @options-handleSubmitOptions="optionsHandleSubmitOptions"
-          v-model="formModel"
-          :formConfig="formRuleConfig"
-          :rule="formRule"
-        ></ZFormCreate>
+        <div
+          class="independent_dom_class"
+          v-if="['select', 'checkbox', 'radio'].includes(ruleItemType)"
+        >
+          <span>配置数据:</span>
+          <div class="width-70">
+            <setSelectOption @handleSubmitOptions="handleChangeModel" v-model="setSelectModel"></setSelectOption>
+          </div>
+        </div>
+
+        <ZFormCreate v-model="formModel" :formConfig="formRuleConfig" :rule="formRule"></ZFormCreate>
       </div>
     </main>
   </div>
 </template>
 <script>
 /* eslint-disable no-unused-vars */
+const propsKeyArr = ['disabled']
 import { clone } from '@/utils/utils.js'
 
 import {
@@ -39,32 +45,83 @@ export default {
 
     activeValue: {
       type: [String, Number]
+    },
+    ruleItemType: {
+      type: [String, Number]
     }
   },
   watch: {
-    activeValue() {
-      this.init()
-    }
+    // activeValue(newV) {
+    //   if (newV) {
+    //     this.init()
+    //   }
+    // }
   },
   computed: {
     formRule() {
       if (this.activeValue) {
-        const {
-          ruleItem: { type }
-        } = getRuleItem(this.rule, this.activeValue)
+        // const attr = [
+        //   'input',
+        //   'datePicker',
+        //   'rangePicker',
+        //   'select',
+        //   'radio',
+        //   'checkbox',
+        //   'switch',
+        //   'slider'
+        // ] maxLength
         const formRule = [
           {
-            type: 'setSelectOption',
-            label: '配置数据',
-            fileId: 'options',
-            value: [],
-            options: [],
+            type: 'switch',
+            label: '清楚图标',
+            fileId: 'allowClear',
+            value: false,
             span: 24,
-            attts: ['select', 'checkbox']
+            on: {
+              change: () => {
+                this.handleChangeModel()
+              }
+            },
+            attrArr: ['input', 'select']
+          },
+          {
+            type: 'number',
+            label: '最大长度',
+            fileId: 'maxLength',
+            value: 10,
+            span: 24,
+            on: {
+              change: () => {
+                this.handleChangeModel()
+              }
+            },
+            attrArr: ['input']
+          },
+          {
+            type: 'switch',
+            label: '禁用',
+            fileId: 'disabled',
+            value: false,
+            span: 24,
+            on: {
+              change: () => {
+                this.handleChangeModel()
+              }
+            },
+            attrArr: [
+              'input',
+              'datePicker',
+              'rangePicker',
+              'select',
+              'radio',
+              'checkbox',
+              'switch',
+              'slider'
+            ]
           }
         ]
         return formRule.filter(v => {
-          if (v.attts.includes(type)) {
+          if (v.attrArr.includes(this.ruleItemType)) {
             return v
           }
         })
@@ -74,6 +131,7 @@ export default {
   },
   data() {
     return {
+      setSelectModel: [],
       tabsModel: '',
       formModel: {},
       defaultRule: [
@@ -92,6 +150,7 @@ export default {
             }
           }
         },
+
         {
           type: 'input',
           label: 'fileId',
@@ -106,8 +165,23 @@ export default {
               if (!value) {
                 value = setCompoentId()
               }
-
               this.handleChangeModel(value, 'label')
+            }
+          }
+        },
+        {
+          type: 'slider',
+          label: '长度',
+          fileId: 'span',
+          value: 1,
+          span: 24,
+          props: {
+            max: 24,
+            min: 1
+          },
+          on: {
+            afterChange: () => {
+              this.handleChangeModel()
             }
           }
         }
@@ -126,12 +200,7 @@ export default {
         span: 0
       },
       formProps: {},
-      props: {},
-      formConfig: {
-        // fileId: '',
-        // label: '',
-        // options: []
-      },
+      formConfig: {},
       tabsOption: [
         {
           name: '表单配置',
@@ -144,60 +213,47 @@ export default {
       ]
     }
   },
-  mounted() {
-    // this.init()
+  created() {
+    this.init()
   },
+  mounted() {},
   methods: {
     init() {
-      const { ruleItem } = getRuleItem(this.rule, this.activeValue)
-      console.log(ruleItem, 'ruleItem')
-      //       col: Object
-      // fileId: "l3wlkxee360"
-      // formProps: Object
-      // label: ""
-      // options: Array(1)
-      // props: Object
-      // rules: Array(0)
-      // type: "select"
-      // value: ""
-      // if (ruleItem.options && getDataType(ruleItem.options)) {
-      //   //
-      // }
-      // console.log(getDataType(ruleItem.options), 'ruleItem')
-      this.props = ruleItem.props
-      this.formConfig = {
-        fileId: ruleItem.fileId,
-        label: ruleItem.label,
-        ...ruleItem
+      if (this.activeValue) {
+        const { ruleItem } = getRuleItem(this.rule, this.activeValue)
+        const props = ruleItem.props
+        const propsKey = Object.keys(props)
+        if (['select', 'checkbox', 'radio'].includes(this.ruleItemType)) {
+          this.setSelectModel = ruleItem.options
+        }
+        this.defaultRule.forEach(item => {
+          if (ruleItem[item.fileId] && this.api.setValue) {
+            this.api.setValue(item.fileId, ruleItem[item.fileId])
+          } else {
+            item.value = ruleItem[item.fileId]
+          }
+        })
+        this.formRule.forEach(item => {
+          if (propsKey.includes(item.fileId)) {
+            item.value = props[item.fileId]
+          }
+        })
       }
-      //这里主要是为了一会儿提交的时候 不影响组件的参数设置
-      delete this.formConfig.props
     },
-    //点击修改组件options newOptions
-    optionsHandleSubmitOptions(newOptions) {
-      // this.formConfig.options = newOptions
-      // const { ruleItem, index } = getRuleItem(this.rule, this.activeValue)
-      // const newRuleItem = Object.assign(clone(ruleItem), this.formConfig)
-      // this.$emit('handleChangeConfig', newRuleItem, index)
-      // this.$emit('update:activeValue', this.formConfig.fileId)
-      this.handleChangeModel(newOptions, 'newOptions')
-    },
-    //fileId label的change事件
-    // eslint-disable-next-line no-unused-vars
-    handleChangeModel(value, formKey) {
-      // const {
-      //   target: { value }
-      // } = event
-      // if (!value) {
-      //   this.formConfig.fileId = setCompoentId()
-      // }
+    //change事件 用来改变外部的参数设置
+    handleChangeModel() {
       const defaultFormData = this.api.getFormData()
       const componentsFormData = this.formModel.getFormData()
-      // const { ruleItem, index } = getRuleItem(this.rule, this.activeValue)
-      const newRuleItem = Object.assign(defaultFormData, componentsFormData)
-      console.log(newRuleItem, 'defaultFormData')
-
-      // this.$emit('handleChangeConfig', newRuleItem, index)
+      const newRuleItem = {
+        ...defaultFormData,
+        props: {
+          ...componentsFormData
+        }
+      }
+      if (['select', 'checkbox', 'radio'].includes(this.ruleItemType)) {
+        newRuleItem.options = this.setSelectModel
+      }
+      this.$emit('handleChangeConfig', newRuleItem)
       // this.$emit('update:activeValue', this.formConfig.fileId)
     }
   }
@@ -220,6 +276,10 @@ export default {
     width: 100%;
     height: calc(100% - 40px);
     padding: 8px 12px;
+    .independent_dom_class {
+      width: 100%;
+      @include flex-row-s-c;
+    }
     .form_config {
       width: 100%;
     }

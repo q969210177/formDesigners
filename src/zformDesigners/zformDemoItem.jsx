@@ -66,29 +66,22 @@ export default {
     //返回props
     returnCompoentsProps(i) {
       //需要options的组件
-      const needOptions = ["select", "radio", "checkbox"];
       //当他是一个需要数据去渲染的组件的时候
-      if (needOptions.includes(i.type)) {
-        //当options的时候 给他报错
-        if (i.options) {
-          return {
-            props: {
-              options: i.options,
-              value: i.value,
-            },
-            attrs: {
-              ...i.props,
-            },
-          };
-        }
-      } else {
-        return {
-          props: {
-            value: i.value,
-            ...i.props,
-          },
-        };
+      const returnObj = {
+        props: {
+          value: i.value,
+          ...i.props,
+        },
+        attrs: {
+          ...i.props,
+        },
+      };
+      if (i.options) {
+        returnObj.props.options = i.options;
       }
+      // console.log(returnObj, "returnObj");
+      //当他是一个需要数据去渲染的组件的时候
+      return returnObj;
     },
     //返回操作区按钮
     returnOperateDom() {

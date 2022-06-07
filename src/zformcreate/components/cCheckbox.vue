@@ -1,6 +1,11 @@
 <template>
   <div class="cCheckbox">
-    <a-checkbox-group v-model="checkBoxValue" @change="handleChange">
+    <a-checkbox-group
+      v-model="checkBoxValue"
+      @change="handleChange"
+      v-bind="$attrs"
+      v-on="$listeners"
+    >
       <a-checkbox
         :value="v[valueKey]"
         v-for="(v, k) in options"
@@ -11,7 +16,7 @@
 </template>
 <script>
 export default {
-  name: 'CCheckbox',
+  name: 'cCheckbox',
   props: {
     value: {
       type: [Array, String],

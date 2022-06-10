@@ -18,6 +18,8 @@
           <zformDemo
             style="background: #fff;padding:4px"
             v-model="userInfoModel"
+            @handleZformDemoItemDownClick="handleZformDemoItemDownClick"
+            @handleZformDemoItemUpClick="handleZformDemoItemUpClick"
             @handleZformDemoCopyClick="handleZformDemoCopyClick"
             @handleZformDemoDelClick="handleZformDemoDelClick"
             :activeValue.sync="activeValue"
@@ -49,7 +51,13 @@
     <a-modal :footer="null" :destroyOnClose="true" title="查看vue的代码" v-model="vueCodeModel.show">
       <div>{{vueCodeModel.value}}</div>
     </a-modal>
-    <a-modal :footer="null" :destroyOnClose="true" title="预览" v-model="formModel.show">
+    <a-modal
+      :width="1000"
+      :footer="null"
+      :destroyOnClose="true"
+      title="预览"
+      v-model="formModel.show"
+    >
       <ZFormCreate v-model="userInfoModel" :formConfig="formConfig" :rule="userInfoRule"></ZFormCreate>
     </a-modal>
     <!--  -->
@@ -61,6 +69,7 @@ import componentsConfig from './compoents/componentsConfig.vue'
 import defaultformConfig from './compoents/defaultformConfig.vue'
 import zformDemo from './zformDemo'
 import { defaultFormConfig, setDefaultFormConfig } from './data/defaultData.js'
+import { request } from '@/utils/fetch.js'
 import {
   setCompoentId,
   getRuleItem,
@@ -104,8 +113,30 @@ export default {
     if (userInfoRule) {
       this.userInfoRule = JSON.parse(userInfoRule)
     }
+    this.test()
   },
   methods: {
+    test() {
+      request('http://127.0.0.1:8001/')
+      // request('/api/hello/')
+    },
+    //点击下移位置
+    handleZformDemoItemDownClick(ruleItem, index) {
+      if (index === this.userInfoRule.length - 1) return
+      const newRuleItem = this.userInfoRule[index + 1]
+      this.userInfoRule.splice(index, 1, newRuleItem)
+      this.userInfoRule.splice(index + 1, 1, ruleItem)
+      this.storageRule()
+    },
+    //点击上移位置
+    handleZformDemoItemUpClick(ruleItem, index) {
+      if (index === 0) return
+      const newRuleItem = this.userInfoRule[index - 1]
+      this.userInfoRule.splice(index, 1, newRuleItem)
+      this.userInfoRule.splice(index - 1, 1, ruleItem)
+      // console.log(newRuleItem, 'up')
+      this.storageRule()
+    },
     //点击复制表单
     handleZformDemoCopyClick(ruleItem, index) {
       const newRuleItem = JSON.parse(JSON.stringify(ruleItem))

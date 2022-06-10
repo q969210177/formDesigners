@@ -88,6 +88,28 @@ export default {
       return (
         <div class="operate_btn">
           <span
+            title="下降"
+            onClick={() => {
+              this.$emit("handleZformDemoItemDownClick", this.formItem);
+            }}
+            class="square_box_btn "
+            style={{ color: "#2e73ff" }}
+          >
+            <span class=" iconfont icon-xiajiang"></span>
+          </span>
+
+          <span
+            title="上升"
+            onClick={() => {
+              this.$emit("handleZformDemoItemUpClick", this.formItem);
+            }}
+            class="square_box_btn "
+            style={{ color: "#2e73ff" }}
+          >
+            <span class="iconfont icon-shangsheng"></span>
+          </span>
+          <span
+            title="复制"
             onClick={() => {
               this.$emit("handleZformDemoItemCopyClick", this.formItem);
             }}
@@ -97,6 +119,7 @@ export default {
             <span class=" iconfont icon-fuzhi1"></span>
           </span>
           <span
+            title="删除"
             onClick={() => {
               this.$emit("handleZformDemoItemDelClick", this.formItem);
             }}

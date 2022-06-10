@@ -113,7 +113,6 @@ export default {
         return ruleItem[ruleItemkey];
       }
       return {};
-      // this.updateRule()
     },
 
     //设置组件的rule
@@ -181,6 +180,20 @@ export default {
                             onHandleZformDemoItemDelClick={(formItem) => {
                               this.$emit(
                                 "handleZformDemoDelClick",
+                                formItem,
+                                k
+                              );
+                            }}
+                            onHandleZformDemoItemUpClick={(formItem) => {
+                              this.$emit(
+                                "handleZformDemoItemUpClick",
+                                formItem,
+                                k
+                              );
+                            }}
+                            onHandleZformDemoItemDownClick={(formItem) => {
+                              this.$emit(
+                                "handleZformDemoItemDownClick",
                                 formItem,
                                 k
                               );

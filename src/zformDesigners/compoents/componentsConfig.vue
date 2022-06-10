@@ -17,7 +17,10 @@
             <setSelectOption @handleSubmitOptions="handleChangeModel" v-model="setSelectModel"></setSelectOption>
           </div>
         </div>
-
+        <!-- <div class="independent_dom_class" v-if="['input'].includes(ruleItemType)">
+          <span>设置验证规则:</span>
+          <div class="width-50"></div>
+        </div>-->
         <ZFormCreate v-model="formModel" :formConfig="formRuleConfig" :rule="formRule"></ZFormCreate>
       </div>
     </main>
@@ -50,26 +53,10 @@ export default {
       type: [String, Number]
     }
   },
-  watch: {
-    // activeValue(newV) {
-    //   if (newV) {
-    //     this.init()
-    //   }
-    // }
-  },
+  watch: {},
   computed: {
     formRule() {
       if (this.activeValue) {
-        // const attr = [
-        //   'input',
-        //   'datePicker',
-        //   'rangePicker',
-        //   'select',
-        //   'radio',
-        //   'checkbox',
-        //   'switch',
-        //   'slider'
-        // ] maxLength
         const formRule = [
           {
             type: 'switch',
@@ -97,6 +84,33 @@ export default {
             },
             attrArr: ['input']
           },
+          {
+            type: 'number',
+            label: '最大值',
+            fileId: 'max',
+            value: 10,
+            span: 24,
+            on: {
+              change: () => {
+                this.handleChangeModel()
+              }
+            },
+            attrArr: ['slider']
+          },
+          {
+            type: 'number',
+            label: '最小值',
+            fileId: 'min',
+            value: 10,
+            span: 24,
+            on: {
+              change: () => {
+                this.handleChangeModel()
+              }
+            },
+            attrArr: ['slider']
+          },
+          // max
           {
             type: 'switch',
             label: '禁用',
@@ -150,7 +164,6 @@ export default {
             }
           }
         },
-
         {
           type: 'input',
           label: 'fileId',
@@ -170,6 +183,19 @@ export default {
           }
         },
         {
+          type: 'setRulesValidate',
+          label: '验证规则',
+          fileId: 'rules',
+          value: [],
+          options: [],
+          on: {
+            handleSubmitOptions: v => {
+              this.handleChangeModel()
+            }
+          },
+          span: 24
+        },
+        {
           type: 'slider',
           label: '长度',
           fileId: 'span',
@@ -186,6 +212,7 @@ export default {
           }
         }
       ],
+      formPropsRule: [],
       api: {},
       formRuleConfig: {
         labelCol: { span: 8 },
@@ -250,6 +277,7 @@ export default {
           ...componentsFormData
         }
       }
+      console.log(newRuleItem, 'newRuleItem')
       if (['select', 'checkbox', 'radio'].includes(this.ruleItemType)) {
         newRuleItem.options = this.setSelectModel
       }

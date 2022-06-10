@@ -46,9 +46,6 @@ export default {
     value(newV) {
       this.options = newV
     }
-    // defaultOption(newV) {
-    //   this.options = newV
-    // }
   },
   data() {
     return {

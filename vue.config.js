@@ -7,11 +7,11 @@ module.exports = {
   },
   devServer: {
     port: 9000,
-    // proxy: {
-    //   "/api/": {
-    //     target: "http://127.0.0.1:8001/",
-    //   },
-    // },
+    proxy: {
+      "/api/": {
+        target: "http://localhost:3000/",
+      },
+    },
   },
   chainWebpack() {
     //修改htmlWebpackPlugin

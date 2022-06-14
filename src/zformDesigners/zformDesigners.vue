@@ -15,52 +15,31 @@
           <!-- <a-button size="small">清空{{ruleItemType}}</a-button> -->
         </div>
         <div class="main_content_form">
-          <zformDemo
-            style="background: #fff;padding:4px"
-            v-model="userInfoModel"
+          <zformDemo style="background: #fff;padding:4px" v-model="userInfoModel"
             @handleZformDemoItemDownClick="handleZformDemoItemDownClick"
             @handleZformDemoItemUpClick="handleZformDemoItemUpClick"
-            @handleZformDemoCopyClick="handleZformDemoCopyClick"
-            @handleZformDemoDelClick="handleZformDemoDelClick"
-            :activeValue.sync="activeValue"
-            :ruleItemType.sync="ruleItemType"
-            :formConfig="formConfig"
-            :rule="userInfoRule"
-          ></zformDemo>
+            @handleZformDemoCopyClick="handleZformDemoCopyClick" @handleZformDemoDelClick="handleZformDemoDelClick"
+            :activeValue.sync="activeValue" :ruleItemType.sync="ruleItemType" :formConfig="formConfig"
+            :rule="userInfoRule"></zformDemo>
         </div>
       </div>
       <div class="right_rule_config">
-        <componentsConfig
-          :key="componentsKey"
-          @handleChangeConfig="handleChangeConfig"
-          :activeValue.sync="activeValue"
-          :rule="userInfoRule"
-          :ruleItemType="ruleItemType"
-        ></componentsConfig>
+        <componentsConfig :key="componentsKey" @handleChangeConfig="handleChangeConfig" :activeValue.sync="activeValue"
+          :rule="userInfoRule" :ruleItemType="ruleItemType"></componentsConfig>
       </div>
     </div>
     <footer></footer>
     <a-modal :footer="null" :destroyOnClose="true" title="设置表单默认配置" v-model="formModelConfig.show">
-      <defaultformConfig
-        @cancal="formModelConfig.show=false"
-        @handleSubmit="handleDefaultformConfigSubmitClick"
-        :formConfig="formConfig"
-      ></defaultformConfig>
+      <defaultformConfig @cancal="formModelConfig.show = false" @handleSubmit="handleDefaultformConfigSubmitClick"
+        :formConfig="formConfig"></defaultformConfig>
     </a-modal>
 
     <a-modal :footer="null" :destroyOnClose="true" title="查看vue的代码" v-model="vueCodeModel.show">
-      <div>{{vueCodeModel.value}}</div>
+      <div>{{ vueCodeModel.value }}</div>
     </a-modal>
-    <a-modal
-      :width="1000"
-      :footer="null"
-      :destroyOnClose="true"
-      title="预览"
-      v-model="formModel.show"
-    >
+    <a-modal :width="1000" :footer="null" :destroyOnClose="true" title="预览" v-model="formModel.show">
       <ZFormCreate v-model="userInfoModel" :formConfig="formConfig" :rule="userInfoRule"></ZFormCreate>
     </a-modal>
-    <!--  -->
   </div>
 </template>
 <script>
@@ -69,7 +48,6 @@ import componentsConfig from './compoents/componentsConfig.vue'
 import defaultformConfig from './compoents/defaultformConfig.vue'
 import zformDemo from './zformDemo'
 import { defaultFormConfig, setDefaultFormConfig } from './data/defaultData.js'
-import { request } from '@/utils/fetch.js'
 import {
   setCompoentId,
   getRuleItem,
@@ -113,13 +91,9 @@ export default {
     if (userInfoRule) {
       this.userInfoRule = JSON.parse(userInfoRule)
     }
-    this.test()
+
   },
   methods: {
-    test() {
-      request('http://127.0.0.1:8001/')
-      // request('/api/hello/')
-    },
     //点击下移位置
     handleZformDemoItemDownClick(ruleItem, index) {
       if (index === this.userInfoRule.length - 1) return
@@ -257,12 +231,15 @@ export default {
 </script>
 <style lang="scss" scoped>
 @import '~@/assets/layout.scss';
+
 .zformDesigners {
   width: 100vw;
   height: 100vh;
-  .ant-btn + .ant-btn {
+
+  .ant-btn+.ant-btn {
     margin-left: 4px;
   }
+
   .header {
     height: 50px;
     width: 100%;
@@ -270,6 +247,7 @@ export default {
     padding: 4px 8px;
     border: 1px solid #ececec;
   }
+
   .main {
     width: 100%;
     height: calc(100% - 80px);
@@ -285,11 +263,13 @@ export default {
       height: 100%;
       border-right: 1px solid #ececec;
     }
+
     .right_rule_config {
       width: 15%;
       height: 100%;
       border-left: 1px solid #ececec;
     }
+
     .main_content {
       width: 70%;
       height: 100%;
@@ -302,14 +282,20 @@ export default {
         padding: 0 8px;
         // border-left: 1px solid #ececec;
       }
+
       .main_content_form {
         padding: 8px 12px;
         width: 100%;
+        // min-height: calc(100% - 40px);
         height: calc(100% - 40px);
-        background: #f7f7f7;
+        // background: #f7f7f7;
+        overflow-y: auto;
+        border: dashed 1px red;
+
       }
     }
   }
+
   footer {
     height: 30px;
     border-right: 1px solid #ececec;

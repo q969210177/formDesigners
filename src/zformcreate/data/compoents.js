@@ -6,6 +6,7 @@ import cCheckbox from "../components/cCheckbox.vue";
 import cSwitch from "../components/cSwitch.vue";
 import cSlider from "../components/cSlider.vue";
 import cInputNumber from "../components/cInputNumber.vue";
+import cDivider from "../components/cDivider.vue";
 export const componentsObj = {
   number: cInputNumber,
   input: "a-input",
@@ -16,4 +17,5 @@ export const componentsObj = {
   checkbox: cCheckbox,
   switch: cSwitch,
   slider: cSlider,
+  divider: cDivider,
 };

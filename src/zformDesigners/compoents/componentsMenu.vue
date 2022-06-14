@@ -1,21 +1,20 @@
 <template>
   <div class="componentsMenu">
     <div class="menu_body">
-      <h3>表单组件</h3>
-      <div class="menu_box">
-        <div
-          draggable
-          @dragstart="($event)=>handleDragStart($event,v)"
-          class="menu_box_item"
-          v-for="(v,k) in defaultMenuArr"
-          :key="k"
-        >
-          <div class="menu_box_item_square">
-            <span :class="['iconfont',v.icon]"></span>
+      <template>
+        <div v-for="(v, k) in defaultMenuArr" :key="k">
+          <h3>{{ v.name }}</h3>
+          <div class="menu_box" :key="k + v.name">
+            <div draggable @dragstart="($event) => handleDragStart($event, item)" class="menu_box_item"
+              v-for="(item, index) in v.menuArr" :key="index + item.name">
+              <div class="menu_box_item_square">
+                <span :class="['iconfont', item.icon]"></span>
+              </div>
+              <div class="menu_box_item_name">{{ item.name }}</div>
+            </div>
           </div>
-          <div class="menu_box_item_name">{{v.name}}</div>
         </div>
-      </div>
+      </template>
     </div>
   </div>
 </template>
@@ -42,9 +41,11 @@ export default {
 </script>
 <style lang="scss" scoped>
 @import '~@/assets/layout.scss';
+
 .componentsMenu {
   width: 100%;
   height: 100%;
+
   .menu_body {
     width: 100%;
     padding: 4px 8px;
@@ -54,21 +55,25 @@ export default {
       padding: 4px 8px;
       @include flex-row-s-s;
       flex-wrap: wrap;
+
       .menu_box_item {
         width: 70px;
         height: 70px;
         margin: 4px;
         @include flex-row-c-c;
         flex-wrap: wrap;
+
         &:hover {
           background: #409eff;
           color: #fff;
         }
+
         .menu_box_item_square {
           width: 100%;
           height: 40px;
           @include flex-row-c-c;
         }
+
         .menu_box_item_name {
           font-size: 12px;
         }

@@ -19,6 +19,7 @@ import {
   InputNumber,
   message,
   Table,
+  Divider,
 } from "ant-design-vue";
 import "ant-design-vue/dist/antd.css";
 Vue.prototype.$message = message;
@@ -40,6 +41,7 @@ const componentsArr = [
   Modal,
   InputNumber,
   Table,
+  Divider,
 ];
 componentsArr.forEach((i) => {
   Vue.use(i);

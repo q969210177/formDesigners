@@ -1,6 +1,6 @@
 <template>
   <div class="componentsConfig">
-    <header class="header">组件配置{{ruleItemType}}</header>
+    <header class="header">组件配置{{ ruleItemType }}</header>
     <main class="main" v-show="activeValue">
       <div class="form_config">
         <h3>表单项配置</h3>
@@ -8,10 +8,7 @@
       </div>
       <div class="components_config">
         <h3>组件配置</h3>
-        <div
-          class="independent_dom_class"
-          v-if="['select', 'checkbox', 'radio'].includes(ruleItemType)"
-        >
+        <div class="independent_dom_class" v-if="['select', 'checkbox', 'radio'].includes(ruleItemType)">
           <span>配置数据:</span>
           <div class="width-70">
             <setSelectOption @handleSubmitOptions="handleChangeModel" v-model="setSelectModel"></setSelectOption>
@@ -21,7 +18,11 @@
           <span>设置验证规则:</span>
           <div class="width-50"></div>
         </div>-->
-        <ZFormCreate v-model="formModel" :formConfig="formRuleConfig" :rule="formRule"></ZFormCreate>
+        <ZFormCreate v-model="formModel" :formConfig="formRuleConfig" :rule="formRule">
+          <template slot="allowClear">
+            111
+          </template>
+        </ZFormCreate>
       </div>
     </main>
   </div>
@@ -59,6 +60,63 @@ export default {
       if (this.activeValue) {
         const formRule = [
           {
+            type: 'input',
+            label: '展示的标题',
+            fileId: 'text',
+            value: "",
+            span: 24,
+            on: {
+              blur: () => {
+                this.handleChangeModel()
+              }
+            },
+            attrArr: ['divider']
+          },
+          {
+            type: 'number',
+            label: '高度',
+            fileId: 'height',
+            value: 100,
+            span: 24,
+            on: {
+              blur: () => {
+                this.handleChangeModel()
+              }
+            },
+            attrArr: ['divider']
+          },
+          {
+            type: 'switch',
+            label: '是否虚线',
+            fileId: 'dashed',
+            value: false,
+            span: 24,
+            on: {
+              change: () => {
+                this.handleChangeModel()
+              }
+            },
+            attrArr: ['divider']
+          },
+          {
+            type: 'radio',
+            label: '标题的位置',
+            fileId: 'orientation',
+            value: "",
+            span: 24,
+            options: [
+              { label: '左', value: "left" },
+              { label: '中', value: "center" },
+              { label: '右', value: "right" },
+            ],
+            on: {
+              change: () => {
+                this.handleChangeModel()
+              }
+            },
+            attrArr: ['divider']
+          },
+          {
             type: 'switch',
             label: '清楚图标',
             fileId: 'allowClear',
@@ -70,6 +128,46 @@ export default {
               }
             },
             attrArr: ['input', 'select']
+          },
+          {
+            type: 'activeIcon',
+            label: '前置按钮',
+            fileId: 'prefix',
+            value: '11image.png',
+            span: 24,
+            attrArr: ['input', 'select']
+          },
+          {
+            type: 'input',
+            label: '未选中的文字内容',
+            fileId: 'unCheckedChildren',
+            value: "",
+            span: 24,
+            props: {
+              maxLength: 2
+            },
+            on: {
+              blur: () => {
+                this.handleChangeModel()
+              }
+            },
+            attrArr: ['switch',]
+          },
+          {
+            type: 'input',
+            label: '选中的文字内容',
+            fileId: 'checkedChildren',
+            value: "",
+            span: 24,
+            props: {
+              maxLength: 2
+            },
+            on: {
+              blur: () => {
+                this.handleChangeModel()
+              }
+            },
+            attrArr: ['switch',]
           },
           {
             type: 'number',
@@ -91,7 +189,7 @@ export default {
             value: 10,
             span: 24,
             on: {
-              change: () => {
+              blur: () => {
                 this.handleChangeModel()
               }
             },
@@ -117,6 +215,38 @@ export default {
             fileId: 'disabled',
             value: false,
             span: 24,
+            on: {
+              change: () => {
+                this.handleChangeModel()
+              }
+            },
+            attrArr: [
+              'input',
+              'datePicker',
+              'rangePicker',
+              'select',
+              'radio',
+              'checkbox',
+              'switch',
+              'slider'
+            ]
+          },
+          {
+            type: 'radio',
+            label: '组件大小',
+            fileId: 'size',
+            value: "",
+            span: 24,
+            options: [
+              {
+                label: "默认",
+                value: "default"
+              },
+              {
+                label: "小",
+                value: "small"
+              },
+            ],
             on: {
               change: () => {
                 this.handleChangeModel()
@@ -220,7 +350,7 @@ export default {
           span: 16
         },
         labelAlign: 'left',
-        labelWidth: 130,
+        labelWidth: 80,
         colonStatus: true
       },
       col: {
@@ -243,7 +373,7 @@ export default {
   created() {
     this.init()
   },
-  mounted() {},
+  mounted() { },
   methods: {
     init() {
       if (this.activeValue) {
@@ -289,9 +419,11 @@ export default {
 </script>
 <style lang="scss" scoped>
 @import '~@/assets/layout.scss';
+
 .componentsConfig {
   width: 100%;
   height: 100%;
+
   .header {
     width: 100%;
     height: 40px;
@@ -300,17 +432,21 @@ export default {
     border-bottom: 1px solid #ececec;
     @include flex-row-c-c;
   }
+
   .main {
     width: 100%;
     height: calc(100% - 40px);
     padding: 8px 12px;
+
     .independent_dom_class {
       width: 100%;
       @include flex-row-s-c;
     }
+
     .form_config {
       width: 100%;
     }
+
     .components_config {
       width: 100%;
     }

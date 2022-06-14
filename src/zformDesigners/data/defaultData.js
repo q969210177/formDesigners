@@ -159,7 +159,7 @@ export const defaultMenuArr = [
           type: "divider",
           value: "",
           itemType: "style",
-          label: "111",
+          label: "",
           props: {},
           span: 24,
         },

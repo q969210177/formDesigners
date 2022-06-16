@@ -1,8 +1,5 @@
-import {
-  isHaveDefaultValue,
-  getWordsWidth,
-} from "@/zformcreate/utils/utils.js";
-import { componentsObj } from "@/zformcreate/data/compoents.js";
+import { isHaveDefaultValue, getWordsWidth } from "@/utils/utils.js";
+import { componentsObj } from "../zformcreate/data/compoents.js";
 import "./style/zformDemoItem.scss";
 export default {
   name: "zformDemoItem",

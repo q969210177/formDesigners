@@ -2,11 +2,7 @@
 import zformDemoItem from "./zformDemoItem";
 import aGridLayout from "@/components/aGridLayout";
 import aGridLayoutItem from "@/components/aGridLayoutItem";
-import {
-  returnEvent,
-  getRuleItem,
-  returnSlots,
-} from "@/zformcreate/utils/utils";
+import { returnEvent, getRuleItem, returnSlots } from "@/utils/utils";
 import "./style/zformDemo.scss";
 import _ from "lodash";
 

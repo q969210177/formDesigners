@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import zFormCreateItem from "./zFormCreateItem";
-import { returnEvent, getRuleItem, returnSlots } from "./utils/utils";
+import { returnEvent, getRuleItem, returnSlots } from "@/utils/utils";
 import "./style/zFormCreate.scss";
 import _ from "lodash";
 

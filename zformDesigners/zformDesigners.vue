@@ -52,7 +52,7 @@ import {
   setCompoentId,
   getRuleItem,
   setRuleItem
-} from '@/zformcreate/utils/utils'
+} from '@/utils/utils'
 export default {
   name: 'zformDesigners',
   components: {

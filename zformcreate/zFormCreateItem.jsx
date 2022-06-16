@@ -1,4 +1,4 @@
-import { isHaveDefaultValue, getWordsWidth } from "./utils/utils.js";
+import { isHaveDefaultValue, getWordsWidth } from "@/utils/utils.js";
 import { componentsObj } from "./data/compoents.js";
 import "./style/zFormCreateItem.scss";
 export default {

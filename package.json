@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "lib:formDesigners": "vue-cli-service build --target lib --inline-vue --name formDesigners formDesigners.js",
-    "lib:formCreate": "vue-cli-service build --target lib --inline-vue --name formCreate formCreate.js",
+    "lib:formDesigners": "vue-cli-service build --target lib --inline-vue --name zformDesigners formDesigners.js",
+    "lib:formCreate": "vue-cli-service build --target lib --inline-vue --name zformcreate formCreate.js",
     "lint": "vue-cli-service lint",
     "build": "vue-cli-service build"
   },

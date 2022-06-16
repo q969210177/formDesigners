@@ -30,13 +30,12 @@
 <script>
 /* eslint-disable no-unused-vars */
 const propsKeyArr = ['disabled']
-import { clone } from '@/utils/utils.js'
-
 import {
+  clone,
   getRuleItem,
   setCompoentId
-  // getDataType
-} from '@/zformcreate/utils/utils'
+} from '@/utils/utils.js'
+
 export default {
   name: 'componentsConfig',
   props: {

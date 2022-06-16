@@ -133,7 +133,7 @@ export default {
             type: 'activeIcon',
             label: '前置按钮',
             fileId: 'prefix',
-            value: '11image.png',
+            value: '',
             span: 24,
             attrArr: ['input', 'select']
           },
@@ -318,6 +318,9 @@ export default {
           fileId: 'rules',
           value: [],
           options: [],
+          props: {
+            validateType: this.ruleItemType
+          },
           on: {
             handleSubmitOptions: v => {
               this.handleChangeModel()
@@ -401,13 +404,23 @@ export default {
     handleChangeModel() {
       const defaultFormData = this.api.getFormData()
       const componentsFormData = this.formModel.getFormData()
+      //清洗一下props
+      for (const key in componentsFormData) {
+        if (Object.hasOwnProperty.call(componentsFormData, key)) {
+          const element = componentsFormData[key];
+          if (!element) {
+            delete componentsFormData[key]
+          }
+        }
+      }
+
       const newRuleItem = {
         ...defaultFormData,
         props: {
           ...componentsFormData
         }
       }
-      console.log(newRuleItem, 'newRuleItem')
+      console.log(defaultFormData, 'defaultFormData');
       if (['select', 'checkbox', 'radio'].includes(this.ruleItemType)) {
         newRuleItem.options = this.setSelectModel
       }

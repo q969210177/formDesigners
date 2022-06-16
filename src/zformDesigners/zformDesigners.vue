@@ -184,7 +184,7 @@ export default {
       function returnRuleStr(userInfoRule) {
         let str = '['
         userInfoRule.forEach(v => {
-          str += JSON.stringify(v).replaceAll('"', '')
+          str += JSON.stringify(v) + ","
         })
         return str + ']'
       }
@@ -193,7 +193,7 @@ export default {
         const returnObj = {
           ...defaultFormConfig
         }
-        return JSON.stringify(returnObj).replaceAll('"', '')
+        return JSON.stringify(returnObj) + ","
       }
       const aTag = document.createElement('a')
       const s = '<' + '/script' + '>'

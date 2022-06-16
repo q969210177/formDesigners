@@ -290,16 +290,16 @@ export default {
     handleDelTableData(k) {
       this.options.splice(k, 1)
     },
-    // 因为有全部触发 所以设置一下返回值
-    setOptions() {
-      const newOptions = clone(this.options)
-      // newOptions.forEach(v => {
-      //   if (v.trigger === 'all') {
-      //     v.trigger = ["blur", "change"]
-      //   }
-      // })
-      // return newOptions
-    },
+    // // 因为有全部触发 所以设置一下返回值
+    // setOptions() {
+    //   const newOptions = clone(this.options)
+    //   // newOptions.forEach(v => {
+    //   //   if (v.trigger === 'all') {
+    //   //     v.trigger = ["blur", "change"]
+    //   //   }
+    //   // })
+    //   // return newOptions
+    // },
     //处理一下默认值
     setDefaultOptions() {
       this.options = clone(this.value)

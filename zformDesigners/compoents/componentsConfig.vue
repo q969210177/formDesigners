@@ -4,7 +4,7 @@
     <main class="main" v-show="activeValue">
       <div class="form_config">
         <h3>表单项配置</h3>
-        <ZFormCreate v-model="api" :formConfig="formRuleConfig" :rule="defaultRule"></ZFormCreate>
+        <ZFormCreate v-model="formModel" :formConfig="formRuleConfig" :rule="formRule"></ZFormCreate>
       </div>
       <div class="components_config">
         <h3>组件配置</h3>
@@ -18,7 +18,7 @@
           <span>设置验证规则:</span>
           <div class="width-50"></div>
         </div>-->
-        <ZFormCreate v-model="formModel" :formConfig="formRuleConfig" :rule="formRule">
+        <ZFormCreate v-model="compoentsModel" :formConfig="formRuleConfig" :rule="compoentsRule">
           <template slot="allowClear">
             111
           </template>
@@ -28,12 +28,10 @@
   </div>
 </template>
 <script>
-/* eslint-disable no-unused-vars */
-const propsKeyArr = ['disabled']
+import { formRule, compoentsRule } from "../data/defaultData.js"
 import {
-  clone,
+  setCompoentId,
   getRuleItem,
-  setCompoentId
 } from '@/utils/utils.js'
 
 export default {
@@ -55,9 +53,12 @@ export default {
   },
   watch: {},
   computed: {
-    formRule() {
+    compoentsRule() {
       if (this.activeValue) {
-        const formRule = [
+        const { ruleItem } = getRuleItem(this.rule, this.activeValue)
+        const props = ruleItem.props
+        const propsKey = Object.keys(props)
+        const compoentsRules = [
           {
             type: 'input',
             label: '展示的标题',
@@ -75,7 +76,7 @@ export default {
             type: 'number',
             label: '高度',
             fileId: 'height',
-            value: 100,
+            value: 50,
             span: 24,
             on: {
               blur: () => {
@@ -262,10 +263,97 @@ export default {
               'slider'
             ]
           }
-        ]
-        return formRule.filter(v => {
-          if (v.attrArr.includes(this.ruleItemType)) {
-            return v
+        ].concat(compoentsRule)
+        return compoentsRules.filter(item => {
+          if (propsKey.includes(item.fileId)) {
+            item.value = props[item.fileId]
+          }
+          if (item.attrArr.includes(this.ruleItemType)) {
+            return item
+          }
+        })
+      }
+      return []
+    },
+    formRule() {
+      if (this.activeValue) {
+        const { ruleItem } = getRuleItem(this.rule, this.activeValue)
+        const formRules = [
+          {
+            type: 'input',
+            label: 'label',
+            fileId: 'label',
+            value: '',
+            span: 24,
+            attrArr: ["form",],
+            on: {
+              blur: $event => {
+                let {
+                  target: { value }
+                } = $event
+                this.handleChangeModel(value, 'label')
+              }
+            }
+          },
+          {
+            type: 'setRulesValidate',
+            label: '验证规则',
+            fileId: 'rules',
+            value: [],
+            options: [],
+            props: {
+              validateType: this.ruleItemType
+            },
+            attrArr: ["form",],
+            on: {
+              handleSubmitOptions: () => {
+                this.handleChangeModel()
+              }
+            },
+            span: 24
+          },
+          {
+            type: 'input',
+            label: 'fileId',
+            fileId: 'fileId',
+            value: '',
+            span: 24,
+            attrArr: ["form"],
+            on: {
+              blur: $event => {
+                let {
+                  target: { value }
+                } = $event
+                if (!value) {
+                  this.formModel.setValue("fileId", value)
+                }
+                this.handleChangeModel()
+              }
+            }
+          },
+          {
+            type: 'slider',
+            label: '长度',
+            fileId: 'span',
+            value: 1,
+            span: 24,
+            props: {
+              max: 24,
+              min: 1
+            },
+            attrArr: ["form"],
+            on: {
+              afterChange: () => {
+                this.handleChangeModel()
+              }
+            }
+          }
+        ].concat(formRule)
+        return formRules.filter(item => {
+          item.value = ruleItem[item.fileId]
+
+          if (item.attrArr.includes(ruleItem.itemType)) {
+            return item
           }
         })
       }
@@ -276,76 +364,8 @@ export default {
     return {
       setSelectModel: [],
       tabsModel: '',
+      compoentsModel: {},
       formModel: {},
-      defaultRule: [
-        {
-          type: 'input',
-          label: 'label',
-          fileId: 'label',
-          value: '',
-          span: 24,
-          on: {
-            blur: $event => {
-              let {
-                target: { value }
-              } = $event
-              this.handleChangeModel(value, 'label')
-            }
-          }
-        },
-        {
-          type: 'input',
-          label: 'fileId',
-          fileId: 'fileId',
-          value: '',
-          span: 24,
-          on: {
-            blur: $event => {
-              let {
-                target: { value }
-              } = $event
-              if (!value) {
-                value = setCompoentId()
-              }
-              this.handleChangeModel(value, 'label')
-            }
-          }
-        },
-        {
-          type: 'setRulesValidate',
-          label: '验证规则',
-          fileId: 'rules',
-          value: [],
-          options: [],
-          props: {
-            validateType: this.ruleItemType
-          },
-          on: {
-            handleSubmitOptions: v => {
-              this.handleChangeModel()
-            }
-          },
-          span: 24
-        },
-        {
-          type: 'slider',
-          label: '长度',
-          fileId: 'span',
-          value: 1,
-          span: 24,
-          props: {
-            max: 24,
-            min: 1
-          },
-          on: {
-            afterChange: () => {
-              this.handleChangeModel()
-            }
-          }
-        }
-      ],
-      formPropsRule: [],
-      api: {},
       formRuleConfig: {
         labelCol: { span: 8 },
         wrapperCol: {
@@ -355,11 +375,6 @@ export default {
         labelWidth: 80,
         colonStatus: true
       },
-      col: {
-        span: 0
-      },
-      formProps: {},
-      formConfig: {},
       tabsOption: [
         {
           name: '表单配置',
@@ -380,29 +395,18 @@ export default {
     init() {
       if (this.activeValue) {
         const { ruleItem } = getRuleItem(this.rule, this.activeValue)
-        const props = ruleItem.props
-        const propsKey = Object.keys(props)
         if (['select', 'checkbox', 'radio'].includes(this.ruleItemType)) {
           this.setSelectModel = ruleItem.options
         }
-        this.defaultRule.forEach(item => {
-          if (ruleItem[item.fileId] && this.api.setValue) {
-            this.api.setValue(item.fileId, ruleItem[item.fileId])
-          } else {
-            item.value = ruleItem[item.fileId]
-          }
-        })
-        this.formRule.forEach(item => {
-          if (propsKey.includes(item.fileId)) {
-            item.value = props[item.fileId]
-          }
-        })
       }
     },
     //change事件 用来改变外部的参数设置
     handleChangeModel() {
-      const defaultFormData = this.api.getFormData()
-      const componentsFormData = this.formModel.getFormData()
+      const defaultFormData = this.formModel.getFormData()
+      const componentsFormData = this.compoentsModel.getFormData()
+      if (!defaultFormData.fileId) {
+        defaultFormData.fileId = setCompoentId()
+      }
       //清洗一下props
       for (const key in componentsFormData) {
         if (Object.hasOwnProperty.call(componentsFormData, key)) {
@@ -412,19 +416,17 @@ export default {
           }
         }
       }
-
       const newRuleItem = {
         ...defaultFormData,
         props: {
           ...componentsFormData
         }
       }
-      console.log(defaultFormData, 'defaultFormData');
       if (['select', 'checkbox', 'radio'].includes(this.ruleItemType)) {
         newRuleItem.options = this.setSelectModel
       }
       this.$emit('handleChangeConfig', newRuleItem)
-      // this.$emit('update:activeValue', this.formConfig.fileId)
+      this.$emit('update:activeValue', this.formConfig.fileId)
     }
   }
 }

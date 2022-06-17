@@ -20,6 +20,8 @@ import {
   message,
   Table,
   Divider,
+  Pagination,
+  Spin,
 } from "ant-design-vue";
 import "ant-design-vue/dist/antd.css";
 Vue.prototype.$message = message;
@@ -42,6 +44,8 @@ const componentsArr = [
   InputNumber,
   Table,
   Divider,
+  Pagination,
+  Spin,
 ];
 componentsArr.forEach((i) => {
   Vue.use(i);

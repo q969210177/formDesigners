@@ -213,6 +213,7 @@ export default {
           zformDemoItem: true,
           active: this.activeValue,
         }}
+        style={{ outline: this.activeValue ? "2px solid #2e73ff" : "" }}
       >
         {this.renderCompoents(this.formItem.itemType, h)}
         <div style={{ height: "20px" }}>

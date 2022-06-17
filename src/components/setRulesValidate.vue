@@ -5,7 +5,7 @@
       <a-button size="small" type="link" @click="formModelConfig.show = true">打开{{ validateType }}</a-button>
     </div>
     <a-modal :destroyOnClose="true" title="设置组件的验证规则" :width="1000" cancelText="取消" okText="确定"
-      @ok="handleSubmitOptions" v-model="formModelConfig.show">
+      @ok="handleSubmitOptions" @cancel="handleCamcel" v-model="formModelConfig.show">
       <div class="model_table_header">
         <a-button size="small" @click="handleAddTableData">添加</a-button>
       </div>
@@ -18,7 +18,6 @@
   </div>
 </template>
 <script>
-import { clone } from '../utils/utils'
 
 
 export default {
@@ -36,11 +35,19 @@ export default {
     }
   },
   watch: {
-    value() {
-      console.log("watch,");
-      this.setDefaultOptions()
-
+    "formModelConfig.show"(newV) {
+      console.log(newV, "11");
+      if (newV) {
+        this.options = this.value
+        this.defaultOptions = JSON.parse(JSON.stringify(this.value))
+      }
     }
+    // "formModelConfig.show": {
+    //   handle(newV) {
+    //     console.log(newV, "11");
+
+    //   }
+    // }
   },
   computed: {
     columns() {
@@ -268,12 +275,13 @@ export default {
       formModelConfig: {
         show: false
       },
-
-      options: []
+      options: [],
+      defaultOptions: []
     }
   },
   mounted() {
-    this.setDefaultOptions()
+    this.options = this.value
+    this.defaultOptions = JSON.parse(JSON.stringify(this.value))
   },
   methods: {
     //点击新增一条表单的数据
@@ -290,25 +298,13 @@ export default {
     handleDelTableData(k) {
       this.options.splice(k, 1)
     },
-    // // 因为有全部触发 所以设置一下返回值
-    // setOptions() {
-    //   const newOptions = clone(this.options)
-    //   // newOptions.forEach(v => {
-    //   //   if (v.trigger === 'all') {
-    //   //     v.trigger = ["blur", "change"]
-    //   //   }
-    //   // })
-    //   // return newOptions
-    // },
-    //处理一下默认值
-    setDefaultOptions() {
-      this.options = clone(this.value)
-      // this.options.forEach(v => {
-      //   if (typeof v.trigger !== "string") {
-      //     v.trigger = "all"
-      //   }
-      // })
-
+    //弹窗里面的返回按钮
+    handleCamcel() {
+      this.formModelConfig.show = false
+      // this.options = this.defaultOptions
+      this.options = JSON.parse(JSON.stringify(this.defaultOptions))
+      this.$emit('handleSubmitOptions', this.defaultOptions)
+      this.$emit('input', this.defaultOptions)
     },
     //弹窗里面的确定按钮
     handleSubmitOptions() {

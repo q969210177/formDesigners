@@ -167,30 +167,7 @@ export const defaultMenuArr = [
     ],
   },
 ];
-// export const defaultMenuArr = [
 
-// ];
+export const formRule = [];
 
-/**
- * @props
- *  公用部分
- *  isRequired:是否必填
- *
- *  input
- *  allowClear:boolean 可以点击清除图标删除内容
- *  size:large default small 控件大小
- *  maxLength:最大长度
- *
- * radio
- *  size:large default small 控件大小
- *
- *
- * checkbox
- *   size:large default small 控件大小
- *
- * select
- *  allowClear:boolean 可以点击清除图标删除内容
- *  notFoundContent:string 当下拉列表为空时显示的内容
- *  placeholder:string 选择框默认展示的内容
- *  size:large default small 控件大小
- */
+export const compoentsRule = [];

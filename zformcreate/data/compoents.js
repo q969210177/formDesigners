@@ -1,3 +1,4 @@
+import cInput from "../components/cInput.vue";
 import cSelect from "../components/cSelect.vue";
 import cRadio from "../components/cRadio.vue";
 import cDataPick from "../components/cDataPick.vue";
@@ -9,7 +10,7 @@ import cInputNumber from "../components/cInputNumber.vue";
 import cDivider from "../components/cDivider.vue";
 export const componentsObj = {
   number: cInputNumber,
-  input: "a-input",
+  input: cInput,
   datePicker: cDataPick,
   rangePicker: cRangePick,
   select: cSelect,

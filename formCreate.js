@@ -1,4 +1,4 @@
-import createForm from "./src/createForm/index.js";
+import createForm from "./zformcreate/index.js";
 
 export const createFormObj = {
   version: "0.0.1",

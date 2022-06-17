@@ -4,7 +4,7 @@
     <main class="main" v-show="activeValue">
       <div class="form_config">
         <h3>表单项配置</h3>
-        <ZFormCreate @valueChange="handleTest" v-model="formModel" :formConfig="formRuleConfig" :rule="formRule">
+        <ZFormCreate @valueChange="handleChangeModel" v-model="formModel" :formConfig="formRuleConfig" :rule="formRule">
         </ZFormCreate>
       </div>
       <div class="components_config">
@@ -19,7 +19,8 @@
           <span>设置验证规则:</span>
           <div class="width-50"></div>
         </div>-->
-        <ZFormCreate v-model="compoentsModel" :formConfig="formRuleConfig" :rule="compoentsRule">
+        <ZFormCreate @valueChange="handleChangeModel" v-model="compoentsModel" :formConfig="formRuleConfig"
+          :rule="compoentsRule">
           <template slot="allowClear">
             111
           </template>

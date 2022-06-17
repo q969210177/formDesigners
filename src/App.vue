@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <!-- <ZFormCreate :rule="rule" v-model="api"></ZFormCreate> -->
     <zformDesigners></zformDesigners>
   </div>
 </template>
@@ -8,9 +9,28 @@ export default {
   name: 'App',
   components: {},
   data() {
-    return {}
+    return {
+      api: {},
+      rule: [{
+        type: "input",
+        fileId: "a",
+        label: "测试",
+        on: {
+          blur: ($event) => {
+            console.log($event);
+          },
+          change: ($event) => {
+            console.log($event);
+          },
+        }
+      }]
+    }
   },
-  mounted() {}
+  mounted() {
+  },
+  methods: {
+
+  },
 }
 </script>
 <style lang="scss" scoped>

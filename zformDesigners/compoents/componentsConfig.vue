@@ -29,6 +29,7 @@
 </template>
 <script>
 import { formRule, compoentsRule } from "../data/defaultData.js"
+import { setInstallRule } from "@/utils/utils"
 import {
   setCompoentId,
   getRuleItem,
@@ -264,6 +265,7 @@ export default {
             ]
           }
         ].concat(compoentsRule)
+
         return compoentsRules.filter(item => {
           if (propsKey.includes(item.fileId)) {
             item.value = props[item.fileId]
@@ -278,6 +280,7 @@ export default {
     formRule() {
       if (this.activeValue) {
         const { ruleItem } = getRuleItem(this.rule, this.activeValue)
+        setInstallRule(formRule, this.test)
         const formRules = [
           {
             type: 'input',
@@ -349,6 +352,7 @@ export default {
             }
           }
         ].concat(formRule)
+
         return formRules.filter(item => {
           item.value = ruleItem[item.fileId]
 
@@ -400,6 +404,11 @@ export default {
         }
       }
     },
+    test() {
+      if (this.formModel.getFormData) {
+        this.handleChangeModel()
+      }
+    },
     //change事件 用来改变外部的参数设置
     handleChangeModel() {
       const defaultFormData = this.formModel.getFormData()
@@ -426,7 +435,6 @@ export default {
         newRuleItem.options = this.setSelectModel
       }
       this.$emit('handleChangeConfig', newRuleItem)
-      this.$emit('update:activeValue', this.formConfig.fileId)
     }
   }
 }

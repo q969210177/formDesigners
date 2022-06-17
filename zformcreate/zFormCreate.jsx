@@ -1,6 +1,14 @@
 /* eslint-disable no-unused-vars */
 import zFormCreateItem from "./zFormCreateItem";
-import { returnEvent, getRuleItem, returnSlots } from "@/utils/utils";
+import {
+  returnEvent,
+  getRuleItem,
+  returnSlots,
+  isHaveDefaultValue,
+  getWordsWidth,
+  setInstallRule,
+} from "@/utils/utils";
+import { componentsObj } from "./data/compoents.js";
 import "./style/zFormCreate.scss";
 import _ from "lodash";
 
@@ -54,8 +62,12 @@ export default {
     rule(newV) {
       this.updateRule();
     },
+    // copyRule(newV) {
+    //   console.log(newV, "v");
+    //   // this.updateRule();
+    // },
   },
-  beforeMount() {
+  created() {
     this.$emit("input", {
       getFormData: this.getFormData,
       setValue: this.setValue,
@@ -66,6 +78,7 @@ export default {
       getRuleItemSomeOne: this.getRuleItemSomeOne,
     });
   },
+  beforeMount() {},
   mounted() {
     this.copyRule = _.cloneDeep(this.rule);
   },
@@ -108,12 +121,140 @@ export default {
         return ruleItem[ruleItemkey];
       }
       return {};
-      // this.updateRule()
+    },
+    //返回组件
+    renderCompoents(type, h, ruleItem) {
+      const returnObj = {
+        form: this.returnFormItem,
+        style: this.returnStyleItem,
+      };
+      if (returnObj[type]) {
+        returnObj[type](h, ruleItem);
+      }
+      return this.returnFormItem(h, ruleItem);
+    },
+    //返回样式组件
+    returnStyleItem(h, ruleItem) {
+      const com = componentsObj[ruleItem.type];
+      const dom = h(com, {
+        ...this.returnCompoentsProps(ruleItem),
+      });
+      return dom;
+    },
+    //返回form组件
+    returnFormItem(h, ruleItem) {
+      const { colonStatus, labelWidth } = this.formConfig;
+      //设置 formItem的props 并给上默认值
+      const formModelItemProps = {
+        required: isHaveDefaultValue(ruleItem.formProps, "required", false),
+        labelCol: isHaveDefaultValue(
+          ruleItem.formProps,
+          "labelCol",
+          isHaveDefaultValue(this.formConfig, "labelCol", { span: 4 })
+        ),
+        wrapperCol: isHaveDefaultValue(
+          ruleItem.formProps,
+          "wrapperCol",
+          isHaveDefaultValue(this.formConfig, "wrapperCol", { span: 20 })
+        ),
+        prop: ruleItem.fileId,
+        rules: ruleItem.rules,
+      };
+      const labelSlot = {
+        label: () => {
+          //获取字体长度
+          const labelWordWidth = getWordsWidth(ruleItem.label) + 10;
+          //判断这个字体是不是超长的
+          const status = labelWordWidth > labelWidth;
+          let text = "";
+          if (status) {
+            //这里主要是计算一格大概能放下多少个字
+            text =
+              ruleItem.label.slice(0, Math.floor(labelWidth / 12) - 2) + "... ";
+          } else {
+            text = ruleItem.label;
+          }
+          //如果需要加冒号就加冒号
+          text = colonStatus ? text + ":" : text;
+          return (
+            <span class={["ZFormCreatetem_label"]} title={ruleItem.label}>
+              {text}
+            </span>
+          );
+        },
+      };
+      let eventLoop = {};
+      if (ruleItem.on) {
+        eventLoop = {
+          ...returnEvent(this.$listeners, ruleItem.fileId),
+          ...ruleItem.on,
+        };
+      } else {
+        eventLoop = returnEvent(this.$listeners, ruleItem.fileId);
+      }
+      const com = componentsObj[ruleItem.type];
+      return (
+        <div class="item_form">
+          <a-form-model-item
+            scopedSlots={labelSlot}
+            props={{ ...formModelItemProps }}
+          >
+            {h(
+              com,
+              {
+                ...this.returnCompoentsProps(ruleItem),
+                on: {
+                  ...eventLoop,
+                  input: ($event) => {
+                    const value = this.validatorIsEvent(ruleItem.type, $event);
+                    ruleItem.value = value;
+                    this.$emit("valueChange");
+                  },
+                },
+              },
+              {}
+            )}
+          </a-form-model-item>
+        </div>
+      );
+    },
+    //分发input事件的默认值
+    validatorIsEvent(type, event) {
+      // const typeArr = ['InputEvent', 'PointerEvent']
+      if (event instanceof Event) {
+        const {
+          target: { value },
+        } = event;
+        if (value) {
+          return value;
+        }
+        return "";
+      } else {
+        return event;
+      }
+    },
+    //返回props
+    returnCompoentsProps(i) {
+      //需要options的组件
+      const returnObj = {
+        props: {
+          value: i.value,
+          ...i.props,
+        },
+        attrs: {
+          ...i.props,
+        },
+      };
+      if (i.options) {
+        returnObj.props.options = i.options;
+      }
+      //当他是一个需要数据去渲染的组件的时候
+      return returnObj;
     },
     //设置组件的rule
     // setFormRule(fileId, rule) {},
   },
-  render() {
+  render(h) {
     const formConfig = Object.assign(
       {
         labelCol: { span: 4 },
@@ -135,15 +276,6 @@ export default {
         >
           <a-row gutter={20}>
             {this.copyRule.map((i) => {
-              let eventLoop = {};
-              if (i.on) {
-                eventLoop = {
-                  ...returnEvent(this.$listeners, i.fileId),
-                  ...i.on,
-                };
-              } else {
-                eventLoop = returnEvent(this.$listeners, i.fileId);
-              }
               if (i.type !== "hide") {
                 return (
                   <a-col span={i.span ? i.span : 24}>
@@ -158,16 +290,7 @@ export default {
                     >
                       <div class="rule_item_form">
                         <slot name={i.fileId} data={i}>
-                          <zFormCreateItem
-                            // onValueChange={() => this.getFormData()}
-                            formConfig={formConfig}
-                            formItem={i}
-                            eventLoop={eventLoop}
-                          >
-                            {returnSlots(this.$slots, i.fileId)
-                              ? returnSlots(this.$slots, i.fileId)
-                              : ""}
-                          </zFormCreateItem>
+                          {this.renderCompoents(i.itemType, h, i)}
                         </slot>
                       </div>
                     </div>

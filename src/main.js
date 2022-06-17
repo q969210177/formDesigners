@@ -2,8 +2,8 @@ import Vue from "vue";
 import App from "./App.vue";
 import "@/utils/installAntdFormCompoent.js";
 import "@/utils/autoCompoents.js";
-// import zformDesigners from "../zformDesigners/index.js";
-import zformDesigners from "../ccc/zformDesigners.umd.js";
+import zformDesigners from "../zformDesigners/index.js";
+// import zformDesigners from "../ccc/zformDesigners.umd.js";
 import "../ccc/zformDesigners.css";
 import "@/assets/iconFont/iconfont.css";
 zformDesigners.addFormRule([
@@ -14,13 +14,12 @@ zformDesigners.addFormRule([
     value: "",
     span: 24,
     on: {
-      blur: function () {
-        console.log(this, "this");
-      },
-      // blur: () => {
+      // blur: function () {
       //   console.log(this, "this");
-      //   // this.handleChangeModel()
       // },
+      blur: () => {
+        // this.handleChangeModel()
+      },
     },
     attrArr: ["form"],
   },

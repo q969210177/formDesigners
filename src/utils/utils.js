@@ -221,7 +221,6 @@ export const returnEvent = ($listeners, fileId) => {
       }
     }
   }
-
   return newEvent;
 };
 //判断传入的默认值
@@ -246,11 +245,54 @@ export function getWordsWidth(words, wordStyle = { font: "12px sans-serif" }) {
   return 100;
 }
 //分发插槽
-// {...this.$slots[i.fileId]}
 export function returnSlots($slots, fileId) {
   if (getDataType($slots) !== "Object") return;
   if ($slots[fileId]) {
     return $slots[fileId];
   }
 }
-setCompoentId();
+
+//
+//把外部注册的规则和内部方法做一个绑定
+export function setInstallRule(eventObj, callback = () => {}) {
+  /**
+   *  @eventObj blur:($event)=>{}
+   */
+  const a = {
+    blur: ($e) => {
+      console.log($e);
+      callback();
+      eventObj.blur($e);
+    },
+    change: (v) => {
+      console.log(v);
+      eventObj.change(v);
+    },
+  };
+  return a;
+  // //当rule为真
+  // if (rule) {
+  //   //存储一下rule的长度
+  //   const length = rule.length;
+  //   //循环遍历
+  //   for (let index = 0; index < length; index++) {
+  //     const ruleItem = rule[index];
+  //     let defaultEvent = {};
+  //     // let newEvent = {};
+  //     //当他传了触发时机..
+  //     if (ruleItem.on) {
+  //       defaultEvent = clone(ruleItem.on);
+  //       for (const key in defaultEvent) {
+  //         if (Object.hasOwnProperty.call(defaultEvent, key)) {
+  //           const item = defaultEvent[key];
+  //           console.log(item);
+  //           ruleItem.on[key] = () => {
+  //             // item();
+  //             callback();
+  //           };
+  //         }
+  //       }
+  //     }
+  //   }
+  // }
+}

@@ -143,16 +143,52 @@ export default {
     //   //释放区域的拖拽结束事件
     handleDropEvent($event) {
       $event.preventDefault()
-      $event.dataTransfer.dropEffect = 'move'
-      const data = JSON.parse($event.dataTransfer.getData('text/plain'))
-      data.fileId = setCompoentId()
-      this.userInfoRule.push(data)
-      this.storageRule()
+      const { toElement, dataTransfer } = $event
+      const { className, classList } = toElement
+
+      //当是直接可以push的时候
+      const pushArr = ["main_content", "main_content_form"]
+      if (pushArr.includes(className)) {
+        $event.dataTransfer.dropEffect = 'move'
+        const data = JSON.parse($event.dataTransfer.getData('text/plain'))
+        data.fileId = setCompoentId()
+        this.userInfoRule.push(data)
+        this.storageRule()
+      } else {
+        // console.dir(toElement, 'className');
+        // console.clear()
+        const value = getRuleItem(this.userInfoRule, classList[0])
+        if (value) {
+          // console.dir(toElement, 'toElement');
+          classList.remove("item_hover")
+          // toElement.style.height = '30px'
+          const { ruleItem, index } = value
+          $event.dataTransfer.dropEffect = 'move'
+          const data = JSON.parse($event.dataTransfer.getData('text/plain'))
+          data.fileId = setCompoentId()
+          this.userInfoRule.splice(index + 1, 0, data)
+          this.storageRule()
+        }
+      }
+      // $event.dataTransfer.dropEffect = 'move'
+      // const data = JSON.parse($event.dataTransfer.getData('text/plain'))
+      // data.fileId = setCompoentId()
+      // this.userInfoRule.push(data)
+      // 
       // this.userInfoModel.updateRule()
     },
     //   //拖拽中的事件
     handleDragoverEvent($event) {
       $event.preventDefault()
+      const { toElement, dataTransfer } = $event
+      const { classList } = toElement
+      classList.remove("item_hover")
+      const value = getRuleItem(this.userInfoRule, classList[0])
+      if (value) {
+        classList.add("item_hover")
+
+      }
+      console.clear()
     },
     //设置表单config的弹窗确定事件
     handleDefaultformConfigSubmitClick(newFormConfig) {

@@ -206,6 +206,7 @@ export default {
                           </zformDemoItem>
                         </slot>
                       </div>
+                      <div class={[i.fileId, "default_item_hover"]}></div>
                     </div>
                   </a-col>
                 );

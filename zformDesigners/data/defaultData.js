@@ -9,7 +9,7 @@ export let defaultFormConfig = {
 };
 
 export const setDefaultFormConfig = (newFormConfig) => {
-  defaultFormConfig = newFormConfig;
+  defaultFormConfig = Object.assign(defaultFormConfig, newFormConfig);
 };
 export const defaultMenuArr = [
   {
@@ -168,6 +168,12 @@ export const defaultMenuArr = [
   },
 ];
 
-export const formRule = [];
+export let formRule = [];
+export const setFormRule = (newRule) => {
+  formRule = newRule;
+};
 
-export const compoentsRule = [];
+export let compoentsRule = [];
+export const setCompoentsRule = (newRule) => {
+  compoentsRule = newRule;
+};

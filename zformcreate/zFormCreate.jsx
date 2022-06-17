@@ -1,5 +1,4 @@
 /* eslint-disable no-unused-vars */
-import zFormCreateItem from "./zFormCreateItem";
 import {
   returnEvent,
   getRuleItem,
@@ -14,9 +13,7 @@ import _ from "lodash";
 
 export default {
   name: "ZFormCreate",
-  components: {
-    zFormCreateItem,
-  },
+  components: {},
   props: {
     rule: {
       type: Array,

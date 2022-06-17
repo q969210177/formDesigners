@@ -258,18 +258,18 @@ export function setInstallRule(eventObj, callback = () => {}) {
   /**
    *  @eventObj blur:($event)=>{}
    */
-  const a = {
-    blur: ($e) => {
-      console.log($e);
-      callback();
-      eventObj.blur($e);
-    },
-    change: (v) => {
-      console.log(v);
-      eventObj.change(v);
-    },
-  };
-  return a;
+  // const a = {
+  //   blur: ($e) => {
+  //     console.log($e);
+  //     callback();
+  //     eventObj.blur($e);
+  //   },
+  //   change: (v) => {
+  //     console.log(v);
+  //     eventObj.change(v);
+  //   },
+  // };
+  // return a;
   // //当rule为真
   // if (rule) {
   //   //存储一下rule的长度

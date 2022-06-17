@@ -4,7 +4,8 @@
     <main class="main" v-show="activeValue">
       <div class="form_config">
         <h3>表单项配置</h3>
-        <ZFormCreate v-model="formModel" :formConfig="formRuleConfig" :rule="formRule"></ZFormCreate>
+        <ZFormCreate @valueChange="handleTest" v-model="formModel" :formConfig="formRuleConfig" :rule="formRule">
+        </ZFormCreate>
       </div>
       <div class="components_config">
         <h3>组件配置</h3>
@@ -66,11 +67,7 @@ export default {
             fileId: 'text',
             value: "",
             span: 24,
-            on: {
-              blur: () => {
-                this.handleChangeModel()
-              }
-            },
+
             attrArr: ['divider']
           },
           {
@@ -79,11 +76,7 @@ export default {
             fileId: 'height',
             value: 50,
             span: 24,
-            on: {
-              blur: () => {
-                this.handleChangeModel()
-              }
-            },
+
             attrArr: ['divider']
           },
           {
@@ -92,11 +85,7 @@ export default {
             fileId: 'dashed',
             value: false,
             span: 24,
-            on: {
-              change: () => {
-                this.handleChangeModel()
-              }
-            },
+
             attrArr: ['divider']
           },
           {
@@ -110,11 +99,7 @@ export default {
               { label: '中', value: "center" },
               { label: '右', value: "right" },
             ],
-            on: {
-              change: () => {
-                this.handleChangeModel()
-              }
-            },
+
             attrArr: ['divider']
           },
           {
@@ -123,11 +108,7 @@ export default {
             fileId: 'allowClear',
             value: false,
             span: 24,
-            on: {
-              change: () => {
-                this.handleChangeModel()
-              }
-            },
+
             attrArr: ['input', 'select']
           },
           {
@@ -147,11 +128,7 @@ export default {
             props: {
               maxLength: 2
             },
-            on: {
-              blur: () => {
-                this.handleChangeModel()
-              }
-            },
+
             attrArr: ['switch',]
           },
           {
@@ -163,11 +140,7 @@ export default {
             props: {
               maxLength: 2
             },
-            on: {
-              blur: () => {
-                this.handleChangeModel()
-              }
-            },
+
             attrArr: ['switch',]
           },
           {
@@ -176,11 +149,7 @@ export default {
             fileId: 'maxLength',
             value: 10,
             span: 24,
-            on: {
-              change: () => {
-                this.handleChangeModel()
-              }
-            },
+
             attrArr: ['input']
           },
           {
@@ -189,11 +158,7 @@ export default {
             fileId: 'max',
             value: 10,
             span: 24,
-            on: {
-              blur: () => {
-                this.handleChangeModel()
-              }
-            },
+
             attrArr: ['slider']
           },
           {
@@ -202,11 +167,7 @@ export default {
             fileId: 'min',
             value: 10,
             span: 24,
-            on: {
-              change: () => {
-                this.handleChangeModel()
-              }
-            },
+
             attrArr: ['slider']
           },
           // max
@@ -216,11 +177,7 @@ export default {
             fileId: 'disabled',
             value: false,
             span: 24,
-            on: {
-              change: () => {
-                this.handleChangeModel()
-              }
-            },
+
             attrArr: [
               'input',
               'datePicker',
@@ -248,11 +205,7 @@ export default {
                 value: "small"
               },
             ],
-            on: {
-              change: () => {
-                this.handleChangeModel()
-              }
-            },
+
             attrArr: [
               'input',
               'datePicker',
@@ -280,7 +233,6 @@ export default {
     formRule() {
       if (this.activeValue) {
         const { ruleItem } = getRuleItem(this.rule, this.activeValue)
-        setInstallRule(formRule, this.test)
         const formRules = [
           {
             type: 'input',
@@ -289,14 +241,7 @@ export default {
             value: '',
             span: 24,
             attrArr: ["form",],
-            on: {
-              blur: $event => {
-                let {
-                  target: { value }
-                } = $event
-                this.handleChangeModel(value, 'label')
-              }
-            }
+
           },
           {
             type: 'setRulesValidate',
@@ -308,11 +253,7 @@ export default {
               validateType: this.ruleItemType
             },
             attrArr: ["form",],
-            on: {
-              handleSubmitOptions: () => {
-                this.handleChangeModel()
-              }
-            },
+
             span: 24
           },
           {
@@ -322,17 +263,7 @@ export default {
             value: '',
             span: 24,
             attrArr: ["form"],
-            on: {
-              blur: $event => {
-                let {
-                  target: { value }
-                } = $event
-                if (!value) {
-                  this.formModel.setValue("fileId", value)
-                }
-                this.handleChangeModel()
-              }
-            }
+
           },
           {
             type: 'slider',
@@ -345,11 +276,6 @@ export default {
               min: 1
             },
             attrArr: ["form"],
-            on: {
-              afterChange: () => {
-                this.handleChangeModel()
-              }
-            }
           }
         ].concat(formRule)
 
@@ -404,10 +330,8 @@ export default {
         }
       }
     },
-    test() {
-      if (this.formModel.getFormData) {
-        this.handleChangeModel()
-      }
+    handleTest() {
+      console.log(111, "11")
     },
     //change事件 用来改变外部的参数设置
     handleChangeModel() {

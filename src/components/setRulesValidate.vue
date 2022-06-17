@@ -36,18 +36,11 @@ export default {
   },
   watch: {
     "formModelConfig.show"(newV) {
-      console.log(newV, "11");
       if (newV) {
         this.options = this.value
         this.defaultOptions = JSON.parse(JSON.stringify(this.value))
       }
     }
-    // "formModelConfig.show": {
-    //   handle(newV) {
-    //     console.log(newV, "11");
-
-    //   }
-    // }
   },
   computed: {
     columns() {

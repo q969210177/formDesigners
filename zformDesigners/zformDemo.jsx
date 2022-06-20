@@ -332,6 +332,7 @@ export default {
                 return (
                   <a-col span={ruleItem.span ? ruleItem.span : 24}>
                     <div
+                      draggable
                       class={[
                         {
                           rule_item_active:

@@ -17,7 +17,8 @@
           <!-- <a-button size="small">清空{{ruleItemType}}</a-button> -->
         </div>
         <div class="main_content_form">
-          <zformDemo ref="zformDemo" style="background: #fff;padding:4px" v-model="userInfoModel"
+          <!-- style="background: #fff;padding:4px" -->
+          <zformDemo ref="zformDemo" v-model="userInfoModel"
             @handleZformDemoItemDownClick="handleZformDemoItemDownClick"
             @handleZformDemoItemUpClick="handleZformDemoItemUpClick"
             @handleZformDemoCopyClick="handleZformDemoCopyClick" @handleZformDemoDelClick="handleZformDemoDelClick"

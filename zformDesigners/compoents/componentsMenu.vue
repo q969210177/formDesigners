@@ -5,7 +5,8 @@
         <div v-for="(v, k) in defaultMenuArr" :key="k">
           <h3>{{ v.name }}</h3>
           <div class="menu_box" :key="k + v.name">
-            <div draggable @dragstart="($event) => handleDragStart($event, item)" class="menu_box_item"
+            <div draggable @dragstart="($event) => handleDragStart($event, item)"
+              @dragend="($event) => handleDragEnd($event, item)" class="menu_box_item"
               v-for="(item, index) in v.menuArr" :key="index + item.name">
               <div class="menu_box_item_square">
                 <span :class="['iconfont', item.icon]"></span>
@@ -28,13 +29,24 @@ export default {
     }
   },
   methods: {
-    //拖动的抓取事件
+    //拖动的抓取事件 开始事件
     handleDragStart($event, defaultMenuArrItem) {
       // defaultMenuArrItem.data.fileId = setCompoentId()
       $event.dataTransfer.setData(
         'text/plain',
         JSON.stringify(defaultMenuArrItem.data)
       )
+    },
+    //拖拽抓取的释放事件
+    handleDragEnd($event, defaultMenuArrItem) {
+      const dom = document.getElementsByClassName("item_hover")
+      const length = dom.length
+      if (length) {
+        for (let index = 0; index < length; index++) {
+          const element = dom[index];
+          element.classList.remove("item_hover")
+        }
+      }
     }
   }
 }

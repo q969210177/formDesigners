@@ -1,10 +1,13 @@
 <template>
   <div class="componentsConfig">
-    <header class="header">组件配置{{ ruleItemType }}</header>
-    <main class="main" v-show="activeValue">
+    <header class="header">
+      组件配置
+      <a-button type="primary" size="small" @click="handleChangeModel">确定</a-button>
+    </header>
+    <main class="main">
       <div class="form_config">
         <h3>表单项配置</h3>
-        <ZFormCreate @valueChange="handleChangeModel" v-model="formModel" :formConfig="formRuleConfig" :rule="formRule">
+        <ZFormCreate v-model="formModel" :formConfig="formRuleConfig" :rule="formRule">
         </ZFormCreate>
       </div>
       <div class="components_config">
@@ -12,21 +15,25 @@
         <div class="independent_dom_class" v-if="['select', 'checkbox', 'radio'].includes(ruleItemType)">
           <span>配置数据:</span>
           <div class="width-70">
-            <setSelectOption @handleSubmitOptions="handleChangeModel" v-model="setSelectModel"></setSelectOption>
+            <setSelectOption v-model="setSelectModel"></setSelectOption>
           </div>
         </div>
         <!-- <div class="independent_dom_class" v-if="['input'].includes(ruleItemType)">
           <span>设置验证规则:</span>
           <div class="width-50"></div>
         </div>-->
-        <ZFormCreate @valueChange="handleChangeModel" v-model="compoentsModel" :formConfig="formRuleConfig"
-          :rule="compoentsRule">
+        <ZFormCreate v-model="compoentsModel" :formConfig="formRuleConfig" :rule="compoentsRule">
           <template slot="allowClear">
             111
           </template>
         </ZFormCreate>
       </div>
     </main>
+    <!-- <footer>
+      <div>
+
+      </div>
+    </footer> -->
   </div>
 </template>
 <script>
@@ -57,8 +64,9 @@ export default {
   watch: {},
   computed: {
     compoentsRule() {
-      if (this.activeValue) {
-        const { ruleItem } = getRuleItem(this.rule, this.activeValue)
+      const value = getRuleItem(this.rule, this.activeValue)
+      if (this.activeValue && value) {
+        const { ruleItem } = value
         const props = ruleItem.props
         const propsKey = Object.keys(props)
         const compoentsRules = [
@@ -232,9 +240,22 @@ export default {
       return []
     },
     formRule() {
-      if (this.activeValue) {
-        const { ruleItem } = getRuleItem(this.rule, this.activeValue)
+      const value = getRuleItem(this.rule, this.activeValue)
+      if (this.activeValue && value) {
+        const { ruleItem } = value
         const formRules = [
+          {
+            type: 'input',
+            label: 'fileId',
+            fileId: 'fileId',
+            value: ruleItem.fileId,
+            props: {
+              disabled: ruleItem.itemType === "style"
+            },
+            span: 24,
+            attrArr: ["form", "style"],
+
+          },
           {
             type: 'input',
             label: 'label',
@@ -257,15 +278,7 @@ export default {
 
             span: 24
           },
-          {
-            type: 'input',
-            label: 'fileId',
-            fileId: 'fileId',
-            value: '',
-            span: 24,
-            attrArr: ["form"],
 
-          },
           {
             type: 'slider',
             label: '长度',
@@ -324,15 +337,13 @@ export default {
   mounted() { },
   methods: {
     init() {
-      if (this.activeValue) {
-        const { ruleItem } = getRuleItem(this.rule, this.activeValue)
+      const value = getRuleItem(this.rule, this.activeValue)
+      if (this.activeValue && value) {
+        const { ruleItem } = value
         if (['select', 'checkbox', 'radio'].includes(this.ruleItemType)) {
           this.setSelectModel = ruleItem.options
         }
       }
-    },
-    handleTest() {
-      console.log(111, "11")
     },
     //change事件 用来改变外部的参数设置
     handleChangeModel() {
@@ -359,7 +370,7 @@ export default {
       if (['select', 'checkbox', 'radio'].includes(this.ruleItemType)) {
         newRuleItem.options = this.setSelectModel
       }
-      this.$emit('handleChangeConfig', newRuleItem)
+      this.$emit('handleChangeConfig', newRuleItem, this.activeValue)
     }
   }
 }
@@ -377,7 +388,8 @@ export default {
     font-weight: 500;
     font-size: 18px;
     border-bottom: 1px solid #ececec;
-    @include flex-row-c-c;
+    padding: 0 8px;
+    @include flex-row-sb-c;
   }
 
   .main {

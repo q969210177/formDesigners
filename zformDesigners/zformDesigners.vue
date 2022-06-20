@@ -4,18 +4,20 @@
       <slot name="header"></slot>
       <a-button @click="handleSetFormConfigClick">设置表单默认配置</a-button>
       <a-button @click="handleLookVueCode">下载vue文件</a-button>
+      <a-button type="link"> <a href="https://gitee.com/zuzu5201314/form-designers">源码地址</a></a-button>
+
     </header>
     <div class="main">
       <div class="left_menu_box">
         <componentsMenu></componentsMenu>
       </div>
-      <div class="main_content" @drop="handleDropEvent" @dragover="handleDragoverEvent">
+      <div class="main_content" @drop="handleDropEvent" @dragover="handleDragoverEvent" @dragend="handleTest">
         <div class="main_content_operating">
           <a-button size="small" @click="handleOpenForm">预览</a-button>
           <!-- <a-button size="small">清空{{ruleItemType}}</a-button> -->
         </div>
         <div class="main_content_form">
-          <zformDemo style="background: #fff;padding:4px" v-model="userInfoModel"
+          <zformDemo ref="zformDemo" style="background: #fff;padding:4px" v-model="userInfoModel"
             @handleZformDemoItemDownClick="handleZformDemoItemDownClick"
             @handleZformDemoItemUpClick="handleZformDemoItemUpClick"
             @handleZformDemoCopyClick="handleZformDemoCopyClick" @handleZformDemoDelClick="handleZformDemoDelClick"
@@ -24,8 +26,8 @@
         </div>
       </div>
       <div class="right_rule_config">
-        <componentsConfig :key="componentsKey" @handleChangeConfig="handleChangeConfig" :activeValue.sync="activeValue"
-          :rule="userInfoRule" :ruleItemType="ruleItemType"></componentsConfig>
+        <componentsConfig @handleChangeConfig="handleChangeConfig" :activeValue="activeValue" :rule="userInfoRule"
+          :ruleItemType="ruleItemType"></componentsConfig>
       </div>
     </div>
     <footer></footer>
@@ -73,7 +75,6 @@ export default {
       formModel: {
         show: false
       },
-      componentsKey: 0,
       userInfoModel: {},
       formConfig: defaultFormConfig,
       userInfoRule: [],
@@ -81,11 +82,7 @@ export default {
       ruleItemType: ''
     }
   },
-  watch: {
-    activeValue() {
-      this.componentsKey++
-    }
-  },
+
   mounted() {
     const userInfoRule = localStorage.getItem('rule')
     if (userInfoRule) {
@@ -127,7 +124,7 @@ export default {
       if (fileId) {
         // const { index } = getRuleItem(this.userInfoRule, fileId)
         this.userInfoRule.splice(index, 1)
-        // this.clickActive = null
+        this.clickActive = undefined
         this.storageRule()
       }
     },
@@ -154,41 +151,36 @@ export default {
         data.fileId = setCompoentId()
         this.userInfoRule.push(data)
         this.storageRule()
-      } else {
-        // console.dir(toElement, 'className');
-        // console.clear()
-        const value = getRuleItem(this.userInfoRule, classList[0])
-        if (value) {
-          // console.dir(toElement, 'toElement');
-          classList.remove("item_hover")
-          // toElement.style.height = '30px'
-          const { ruleItem, index } = value
-          $event.dataTransfer.dropEffect = 'move'
-          const data = JSON.parse($event.dataTransfer.getData('text/plain'))
-          data.fileId = setCompoentId()
-          this.userInfoRule.splice(index + 1, 0, data)
-          this.storageRule()
-        }
+        return
       }
-      // $event.dataTransfer.dropEffect = 'move'
-      // const data = JSON.parse($event.dataTransfer.getData('text/plain'))
-      // data.fileId = setCompoentId()
-      // this.userInfoRule.push(data)
-      // 
-      // this.userInfoModel.updateRule()
+      // console.dir(toElement, 'className');
+      // console.clear()
+      const value = getRuleItem(this.userInfoRule, classList[0])
+      if (value) {
+        classList.remove("item_hover")
+        const { ruleItem, index } = value
+        $event.dataTransfer.dropEffect = 'move'
+        const data = JSON.parse($event.dataTransfer.getData('text/plain'))
+        data.fileId = setCompoentId()
+        this.userInfoRule.splice(index + 1, 0, data)
+        this.storageRule()
+        return
+      }
+
     },
     //   //拖拽中的事件
     handleDragoverEvent($event) {
       $event.preventDefault()
       const { toElement, dataTransfer } = $event
       const { classList } = toElement
-      classList.remove("item_hover")
       const value = getRuleItem(this.userInfoRule, classList[0])
       if (value) {
         classList.add("item_hover")
-
       }
-      console.clear()
+    },
+    //
+    handleTest($e) {
+      console.log($e, "111");
     },
     //设置表单config的弹窗确定事件
     handleDefaultformConfigSubmitClick(newFormConfig) {
@@ -197,19 +189,27 @@ export default {
       setDefaultFormConfig(newFormConfig)
     },
     //当表单的配置项发生修改的时候 newFormConfig
-    handleChangeConfig(newFormConfig) {
-      const { ruleItem, index } = getRuleItem(
+    handleChangeConfig(newFormConfig, fileId) {
+      const value = getRuleItem(
         this.userInfoRule,
-        this.activeValue
+        fileId
       )
-      for (const key in newFormConfig) {
-        if (Object.hasOwnProperty.call(newFormConfig, key)) {
-          const element = newFormConfig[key]
-          ruleItem[key] = element
+      if (value) {
+        const { ruleItem, index } = value
+        // if (ruleItem.fileId === newFormConfig.fileId) {
+        //   delete newFormConfig.fileId
+        // }
+        for (const key in newFormConfig) {
+          if (Object.hasOwnProperty.call(newFormConfig, key)) {
+            const element = newFormConfig[key]
+            ruleItem[key] = element
+          }
         }
+        // Object.assign(newFormConfig, ruleItem)
+        this.userInfoRule.splice(index, 1, ruleItem)
+        this.storageRule()
       }
-      this.userInfoRule.splice(index, 1, ruleItem)
-      this.storageRule()
+
     },
     //打开预览的弹窗
     handleOpenForm() {

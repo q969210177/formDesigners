@@ -125,7 +125,6 @@ export default {
         form: this.returnFormItem,
         style: this.returnStyleItem,
       };
-      console.log(type, "type");
       if (returnObj[type]) {
         return returnObj[type](h, ruleItem);
       }

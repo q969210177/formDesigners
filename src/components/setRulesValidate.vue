@@ -2,7 +2,7 @@
   <div class="setRulesValidate">
     <div>
       <span class="label">{{ setOptionsValue() }}</span>
-      <a-button size="small" type="link" @click="formModelConfig.show = true">打开{{ validateType }}</a-button>
+      <a-button size="small" type="link" @click="formModelConfig.show = true">打开</a-button>
     </div>
     <a-modal :destroyOnClose="true" title="设置组件的验证规则" :width="1000" cancelText="取消" okText="确定"
       @ok="handleSubmitOptions" @cancel="handleCamcel" v-model="formModelConfig.show">

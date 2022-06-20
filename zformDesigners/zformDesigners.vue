@@ -26,8 +26,8 @@
         </div>
       </div>
       <div class="right_rule_config">
-        <componentsConfig @handleChangeConfig="handleChangeConfig" :activeValue="activeValue" :rule="userInfoRule"
-          :ruleItemType="ruleItemType"></componentsConfig>
+        <componentsConfig ref="componentsConfig" @handleChangeConfig="handleChangeConfig" :activeValue="activeValue"
+          :rule="userInfoRule" :ruleItemType="ruleItemType"></componentsConfig>
       </div>
     </div>
     <footer></footer>
@@ -75,6 +75,7 @@ export default {
       formModel: {
         show: false
       },
+      // componentsConfigApi: {},
       userInfoModel: {},
       formConfig: defaultFormConfig,
       userInfoRule: [],
@@ -82,7 +83,13 @@ export default {
       ruleItemType: ''
     }
   },
-
+  watch: {
+    activeValue() {
+      if (this.$refs.componentsConfig) {
+        this.$refs.componentsConfig.init()
+      }
+    }
+  },
   mounted() {
     const userInfoRule = localStorage.getItem('rule')
     if (userInfoRule) {
@@ -196,9 +203,6 @@ export default {
       )
       if (value) {
         const { ruleItem, index } = value
-        // if (ruleItem.fileId === newFormConfig.fileId) {
-        //   delete newFormConfig.fileId
-        // }
         for (const key in newFormConfig) {
           if (Object.hasOwnProperty.call(newFormConfig, key)) {
             const element = newFormConfig[key]

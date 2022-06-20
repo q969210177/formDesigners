@@ -1,21 +1,15 @@
 <template>
   <div class="setSelectOption">
     <div>
-      <span class="label">{{setOptionsValue()}}</span>
-      <a-button size="small" type="link" @click="formModelConfig.show=true">打开</a-button>
+      <span class="label">{{ setOptionsValue() }}</span>
+      <a-button size="small" type="link" @click="formModelConfig.show = true">打开</a-button>
     </div>
-    <a-modal
-      :destroyOnClose="true"
-      title="设置select的option"
-      :width="800"
-      cancelText="取消"
-      okText="确定"
-      @ok="handleSubmitOptions"
-      v-model="formModelConfig.show"
-    >
+    <a-modal :destroyOnClose="true" title="设置select的option" :width="800" cancelText="取消" okText="确定"
+      @ok="handleSubmitOptions" v-model="formModelConfig.show">
       <div class="model_table_header">
         <a-button size="small" @click="handleAddTableData">添加</a-button>
       </div>
+      {{ value }}
       <a-table :pagination="false" :columns="columns" :data-source="options" bordered>
         <template slot="label" slot-scope="label,row">
           <a-input v-model="row.label"></a-input>
@@ -121,9 +115,11 @@ export default {
 </script>
 <style lang="scss" scoped>
 @import '~@/assets/layout.scss';
+
 .setSelectOption {
   width: 100%;
   height: 100%;
+
   .label {
     width: 40px;
     overflow: hidden;
@@ -131,6 +127,7 @@ export default {
     text-overflow: ellipsis;
   }
 }
+
 .model_table_header {
   width: 100%;
   @include flex-row-e-c;

@@ -12,20 +12,9 @@
       </div>
       <div class="components_config">
         <h3>组件配置</h3>
-        <div class="independent_dom_class" v-if="['select', 'checkbox', 'radio'].includes(ruleItemType)">
-          <span>配置数据:</span>
-          <div class="width-70">
-            <setSelectOption v-model="setSelectModel"></setSelectOption>
-          </div>
-        </div>
-        <!-- <div class="independent_dom_class" v-if="['input'].includes(ruleItemType)">
-          <span>设置验证规则:</span>
-          <div class="width-50"></div>
-        </div>-->
+
         <ZFormCreate v-model="compoentsModel" :formConfig="formRuleConfig" :rule="compoentsRule">
-          <template slot="allowClear">
-            111
-          </template>
+
         </ZFormCreate>
       </div>
     </main>
@@ -88,6 +77,16 @@ export default {
 
             attrArr: ['divider']
           },
+          {
+            type: 'setSelectOption',
+            label: '配置数据',
+            fileId: 'options',
+            value: [],
+            span: 24,
+
+            attrArr: ['select', 'checkbox', 'radio']
+          },
+          // 
           {
             type: 'switch',
             label: '是否虚线',
@@ -220,8 +219,6 @@ export default {
               'datePicker',
               'rangePicker',
               'select',
-              'radio',
-              'checkbox',
               'switch',
               'slider'
             ]
@@ -337,13 +334,14 @@ export default {
   mounted() { },
   methods: {
     init() {
-      const value = getRuleItem(this.rule, this.activeValue)
-      if (this.activeValue && value) {
-        const { ruleItem } = value
-        if (['select', 'checkbox', 'radio'].includes(this.ruleItemType)) {
-          this.setSelectModel = ruleItem.options
-        }
-      }
+      // const value = getRuleItem(this.rule, this.activeValue)
+      // if (this.activeValue && value) {
+      //   const { ruleItem } = value
+      //   // if (['select', 'checkbox', 'radio'].includes(this.ruleItemType)) {
+      //   //   this.setSelectModel = ruleItem.options
+      //   //   console.log(this.setSelectModel, " this.setSelectModel");
+      //   // }
+      // }
     },
     //change事件 用来改变外部的参数设置
     handleChangeModel() {
@@ -361,15 +359,20 @@ export default {
           }
         }
       }
+
       const newRuleItem = {
         ...defaultFormData,
         props: {
           ...componentsFormData
         }
       }
-      if (['select', 'checkbox', 'radio'].includes(this.ruleItemType)) {
-        newRuleItem.options = this.setSelectModel
+      if (componentsFormData.options) {
+        newRuleItem.options = componentsFormData.options
+        // delete componentsFormData.options
       }
+      // if (['select', 'checkbox', 'radio'].includes(this.ruleItemType)) {
+      //   newRuleItem.options = this.setSelectModel
+      // }
       this.$emit('handleChangeConfig', newRuleItem, this.activeValue)
     }
   }

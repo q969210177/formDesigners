@@ -1,7 +1,59 @@
+@import "~@/assets/layout.scss";
+
 .zformDemo {
   width: 100%;
   // height: 100%;
   background: #f7f7f7;
+  position: relative;
+  .rule_item {
+    width: 100%;
+    padding: 0 2px;
+    outline: 1px dashed #2e73ff;
+    min-height: 80px;
+    .form_item_dialog {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      z-index: 1900;
+      .form_item_dialog_btn {
+        width: 99%;
+        height: 95%;
+        @include flex-row-e-e;
+        .operate_btn {
+          width: 100%;
+          padding: 2px;
+          // margin-top: 2px;
+          @include flex-row-e-s;
+
+          .square_box_btn + .square_box_btn {
+            margin-left: 4px;
+          }
+          .square_box_btn {
+            height: 15px;
+            width: 15px;
+            // position: relative;
+            font-size: 12px;
+            // color: #fff;
+            @include flex-row-c-c;
+          }
+        }
+      }
+    }
+  }
+
+  .rule_item_active {
+    width: 100%;
+    height: 100%;
+    border: 2px #2e73ff solid;
+  }
+  // .form_demo_abs {
+  //   content: "";
+  //   position: absolute;
+  //   width: 100%;
+  //   height: 100%;
+  //   background: red;
+  // }
+
   .default_item_hover {
     height: 10px;
   }

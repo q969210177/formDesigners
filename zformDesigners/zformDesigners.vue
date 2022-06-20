@@ -31,15 +31,15 @@
       </div>
     </div>
     <footer></footer>
-    <a-modal :footer="null" :destroyOnClose="true" title="设置表单默认配置" v-model="formModelConfig.show">
+    <a-modal :zIndex="2000" :footer="null" :destroyOnClose="true" title="设置表单默认配置" v-model="formModelConfig.show">
       <defaultformConfig @cancal="formModelConfig.show = false" @handleSubmit="handleDefaultformConfigSubmitClick"
         :formConfig="formConfig"></defaultformConfig>
     </a-modal>
 
-    <a-modal :footer="null" :destroyOnClose="true" title="查看vue的代码" v-model="vueCodeModel.show">
+    <a-modal :zIndex="2000" :footer="null" :destroyOnClose="true" title="查看vue的代码" v-model="vueCodeModel.show">
       <div>{{ vueCodeModel.value }}</div>
     </a-modal>
-    <a-modal :width="1000" :footer="null" :destroyOnClose="true" title="预览" v-model="formModel.show">
+    <a-modal :zIndex="2000" :width="1000" :footer="null" :destroyOnClose="true" title="预览" v-model="formModel.show">
       <ZFormCreate v-model="userInfoModel" :formConfig="formConfig" :rule="userInfoRule"></ZFormCreate>
     </a-modal>
   </div>

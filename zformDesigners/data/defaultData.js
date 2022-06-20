@@ -8,9 +8,11 @@ export let defaultFormConfig = {
   colonStatus: true,
 };
 
+//设置默认的表单设置
 export const setDefaultFormConfig = (newFormConfig) => {
   defaultFormConfig = Object.assign(defaultFormConfig, newFormConfig);
 };
+//左侧默认的菜单arr
 export const defaultMenuArr = [
   {
     name: "表单组件",
@@ -149,11 +151,12 @@ export const defaultMenuArr = [
   },
 ];
 
+//右侧的组件配置里面的form部分
 export let formRule = [];
 export const setFormRule = (newRule) => {
   formRule = newRule;
 };
-
+//右侧的组件配置里面的组件部分
 export let compoentsRule = [];
 export const setCompoentsRule = (newRule) => {
   compoentsRule = newRule;

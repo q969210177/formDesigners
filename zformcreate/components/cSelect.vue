@@ -1,15 +1,10 @@
 <template>
   <div class="cSelect">
-    <a-select
-      v-model="defaultValue"
-      v-bind="$attrs"
-      v-on="$listeners"
-      @change="handleSelectChange"
-      style="width: 100%"
-    >
+    <a-select :getPopupContainer="() => $el" v-model="defaultValue" v-bind="$attrs" v-on="$listeners"
+      @change="handleSelectChange" style="width: 100%">
       <a-select-option :key="v[valueKey] + k" v-for="(v, k) in options" :value="v[valueKey]">
         {{
-        v[labelKey]
+            v[labelKey]
         }}
       </a-select-option>
     </a-select>
@@ -61,5 +56,6 @@ export default {
 .cSelect {
   width: 100%;
   height: 100%;
+  position: relative;
 }
 </style>

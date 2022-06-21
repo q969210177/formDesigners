@@ -1,9 +1,13 @@
 // entry: "index.js",
+const Version = new Date().getTime();
 module.exports = {
   outputDir: "ccc",
   publicPath: "./",
   configureWebpack: {
-    output: { libraryExport: "default" },
+    output: {
+      libraryExport: "default",
+      filename: "js/[name].[chunkhash]." + Version + ".js",
+    },
   },
   devServer: {
     port: 9000,
@@ -16,6 +20,7 @@ module.exports = {
   chainWebpack() {
     //修改htmlWebpackPlugin
   },
+
   //   output: {
   //     libraryExport: "default",
   //     entry: "./index.js",

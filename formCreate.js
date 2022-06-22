@@ -4,5 +4,4 @@ export const createFormObj = {
   version: "0.0.1",
   createForm,
 };
-console.log(createFormObj, "createFormObj");
 export default createForm;

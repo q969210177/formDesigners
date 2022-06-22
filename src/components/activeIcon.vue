@@ -5,8 +5,8 @@
                 <span :class="['label', 'iconfont', value]"></span>
                 <a-button size="small" type="link" @click="formModelConfig.show = true">打开</a-button>
             </div>
-            <a-modal :getContainer="() => this.$el" :destroyOnClose="true" title="选择icon" :width="600" cancelText="取消"
-                v-model="formModelConfig.show">
+            <a-modal :z-index="2000" :getContainer="() => this.$el" :destroyOnClose="true" title="选择icon" :width="600"
+                cancelText="取消" v-model="formModelConfig.show">
                 <div class="serachSelect_body">
                     <!-- <a-input-search @keyup="handleKeyUpVoid" v-model="activeInputValue" placeholder="请输入搜索关键字" enter-button
                     @click.stop="handleInputClick" @search="handleSerach" @blur="handleBlur" /> -->

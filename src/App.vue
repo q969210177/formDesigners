@@ -1,6 +1,9 @@
 <template>
   <div id="app">
-    <!-- <ZFormCreate :rule="rule" v-model="api"></ZFormCreate> -->
+    <!--    "build": "vue-cli-service build",    
+    "lib:formDesigners": "vue-cli-service build --target lib --inline-vue --name zformDesigners formDesigners.js",
+    "lib:formCreate": "vue-cli-service build --target lib --inline-vue --name zformcreate formCreate.js",-->
+    <!-- <ZFormCreate :rule="rule" v-model="api"></ZFormCreate> thisisunsafe-->
     <zformDesigners></zformDesigners>
   </div>
 </template>

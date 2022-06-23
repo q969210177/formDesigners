@@ -12,9 +12,7 @@
       </div>
       <div class="components_config">
         <h3>组件配置</h3>
-
         <ZFormCreate v-model="compoentsModel" :formConfig="formRuleConfig" :rule="compoentsRule">
-
         </ZFormCreate>
       </div>
     </main>
@@ -50,7 +48,7 @@ export default {
       type: [String, Number]
     }
   },
-  watch: {},
+
   computed: {
     compoentsRule() {
       const value = getRuleItem(this.rule, this.activeValue)
@@ -303,8 +301,6 @@ export default {
   },
   data() {
     return {
-      setSelectModel: [],
-      tabsModel: '',
       compoentsModel: {},
       formModel: {},
       formRuleConfig: {
@@ -316,16 +312,6 @@ export default {
         labelWidth: 80,
         colonStatus: true
       },
-      tabsOption: [
-        {
-          name: '表单配置',
-          key: '1'
-        },
-        {
-          name: '组件配置',
-          key: '2'
-        }
-      ]
     }
   },
   created() {

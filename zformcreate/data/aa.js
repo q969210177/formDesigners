@@ -1,0 +1,15 @@
+export const componentsObj = {
+  11: "c11",
+  checkbox: "cCheckbox",
+  datapick: "cDataPick",
+  divider: "cDivider",
+  input: "cInput",
+  inputnumber: "cInputNumber",
+  radio: "cRadio",
+  rangepick: "cRangePick",
+  select: "cSelect",
+  slider: "cSlider",
+  switch: "cSwitch",
+  tip: "cTip",
+  tree: "cTree",
+};

@@ -1,6 +1,6 @@
 <template>
   <div class="cDataPick">
-    <a-date-picker v-model="defaultValue" v-bind="$attrs" @change="handleChange" />
+    <a-date-picker v-on="$listeners" v-model="defaultValue" v-bind="$attrs" @change="handleChange" />
   </div>
 </template>
 <script>

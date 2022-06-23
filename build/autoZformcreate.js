@@ -2,8 +2,7 @@ var shell = require("shelljs");
 const readline = require("readline");
 const fs = require("fs");
 const path = require("path");
-const page = require("../formCreate.js");
-console.log(page, "page");
+// const page = require("../formCreate.js");
 
 // const newVersion = page.version.split(".");
 // if (newVersion[2] === 9) {
@@ -13,6 +12,7 @@ console.log(page, "page");
 // } else {
 //   newVersion[2] = Number(newVersion[2]) + 1 + "";
 // }
+
 // const newPackage = {
 //   name: "zformcreate",
 //   version: newVersion.join("."),
@@ -28,43 +28,43 @@ console.log(page, "page");
 //     "core-js": "^3.6.5",
 //   },
 // };
-// fs.writeFile(
-//   path.resolve(__dirname, "../lib/zformcreate/package.json"),
-//   `
-//   {
-//     "name":"zformcreate",
-//     "version":"${newVersion.join(".")}",
-//     "description":"根据特地规则生成表单",
-//     "main":"index.js",
-//     "files":["index.js","index.d.ts"],
-//     "typings":"index.d.ts",
-//     "keywords":["form","vue","antd"],
-//     "license":"MIT",
-//     "peerDependencies":{
-//         "vue":"^2.5.17",
-//         "ant-design-vue":"^1.7.8",
-//         "core-js":"^3.6.5"
-//     }
-//   }
-//   `,
-//   () => {
-//     console.log("运行完毕");
-//   }
-// );
+fs.writeFile(
+  path.resolve(__dirname, "../lib/zformcreate/package.json"),
+  `
+  {
+    "name":"zformcreate",
+    "version":"0.0.1",
+    "description":"根据特地规则生成表单",
+    "main":"index.js",
+    "files":["index.js","index.d.ts"],
+    "typings":"index.d.ts",
+    "keywords":["form","vue","antd"],
+    "license":"MIT",
+    "peerDependencies":{
+        "vue":"^2.5.17",
+        "ant-design-vue":"^1.7.8",
+        "core-js":"^3.6.5"
+    }
+  }
+  `,
+  () => {
+    console.log("运行完毕");
+  }
+);
 
-// fs.writeFile(
-//   path.resolve(__dirname, "../lib/zformcreate/index.d.ts"),
-//   `
-//   import Vue, { VNode } from "vue";
-//   export declare class ElementUIComponent extends Vue {
-//     static install(vue: typeof Vue): void;
-//     static components(components: VNode): void;
-//   }
-//   `,
-//   () => {
-//     console.log("运行完毕");
-//   }
-// );
+fs.writeFile(
+  path.resolve(__dirname, "../lib/zformcreate/index.d.ts"),
+  `
+  import Vue, { VNode } from "vue";
+  export declare class ElementUIComponent extends Vue {
+    static install(vue: typeof Vue): void;
+    static components(components: VNode): void;
+  }
+  `,
+  () => {
+    console.log("运行完毕");
+  }
+);
 // shell.exec(`
 //   cd ./lib/zformcreate/
 //   ls -l

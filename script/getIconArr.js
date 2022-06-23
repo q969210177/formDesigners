@@ -3,12 +3,15 @@
 // const postcss = require("postcss");
 const fs = require("fs");
 const path = require("path");
-const fontFile = fs.readFileSync(
-  path.resolve(__dirname, "../src/assets/iconFont/iconfont.json"),
-  "utf8"
-);
+//直接拿到json
+const fontFile = require(path.resolve(
+  __dirname,
+  "../src/assets/iconFont/iconfont.json"
+));
+//
 const classList = [];
-const nodes = JSON.parse(fontFile).glyphs;
+const nodes = fontFile.glyphs;
+
 nodes.forEach((node) => {
   classList.push({
     name: node.name,

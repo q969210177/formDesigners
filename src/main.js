@@ -3,8 +3,6 @@ import App from "./App.vue";
 import "@/utils/installAntdFormCompoent.js";
 import "@/utils/autoCompoents.js";
 import zformDesigners from "../zformDesigners/index.js";
-// import zformDesigners from "../ccc/zformDesigners.umd.js";
-// import "../ccc/zformDesigners.css";
 import "@/assets/iconFont/iconfont.css";
 zformDesigners.addFormRule([
   // {

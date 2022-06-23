@@ -27,7 +27,7 @@ module.exports = {
   //     chunks: ["chunk-vendors", "chunk-common", "index"],
   //   },
   // },
-  outputDir: "ccc",
+  // outputDir: "ccc",
   configureWebpack: {
     output: {
       libraryExport: "default",

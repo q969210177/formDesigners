@@ -73,6 +73,7 @@ export default {
       updateRule: this.updateRule,
       setRuleItemOptions: this.setRuleItemOptions,
       getRuleItemSomeOne: this.getRuleItemSomeOne,
+      updateRuleItemProps: this.updateRuleItemProps,
     });
   },
   beforeMount() {},
@@ -118,6 +119,11 @@ export default {
         return ruleItem[ruleItemkey];
       }
       return {};
+    },
+    //更新组件的Props
+    updateRuleItemProps(fileId, newProps) {
+      const { ruleItem } = getRuleItem(this.copyRule, fileId);
+      Object.assign(ruleItem.props, newProps);
     },
     //返回组件
     renderCompoents(type, h, ruleItem) {

@@ -63,10 +63,8 @@ fs.writeFile(
     console.log("运行完毕");
   }
 );
-//  ./${path.resolve(__dirname, "")}
-shell.exec(`
-  cd ./lib/zformcreate/
-  ls -l
-  npm publish
-`);
-// shell.exec(`ls -l`);
+// shell.exec(`
+//   cd ./lib/zformcreate/
+//   ls -l
+//   npm publish
+// `);

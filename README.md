@@ -5,29 +5,23 @@
 
 #### 软件架构
 1.这是[源码地址](https://github.com/q969210177/formDesigners)
-1.
-
+2.[规则文档](https://github.com/q969210177/formDesigners/tree/master/lib/zformcreate)
 
 #### 安装教程
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+1.  npm i zformcreate
 
-#### 使用说明
+#### 依赖插件（page.js其实有写）
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+1.  必装vue
+2.  antd-vue
 
 #### 参与贡献
 
-1.  Fork 本仓库
-2.  新建 Feat_xxx 分支
-3.  提交代码
-4.  新建 Pull Request
-
-
-#### 特技
+1. 目前是一个人完成的
+2. 如果想参与进来请联系我
+#### 广告
+1. 有需要web前端开发的请联系我
+2. 原神uid 178126507
 
 

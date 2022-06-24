@@ -1,6 +1,7 @@
 <template>
-  <div class="cSelect">
-    <a-select :getPopupContainer="() => $el" v-model="defaultValue" v-bind="$attrs" v-on="$listeners"
+<!-- 多选的下拉框 -->
+    <div class="cmultipleSelect">
+         <a-select :getPopupContainer="() => $el" v-model="defaultValue" v-bind="$attrs" v-on="$listeners"
       @change="handleSelectChange" style="width: 100%">
       <a-select-option :key="v[valueKey] + k" v-for="(v, k) in options" :value="v[valueKey]">
         {{
@@ -8,12 +9,12 @@
         }}
       </a-select-option>
     </a-select>
-  </div>
+    </div>
 </template>
 <script>
 export default {
-  name: 'CSelect',
-  props: {
+    name: 'cmultipleSelect',
+     props: {
     options: {
       type: Array,
       default: () => {
@@ -54,9 +55,8 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.cSelect {
-  width: 100%;
-  height: 100%;
-  position: relative;
+.cmultipleSelect{
+   width:100%;
+   height:100%
 }
 </style>

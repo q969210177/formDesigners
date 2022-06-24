@@ -24,6 +24,7 @@ import {
   Spin,
   Tree,
   Cascader,
+  Alert,
 } from "ant-design-vue";
 import "ant-design-vue/dist/antd.css";
 Vue.prototype.$message = message;
@@ -50,6 +51,7 @@ const componentsArr = [
   Spin,
   Tree,
   Cascader,
+  Alert,
 ];
 componentsArr.forEach((i) => {
   Vue.use(i);

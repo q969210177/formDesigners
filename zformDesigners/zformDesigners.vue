@@ -28,8 +28,8 @@
           <zformDemo
             ref="zformDemo"
             v-model="userInfoModel"
-            @handleZformDemoItemDownClick="handleZformDemoItemDownClick"
-            @handleZformDemoItemUpClick="handleZformDemoItemUpClick"
+            @handleZformDemoDownClick="handleZformDemoItemDownClick"
+            @handleZformDemoUpClick="handleZformDemoItemUpClick"
             @handleZformDemoCopyClick="handleZformDemoCopyClick"
             @handleZformDemoDelClick="handleZformDemoDelClick"
             :activeValue.sync="activeValue"
@@ -140,6 +140,7 @@ export default {
   methods: {
     //点击下移位置
     handleZformDemoItemDownClick(ruleItem, index) {
+      console.log(index,"index");
       if (index === this.userInfoRule.length - 1) return;
       const newRuleItem = this.userInfoRule[index + 1];
       this.userInfoRule.splice(index, 1, newRuleItem);
@@ -148,6 +149,8 @@ export default {
     },
     //点击上移位置
     handleZformDemoItemUpClick(ruleItem, index) {
+      console.log(index,"index");
+
       if (index === 0) return;
       const newRuleItem = this.userInfoRule[index - 1];
       this.userInfoRule.splice(index, 1, newRuleItem);
@@ -167,9 +170,9 @@ export default {
       this.formModelConfig.show = true;
     },
     //表单的点击删除事件
-    handleZformDemoDelClick({ fileId }) {
+    handleZformDemoDelClick({ fileId },index) {
       if (fileId) {
-        const { index } = getRuleItem(this.userInfoRule, fileId);
+        // const { index } = getRuleItem(this.userInfoRule, fileId);
         this.userInfoRule.splice(index, 1);
         this.clickActive = undefined;
         this.storageRule();

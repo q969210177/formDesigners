@@ -118,18 +118,18 @@ export default {
       return {};
     },
     //返回组件
-    renderCompoents(type, h, ruleItem) {
+    renderCompoents(type, h, ruleItem,index) {
       const returnObj = {
         form: this.returnFormItem,
         style: this.returnStyleItem,
       };
       if (returnObj[type]) {
-        return returnObj[type](h, ruleItem);
+        return returnObj[type](h, ruleItem,index);
       }
-      return this.returnFormItem(h, ruleItem);
+      return this.returnFormItem(h, ruleItem,index);
     },
     //返回样式组件
-    returnStyleItem(h, ruleItem) {
+    returnStyleItem(h, ruleItem,index) {
       const com = componentsObj[ruleItem.type];
       const { fileId } = ruleItem;
       const dom = h(com, {
@@ -146,12 +146,12 @@ export default {
               { rule_item_form_noactive: this.activeValue !== fileId },
             ]}
           ></div>
-          {this.returnOperateDom(ruleItem)}
+          {this.returnOperateDom(ruleItem,index)}
         </div>
       );
     },
     //返回form组件
-    returnFormItem(h, ruleItem) {
+    returnFormItem(h, ruleItem,index) {
       const { colonStatus, labelWidth } = this.formConfig;
       const { fileId } = ruleItem;
       //设置 formItem的props 并给上默认值
@@ -238,7 +238,7 @@ export default {
               { rule_item_form_noactive: this.activeValue !== fileId },
             ]}
           ></div>
-          {this.returnOperateDom(ruleItem)}
+          {this.returnOperateDom(ruleItem,index)}
         </div>
       );
     },
@@ -276,13 +276,15 @@ export default {
       return returnObj;
     },
     //返回操作区按钮
-    returnOperateDom(ruleItem) {
+    returnOperateDom(ruleItem,index) {
       return (
         <div class="operate_btn">
           <span
             title="下降"
             onClick={() => {
-              this.$emit("handleZformDemoDownClick", ruleItem);
+              console.log(index,"index");
+
+              this.$emit("handleZformDemoDownClick", ruleItem,index);
             }}
             class="square_box_btn "
             style={{ color: "#2e73ff" }}
@@ -293,7 +295,7 @@ export default {
           <span
             title="上升"
             onClick={() => {
-              this.$emit("handleZformDemoUpClick", ruleItem);
+              this.$emit("handleZformDemoUpClick", ruleItem,index);
             }}
             class="square_box_btn "
             style={{ color: "#2e73ff" }}
@@ -313,7 +315,7 @@ export default {
           <span
             title="删除"
             onClick={() => {
-              this.$emit("handleZformDemoDelClick", ruleItem);
+              this.$emit("handleZformDemoDelClick", ruleItem,index);
             }}
             class="square_box_btn "
             style={{ color: "#ff2e2e" }}
@@ -347,19 +349,20 @@ export default {
           <a-row>
             {this.copyRule.map((ruleItem, k) => {
               let eventLoop = {};
-              if (ruleItem.on) {
-                eventLoop = {
-                  ...returnEvent(this.$listeners, ruleItem.fileId),
-                  ...ruleItem.on,
-                };
-              } else {
-                eventLoop = returnEvent(this.$listeners, ruleItem.fileId);
-              }
+              // if (ruleItem.on) {
+              //   eventLoop = {
+              //     ...returnEvent(this.$listeners, ruleItem.fileId),
+              //     ...ruleItem.on,
+              //   };
+              //  draggable
+              // } else {
+              //   eventLoop = returnEvent(this.$listeners, ruleItem.fileId);
+              // }
               if (ruleItem.type !== "hide") {
                 return (
                   <a-col span={ruleItem.span ? ruleItem.span : 24}>
                     <div
-                      draggable
+                     
                       class="rule_item"
                       onClick={() => {
                         this.$emit("rowClick", ruleItem.fileId);
@@ -369,7 +372,7 @@ export default {
                     >
                       {/* 用来展示显示的组件部分 但是是在z轴的最下层 */}
                       <slot name={ruleItem.fileId} data={ruleItem}>
-                        {this.renderCompoents(ruleItem.itemType, h, ruleItem)}
+                        {this.renderCompoents(ruleItem.itemType, h, ruleItem,k)}
                       </slot>
                       {/* class="rule_item_operating" */}
                       {/* <div

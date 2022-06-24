@@ -254,6 +254,19 @@ export const defaultMenuArr = [
           span: 24,
         },
       },
+      {
+        name: "提示",
+        activeValue: "alert",
+        icon: "icon-danhangshurukuang",
+        data: {
+          type: "alert",
+          value: "",
+          itemType: "style",
+          label: "",
+          props: {},
+          span: 24,
+        },
+      },
     ],
   },
 ];
@@ -342,21 +355,21 @@ export let compoentsRule = [
   },
   {
     type: "switch",
-    label: "清楚图标",
+    label: "清除图标",
     fileId: "allowClear",
     value: false,
     span: 24,
 
     attrArr: ["input", "select"],
   },
-  {
-    type: "activeIcon",
-    label: "前置按钮",
-    fileId: "prefix",
-    value: "",
-    span: 24,
-    attrArr: ["input", "select"],
-  },
+  // {
+  //   type: "activeIcon",
+  //   label: "前置按钮",
+  //   fileId: "prefix",
+  //   value: "",
+  //   span: 24,
+  //   attrArr: ["input", "select"],
+  // },
   {
     type: "input",
     label: "未选中的文字内容",
@@ -411,7 +424,7 @@ export let compoentsRule = [
   // max
   {
     type: "switch",
-    label: "禁用",
+    label: "是否禁用",
     fileId: "disabled",
     value: false,
     span: 24,

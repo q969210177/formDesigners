@@ -4,181 +4,219 @@
       <slot name="header"></slot>
       <a-button @click="handleSetFormConfigClick">设置表单默认配置</a-button>
       <a-button @click="handleLookVueCode">下载vue文件</a-button>
-      <a-button type="link"> <a href="https://github.com/q969210177/formDesigners">源码地址</a></a-button>
-
+      <a-button type="link">
+        <a href="https://github.com/q969210177/formDesigners"
+          >源码地址</a
+        ></a-button
+      >
     </header>
     <div class="main">
       <div class="left_menu_box">
         <componentsMenu></componentsMenu>
       </div>
-      <div class="main_content" @drop="handleDropEvent" @dragover="handleDragoverEvent">
+      <div
+        class="main_content"
+        @drop="handleDropEvent"
+        @dragover="handleDragoverEvent"
+      >
         <div class="main_content_operating">
           <a-button size="small" @click="handleOpenForm">预览</a-button>
           <!-- <a-button size="small">清空{{ruleItemType}}</a-button> -->
         </div>
         <div class="main_content_form">
           <!-- style="background: #fff;padding:4px" -->
-          <zformDemo ref="zformDemo" v-model="userInfoModel"
+          <zformDemo
+            ref="zformDemo"
+            v-model="userInfoModel"
             @handleZformDemoItemDownClick="handleZformDemoItemDownClick"
             @handleZformDemoItemUpClick="handleZformDemoItemUpClick"
-            @handleZformDemoCopyClick="handleZformDemoCopyClick" @handleZformDemoDelClick="handleZformDemoDelClick"
-            :activeValue.sync="activeValue" :ruleItemType.sync="ruleItemType" :formConfig="formConfig"
-            :rule="userInfoRule"></zformDemo>
+            @handleZformDemoCopyClick="handleZformDemoCopyClick"
+            @handleZformDemoDelClick="handleZformDemoDelClick"
+            :activeValue.sync="activeValue"
+            :ruleItemType.sync="ruleItemType"
+            :formConfig="formConfig"
+            :rule="userInfoRule"
+          ></zformDemo>
         </div>
       </div>
       <div class="right_rule_config">
-        <componentsConfig ref="componentsConfig" @handleChangeConfig="handleChangeConfig" :activeValue="activeValue"
-          :rule="userInfoRule" :ruleItemType="ruleItemType"></componentsConfig>
+        <componentsConfig
+          ref="componentsConfig"
+          @handleChangeConfig="handleChangeConfig"
+          :activeValue="activeValue"
+          :rule="userInfoRule"
+          :ruleItemType="ruleItemType"
+        ></componentsConfig>
       </div>
     </div>
     <footer></footer>
-    <a-modal :zIndex="2000" :footer="null" :destroyOnClose="true" title="设置表单默认配置" v-model="formModelConfig.show">
-      <defaultformConfig @cancal="formModelConfig.show = false" @handleSubmit="handleDefaultformConfigSubmitClick"
-        :formConfig="formConfig"></defaultformConfig>
+    <a-modal
+      :zIndex="2000"
+      :footer="null"
+      :destroyOnClose="true"
+      title="设置表单默认配置"
+      v-model="formModelConfig.show"
+    >
+      <defaultformConfig
+        @cancal="formModelConfig.show = false"
+        @handleSubmit="handleDefaultformConfigSubmitClick"
+        :formConfig="formConfig"
+      ></defaultformConfig>
     </a-modal>
 
-    <a-modal :zIndex="2000" :footer="null" :destroyOnClose="true" title="查看vue的代码" v-model="vueCodeModel.show">
+    <a-modal
+      :zIndex="2000"
+      :footer="null"
+      :destroyOnClose="true"
+      title="查看vue的代码"
+      v-model="vueCodeModel.show"
+    >
       <div>{{ vueCodeModel.value }}</div>
     </a-modal>
-    <a-modal :zIndex="2000" :width="1000" :footer="null" :destroyOnClose="true" title="预览" v-model="formModel.show">
-      <ZFormCreate v-model="userInfoModel" :formConfig="formConfig" :rule="userInfoRule"></ZFormCreate>
+    <a-modal
+      :zIndex="2000"
+      :width="1000"
+      :footer="null"
+      :destroyOnClose="true"
+      title="预览"
+      v-model="formModel.show"
+    >
+      <ZFormCreate
+        v-model="userInfoModel"
+        :formConfig="formConfig"
+        :rule="userInfoRule"
+      ></ZFormCreate>
     </a-modal>
   </div>
 </template>
 <script>
-import componentsMenu from './compoents/componentsMenu.vue'
-import componentsConfig from './compoents/componentsConfig.vue'
-import defaultformConfig from './compoents/defaultformConfig.vue'
-import zformDemo from './zformDemo'
-import { defaultFormConfig, setDefaultFormConfig } from './data/defaultData.js'
-import {
-  setCompoentId,
-  getRuleItem,
-  setRuleItem
-} from '@/utils/utils'
+import componentsMenu from "./compoents/componentsMenu.vue";
+import componentsConfig from "./compoents/componentsConfig.vue";
+import defaultformConfig from "./compoents/defaultformConfig.vue";
+import zformDemo from "./zformDemo";
+import { defaultFormConfig, setDefaultFormConfig } from "./data/defaultData.js";
+import { setCompoentId, getRuleItem, setRuleItem } from "@/utils/utils";
 export default {
-  name: 'zformDesigners',
+  name: "zformDesigners",
   components: {
     componentsMenu,
     zformDemo,
     componentsConfig,
-    defaultformConfig
+    defaultformConfig,
   },
   data() {
     return {
       formModelConfig: {
-        show: false
+        show: false,
       },
       vueCodeModel: {
         show: false,
-        value: ''
+        value: "",
       },
       formModel: {
-        show: false
+        show: false,
       },
       // componentsConfigApi: {},
       userInfoModel: {},
       formConfig: defaultFormConfig,
       userInfoRule: [],
-      activeValue: '',
-      ruleItemType: ''
-    }
+      activeValue: "",
+      ruleItemType: "",
+    };
   },
   watch: {
     activeValue() {
       if (this.$refs.componentsConfig) {
-        this.$refs.componentsConfig.init()
+        this.$refs.componentsConfig.init();
       }
-    }
+    },
   },
   mounted() {
-    const userInfoRule = localStorage.getItem('rule')
+    const userInfoRule = localStorage.getItem("rule");
     if (userInfoRule) {
-      this.userInfoRule = JSON.parse(userInfoRule)
+      this.userInfoRule = JSON.parse(userInfoRule);
     }
-
   },
   methods: {
     //点击下移位置
     handleZformDemoItemDownClick(ruleItem, index) {
-      if (index === this.userInfoRule.length - 1) return
-      const newRuleItem = this.userInfoRule[index + 1]
-      this.userInfoRule.splice(index, 1, newRuleItem)
-      this.userInfoRule.splice(index + 1, 1, ruleItem)
-      this.storageRule()
+      if (index === this.userInfoRule.length - 1) return;
+      const newRuleItem = this.userInfoRule[index + 1];
+      this.userInfoRule.splice(index, 1, newRuleItem);
+      this.userInfoRule.splice(index + 1, 1, ruleItem);
+      this.storageRule();
     },
     //点击上移位置
     handleZformDemoItemUpClick(ruleItem, index) {
-      if (index === 0) return
-      const newRuleItem = this.userInfoRule[index - 1]
-      this.userInfoRule.splice(index, 1, newRuleItem)
-      this.userInfoRule.splice(index - 1, 1, ruleItem)
+      if (index === 0) return;
+      const newRuleItem = this.userInfoRule[index - 1];
+      this.userInfoRule.splice(index, 1, newRuleItem);
+      this.userInfoRule.splice(index - 1, 1, ruleItem);
       // console.log(newRuleItem, 'up')
-      this.storageRule()
+      this.storageRule();
     },
     //点击复制表单
     handleZformDemoCopyClick(ruleItem, index) {
-      const newRuleItem = JSON.parse(JSON.stringify(ruleItem))
-      newRuleItem.fileId = setCompoentId()
-      this.userInfoRule.splice(index, 0, newRuleItem)
-      this.storageRule()
+      const newRuleItem = JSON.parse(JSON.stringify(ruleItem));
+      newRuleItem.fileId = setCompoentId();
+      this.userInfoRule.splice(index, 0, newRuleItem);
+      this.storageRule();
     },
     //点击设置表单的默认配置
     handleSetFormConfigClick() {
-      this.formModelConfig.show = true
+      this.formModelConfig.show = true;
     },
     //表单的点击删除事件
-    handleZformDemoDelClick({ fileId }, index) {
+    handleZformDemoDelClick({ fileId }) {
       if (fileId) {
-        // const { index } = getRuleItem(this.userInfoRule, fileId)
-        this.userInfoRule.splice(index, 1)
-        this.clickActive = undefined
-        this.storageRule()
+        const { index } = getRuleItem(this.userInfoRule, fileId);
+        this.userInfoRule.splice(index, 1);
+        this.clickActive = undefined;
+        this.storageRule();
       }
     },
     handleRetuenForm(ruleKey, value, ruleItemKey) {
-      const { ruleItem } = getRuleItem(this.userInfoRule, this.activeValue)
-      setRuleItem(ruleItem, ruleKey, value, ruleItemKey)
+      const { ruleItem } = getRuleItem(this.userInfoRule, this.activeValue);
+      setRuleItem(ruleItem, ruleKey, value, ruleItemKey);
     },
     //把数据存到 locas
     storageRule() {
-      localStorage.removeItem('rule')
-      localStorage.setItem('rule', JSON.stringify(this.userInfoRule))
+      localStorage.removeItem("rule");
+      localStorage.setItem("rule", JSON.stringify(this.userInfoRule));
     },
     //   //释放区域的拖拽结束事件
     handleDropEvent($event) {
-      $event.preventDefault()
-      const { toElement, } = $event
-      const { className, classList } = toElement
+      $event.preventDefault();
+      const { toElement } = $event;
+      const { className, classList } = toElement;
 
       //当是直接可以push的时候
-      const pushArr = ["main_content", "main_content_form"]
+      const pushArr = ["main_content", "main_content_form"];
       if (pushArr.includes(className)) {
-        $event.dataTransfer.dropEffect = 'move'
-        const data = JSON.parse($event.dataTransfer.getData('text/plain'))
-        data.fileId = setCompoentId()
-        this.userInfoRule.push(data)
-        this.storageRule()
-        return
+        $event.dataTransfer.dropEffect = "move";
+        const data = JSON.parse($event.dataTransfer.getData("text/plain"));
+        data.fileId = setCompoentId();
+        this.userInfoRule.push(data);
+        this.storageRule();
+        return;
       }
       // console.clear()
       // console.dir(toElement, 'className');
       //当是拖动到现有的表单上的时候  就根据查询到的数据 插在那个后面
-      const value = getRuleItem(this.userInfoRule, classList[0])
+      const value = getRuleItem(this.userInfoRule, classList[0]);
       if (value) {
-        const { ruleItem, index } = value
-        $event.dataTransfer.dropEffect = 'move'
-        const data = JSON.parse($event.dataTransfer.getData('text/plain'))
-        data.fileId = setCompoentId()
-        this.userInfoRule.splice(index + 1, 0, data)
-        this.storageRule()
-        return
+        const { ruleItem, index } = value;
+        $event.dataTransfer.dropEffect = "move";
+        const data = JSON.parse($event.dataTransfer.getData("text/plain"));
+        data.fileId = setCompoentId();
+        this.userInfoRule.splice(index + 1, 0, data);
+        this.storageRule();
+        return;
       }
-
     },
     //   //拖拽中的事件
     handleDragoverEvent($event) {
-      $event.preventDefault()
+      $event.preventDefault();
       // const { toElement, dataTransfer } = $event
       // const { classList } = toElement
       // const value = getRuleItem(this.userInfoRule, classList[0])
@@ -189,52 +227,48 @@ export default {
 
     //设置表单config的弹窗确定事件
     handleDefaultformConfigSubmitClick(newFormConfig) {
-      this.formConfig = newFormConfig
-      this.formModelConfig.show = false
-      setDefaultFormConfig(newFormConfig)
+      this.formConfig = newFormConfig;
+      this.formModelConfig.show = false;
+      setDefaultFormConfig(newFormConfig);
     },
     //当表单的配置项发生修改的时候 newFormConfig
     handleChangeConfig(newFormConfig, fileId) {
-      const value = getRuleItem(
-        this.userInfoRule,
-        fileId
-      )
+      const value = getRuleItem(this.userInfoRule, fileId);
       if (value) {
-        const { ruleItem, index } = value
+        const { ruleItem, index } = value;
         for (const key in newFormConfig) {
           if (Object.hasOwnProperty.call(newFormConfig, key)) {
-            const element = newFormConfig[key]
-            ruleItem[key] = element
+            const element = newFormConfig[key];
+            ruleItem[key] = element;
           }
         }
         // Object.assign(newFormConfig, ruleItem)
-        this.userInfoRule.splice(index, 1, ruleItem)
-        this.storageRule()
+        this.userInfoRule.splice(index, 1, ruleItem);
+        this.storageRule();
       }
-
     },
     //打开预览的弹窗
     handleOpenForm() {
-      this.formModel.show = true
+      this.formModel.show = true;
     },
     //点击下载vue的文件
     handleLookVueCode() {
       function returnRuleStr(userInfoRule) {
-        let str = '['
-        userInfoRule.forEach(v => {
-          str += JSON.stringify(v) + ","
-        })
-        return str + ']'
+        let str = "[";
+        userInfoRule.forEach((v) => {
+          str += JSON.stringify(v) + ",";
+        });
+        return str + "]";
       }
       function returnFormConfigStr(defaultFormConfig) {
-        console.log(defaultFormConfig, 'defaultFormConfig')
+        console.log(defaultFormConfig, "defaultFormConfig");
         const returnObj = {
-          ...defaultFormConfig
-        }
-        return JSON.stringify(returnObj) + ","
+          ...defaultFormConfig,
+        };
+        return JSON.stringify(returnObj) + ",";
       }
-      const aTag = document.createElement('a')
-      const s = '<' + '/script' + '>'
+      const aTag = document.createElement("a");
+      const s = "<" + "/script" + ">";
       const str =
         `
       <template>
@@ -257,24 +291,24 @@ export default {
             width:100%;
             height:100%
           }
-        </style>`
-      const blob = new Blob([str])
-      aTag.download = 'zFormCreate.vue'
-      aTag.href = URL.createObjectURL(blob)
-      aTag.click()
-      URL.revokeObjectURL(blob)
-    }
-  }
-}
+        </style>`;
+      const blob = new Blob([str]);
+      aTag.download = "zFormCreate.vue";
+      aTag.href = URL.createObjectURL(blob);
+      aTag.click();
+      URL.revokeObjectURL(blob);
+    },
+  },
+};
 </script>
 <style lang="scss" scoped>
-@import '~@/assets/layout.scss';
+@import "~@/assets/layout.scss";
 
 .zformDesigners {
   width: 100vw;
   height: 100vh;
 
-  .ant-btn+.ant-btn {
+  .ant-btn + .ant-btn {
     margin-left: 4px;
   }
 
@@ -329,7 +363,6 @@ export default {
         // background: #f7f7f7;
         overflow-y: auto;
         border: dashed 1px red;
-
       }
     }
   }

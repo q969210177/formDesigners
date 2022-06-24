@@ -46,25 +46,24 @@ export default {
   data() {
     return {
       formData: {},
-      // copyRule: [],
+      copyRule: [],
     };
   },
   computed: {
-    copyRule() {
-      return this.rule;
-    },
+    // copyRule() {
+    //   return this.rule;
+    // },
   },
   watch: {
     //当外界需要改变这个rule的时候 比如说弹窗 或者说在弹窗打开之前
     changeRule(newV) {
       if (newV) {
-        console.log(newV);
         this.updateRule();
       }
     },
-    // rule(newV) {
-    //   this.updateRule();
-    // },
+    rule() {
+      this.updateRule();
+    },
   },
   created() {
     this.$emit("input", {
@@ -80,7 +79,7 @@ export default {
   },
   beforeMount() {},
   mounted() {
-    // this.copyRule = _.cloneDeep(this.rule);
+    this.copyRule = this.rule;
   },
   methods: {
     //获取json格式的数据
@@ -102,7 +101,7 @@ export default {
     },
     //将rule重置成最开始的状态
     resetRule() {
-      this.copyRule = _.cloneDeep(this.rule);
+      this.copyRule = this.rule;
     },
     //重新给copyrule赋值
     updateRule() {

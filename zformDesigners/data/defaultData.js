@@ -82,10 +82,10 @@ export const defaultMenuArr = [
       },
       {
         name: "时间选择器",
-        activeValue: "datePicker",
+        activeValue: "datapick",
         icon: "icon-Date",
         data: {
-          type: "datePicker",
+          type: "datapick",
           value: "",
           itemType: "form",
           label: "",
@@ -300,6 +300,15 @@ export let compoentsRule = [
     attrArr: ["cascader"],
   },
   {
+    type: "switch",
+    label: "复选框模式",
+    fileId: "checkable",
+    value: false,
+    span: 24,
+    attrArr: ["tree"],
+  },
+  //checkable
+  {
     type: "setTreeRuleData",
     label: "配置数据",
     fileId: "treeData",
@@ -409,7 +418,7 @@ export let compoentsRule = [
 
     attrArr: [
       "input",
-      "datePicker",
+      "datapick",
       "rangePicker",
       "select",
       "radio",
@@ -435,14 +444,7 @@ export let compoentsRule = [
       },
     ],
 
-    attrArr: [
-      "input",
-      "datePicker",
-      "rangePicker",
-      "select",
-      "switch",
-      "slider",
-    ],
+    attrArr: ["input", "datapick", "rangePicker", "select", "switch", "slider"],
   },
 ];
 export const setCompoentsRule = (newRule) => {

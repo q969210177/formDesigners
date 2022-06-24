@@ -4,16 +4,7 @@ import "@/utils/installAntdFormCompoent.js";
 import "@/utils/autoCompoents.js";
 import zformDesigners from "../zformDesigners/index.js";
 import "@/assets/iconFont/iconfont.css";
-zformDesigners.addFormRule([
-  // {
-  //   type: "input",
-  //   label: "展示的标题zzz",
-  //   fileId: "text1",
-  //   value: "",
-  //   span: 24,
-  //   attrArr: ["form"],
-  // },
-]);
+// zformDesigners.addFormRule();
 Vue.use(zformDesigners);
 Vue.config.productionTip = false;
 new Vue({

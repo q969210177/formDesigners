@@ -130,7 +130,7 @@ export const defaultMenuArr = [
         },
       },
       {
-        name: "tree",
+        name: "树",
         activeValue: "tree",
         icon: "icon-tree",
         data: {
@@ -188,6 +188,54 @@ export const defaultMenuArr = [
           span: 24,
         },
       },
+      {
+        name: "级联",
+        activeValue: "cascader",
+        icon: "icon-tree",
+        data: {
+          type: "cascader",
+          itemType: "form",
+          value: [],
+          label: "",
+          props: {},
+          options: [
+            {
+              value: "zhejiang",
+              label: "Zhejiang",
+              children: [
+                {
+                  value: "hangzhou",
+                  label: "Hangzhou",
+                  children: [
+                    {
+                      value: "xihu",
+                      label: "West Lake",
+                    },
+                  ],
+                },
+              ],
+            },
+            {
+              value: "jiangsu",
+              label: "Jiangsu",
+              children: [
+                {
+                  value: "nanjing",
+                  label: "Nanjing",
+                  children: [
+                    {
+                      value: "zhonghuamen",
+                      label: "Zhong Hua Men",
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+          rules: [],
+          span: 24,
+        },
+      },
     ],
   },
   {
@@ -213,10 +261,190 @@ export const defaultMenuArr = [
 //右侧的组件配置里面的form部分
 export let formRule = [];
 export const setFormRule = (newRule) => {
-  formRule = newRule;
+  formRule.concat(newRule);
 };
 //右侧的组件配置里面的组件部分
-export let compoentsRule = [];
+export let compoentsRule = [
+  {
+    type: "input",
+    label: "展示的标题",
+    fileId: "text",
+    value: "",
+    span: 24,
+
+    attrArr: ["divider"],
+  },
+  {
+    type: "number",
+    label: "高度",
+    fileId: "height",
+    value: 50,
+    span: 24,
+
+    attrArr: ["divider"],
+  },
+  {
+    type: "setSelectOption",
+    label: "配置数据",
+    fileId: "options",
+    value: [],
+    span: 24,
+    attrArr: ["select", "checkbox", "radio"],
+  },
+  {
+    type: "setTreeRuleData",
+    label: "配置数据",
+    fileId: "options",
+    value: [],
+    span: 24,
+    attrArr: ["cascader"],
+  },
+  {
+    type: "setTreeRuleData",
+    label: "配置数据",
+    fileId: "treeData",
+    value: [],
+    span: 24,
+    attrArr: ["tree"],
+  },
+  //
+  {
+    type: "switch",
+    label: "是否虚线",
+    fileId: "dashed",
+    value: false,
+    span: 24,
+
+    attrArr: ["divider"],
+  },
+  {
+    type: "radio",
+    label: "标题的位置",
+    fileId: "orientation",
+    value: "",
+    span: 24,
+    options: [
+      { label: "左", value: "left" },
+      { label: "中", value: "center" },
+      { label: "右", value: "right" },
+    ],
+
+    attrArr: ["divider"],
+  },
+  {
+    type: "switch",
+    label: "清楚图标",
+    fileId: "allowClear",
+    value: false,
+    span: 24,
+
+    attrArr: ["input", "select"],
+  },
+  {
+    type: "activeIcon",
+    label: "前置按钮",
+    fileId: "prefix",
+    value: "",
+    span: 24,
+    attrArr: ["input", "select"],
+  },
+  {
+    type: "input",
+    label: "未选中的文字内容",
+    fileId: "unCheckedChildren",
+    value: "",
+    span: 24,
+    props: {
+      maxLength: 2,
+    },
+
+    attrArr: ["switch"],
+  },
+  {
+    type: "input",
+    label: "选中的文字内容",
+    fileId: "checkedChildren",
+    value: "",
+    span: 24,
+    props: {
+      maxLength: 2,
+    },
+
+    attrArr: ["switch"],
+  },
+  {
+    type: "number",
+    label: "最大长度",
+    fileId: "maxLength",
+    value: 10,
+    span: 24,
+
+    attrArr: ["input"],
+  },
+  {
+    type: "number",
+    label: "最大值",
+    fileId: "max",
+    value: 10,
+    span: 24,
+
+    attrArr: ["slider"],
+  },
+  {
+    type: "number",
+    label: "最小值",
+    fileId: "min",
+    value: 10,
+    span: 24,
+
+    attrArr: ["slider"],
+  },
+  // max
+  {
+    type: "switch",
+    label: "禁用",
+    fileId: "disabled",
+    value: false,
+    span: 24,
+
+    attrArr: [
+      "input",
+      "datePicker",
+      "rangePicker",
+      "select",
+      "radio",
+      "checkbox",
+      "switch",
+      "slider",
+    ],
+  },
+  {
+    type: "radio",
+    label: "组件大小",
+    fileId: "size",
+    value: "",
+    span: 24,
+    options: [
+      {
+        label: "默认",
+        value: "default",
+      },
+      {
+        label: "小",
+        value: "small",
+      },
+    ],
+
+    attrArr: [
+      "input",
+      "datePicker",
+      "rangePicker",
+      "select",
+      "switch",
+      "slider",
+    ],
+  },
+];
 export const setCompoentsRule = (newRule) => {
-  compoentsRule = newRule;
+  compoentsRule.concat(newRule);
 };

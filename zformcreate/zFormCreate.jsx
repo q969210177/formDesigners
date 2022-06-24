@@ -46,22 +46,24 @@ export default {
   data() {
     return {
       formData: {},
-      copyRule: [],
+      // copyRule: [],
     };
+  },
+  computed: {
+    copyRule() {
+      return this.rule;
+    },
   },
   watch: {
     //当外界需要改变这个rule的时候 比如说弹窗 或者说在弹窗打开之前
     changeRule(newV) {
       if (newV) {
+        console.log(newV);
         this.updateRule();
       }
     },
-    rule(newV) {
-      this.updateRule();
-    },
-    // copyRule(newV) {
-    //   console.log(newV, "v");
-    //   // this.updateRule();
+    // rule(newV) {
+    //   this.updateRule();
     // },
   },
   created() {
@@ -78,7 +80,7 @@ export default {
   },
   beforeMount() {},
   mounted() {
-    this.copyRule = _.cloneDeep(this.rule);
+    // this.copyRule = _.cloneDeep(this.rule);
   },
   methods: {
     //获取json格式的数据
@@ -104,7 +106,7 @@ export default {
     },
     //重新给copyrule赋值
     updateRule() {
-      this.copyRule = _.cloneDeep(this.rule);
+      this.copyRule = this.rule;
     },
     //设置组件的option
     setRuleItemOptions(fileId, data) {

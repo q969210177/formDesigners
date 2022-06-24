@@ -1,7 +1,7 @@
 <template>
   <div class="componentsConfig">
     <header class="header">
-      组件配置
+      组件配置{{ ruleItemType }}
       <a-button type="primary" size="small" @click="handleChangeModel">确定</a-button>
     </header>
     <main class="main">
@@ -25,7 +25,6 @@
 </template>
 <script>
 import { formRule, compoentsRule } from "../data/defaultData.js"
-import { setInstallRule } from "@/utils/utils"
 import {
   setCompoentId,
   getRuleItem,
@@ -48,182 +47,17 @@ export default {
       type: [String, Number]
     }
   },
-
   computed: {
     compoentsRule() {
       const value = getRuleItem(this.rule, this.activeValue)
       if (this.activeValue && value) {
         const { ruleItem } = value
+        console.log(ruleItem, "ruleItem");
         const props = ruleItem.props
         const propsKey = Object.keys(props)
-        const compoentsRules = [
-          {
-            type: 'input',
-            label: '展示的标题',
-            fileId: 'text',
-            value: "",
-            span: 24,
-
-            attrArr: ['divider']
-          },
-          {
-            type: 'number',
-            label: '高度',
-            fileId: 'height',
-            value: 50,
-            span: 24,
-
-            attrArr: ['divider']
-          },
-          {
-            type: 'setSelectOption',
-            label: '配置数据',
-            fileId: 'options',
-            value: [],
-            span: 24,
-
-            attrArr: ['select', 'checkbox', 'radio']
-          },
-          // 
-          {
-            type: 'switch',
-            label: '是否虚线',
-            fileId: 'dashed',
-            value: false,
-            span: 24,
-
-            attrArr: ['divider']
-          },
-          {
-            type: 'radio',
-            label: '标题的位置',
-            fileId: 'orientation',
-            value: "",
-            span: 24,
-            options: [
-              { label: '左', value: "left" },
-              { label: '中', value: "center" },
-              { label: '右', value: "right" },
-            ],
-
-            attrArr: ['divider']
-          },
-          {
-            type: 'switch',
-            label: '清楚图标',
-            fileId: 'allowClear',
-            value: false,
-            span: 24,
-
-            attrArr: ['input', 'select']
-          },
-          {
-            type: 'activeIcon',
-            label: '前置按钮',
-            fileId: 'prefix',
-            value: '',
-            span: 24,
-            attrArr: ['input', 'select']
-          },
-          {
-            type: 'input',
-            label: '未选中的文字内容',
-            fileId: 'unCheckedChildren',
-            value: "",
-            span: 24,
-            props: {
-              maxLength: 2
-            },
-
-            attrArr: ['switch',]
-          },
-          {
-            type: 'input',
-            label: '选中的文字内容',
-            fileId: 'checkedChildren',
-            value: "",
-            span: 24,
-            props: {
-              maxLength: 2
-            },
-
-            attrArr: ['switch',]
-          },
-          {
-            type: 'number',
-            label: '最大长度',
-            fileId: 'maxLength',
-            value: 10,
-            span: 24,
-
-            attrArr: ['input']
-          },
-          {
-            type: 'number',
-            label: '最大值',
-            fileId: 'max',
-            value: 10,
-            span: 24,
-
-            attrArr: ['slider']
-          },
-          {
-            type: 'number',
-            label: '最小值',
-            fileId: 'min',
-            value: 10,
-            span: 24,
-
-            attrArr: ['slider']
-          },
-          // max
-          {
-            type: 'switch',
-            label: '禁用',
-            fileId: 'disabled',
-            value: false,
-            span: 24,
-
-            attrArr: [
-              'input',
-              'datePicker',
-              'rangePicker',
-              'select',
-              'radio',
-              'checkbox',
-              'switch',
-              'slider'
-            ]
-          },
-          {
-            type: 'radio',
-            label: '组件大小',
-            fileId: 'size',
-            value: "",
-            span: 24,
-            options: [
-              {
-                label: "默认",
-                value: "default"
-              },
-              {
-                label: "小",
-                value: "small"
-              },
-            ],
-
-            attrArr: [
-              'input',
-              'datePicker',
-              'rangePicker',
-              'select',
-              'switch',
-              'slider'
-            ]
-          }
-        ].concat(compoentsRule)
-
-        return compoentsRules.filter(item => {
+        let returnArr = []
+        console.log(propsKey, 'propsKey');
+        returnArr = compoentsRule.filter(item => {
           if (propsKey.includes(item.fileId)) {
             item.value = props[item.fileId]
           }
@@ -231,6 +65,8 @@ export default {
             return item
           }
         })
+
+        return returnArr
       }
       return []
     },
@@ -238,63 +74,58 @@ export default {
       const value = getRuleItem(this.rule, this.activeValue)
       if (this.activeValue && value) {
         const { ruleItem } = value
-        const formRules = [
+        let returnArr = []
+        const defaultFormRule = [
           {
-            type: 'input',
-            label: 'fileId',
-            fileId: 'fileId',
+            type: "input",
+            label: "fileId",
+            fileId: "fileId",
             value: ruleItem.fileId,
             props: {
-              disabled: ruleItem.itemType === "style"
+              disabled: ruleItem.itemType === "style",
             },
             span: 24,
             attrArr: ["form", "style"],
-
           },
           {
-            type: 'input',
-            label: 'label',
-            fileId: 'label',
-            value: '',
+            type: "input",
+            label: "label",
+            fileId: "label",
+            value: "",
             span: 24,
-            attrArr: ["form",],
-
+            attrArr: ["form"],
           },
           {
-            type: 'setRulesValidate',
-            label: '验证规则',
-            fileId: 'rules',
+            type: "setRulesValidate",
+            label: "验证规则",
+            fileId: "rules",
             value: [],
             options: [],
             props: {
-              validateType: this.ruleItemType
+              validateType: this.ruleItemType,
             },
-            attrArr: ["form",],
-
-            span: 24
+            attrArr: ["form"],
+            span: 24,
           },
-
           {
-            type: 'slider',
-            label: '长度',
-            fileId: 'span',
+            type: "slider",
+            label: "长度",
+            fileId: "span",
             value: 1,
             span: 24,
             props: {
               max: 24,
-              min: 1
+              min: 1,
             },
             attrArr: ["form"],
-          }
-        ].concat(formRule)
-
-        return formRules.filter(item => {
+          }].concat(formRule)
+        returnArr = defaultFormRule.filter(item => {
           item.value = ruleItem[item.fileId]
-
           if (item.attrArr.includes(ruleItem.itemType)) {
             return item
           }
         })
+        return returnArr
       }
       return []
     }
@@ -315,20 +146,11 @@ export default {
     }
   },
   created() {
-    this.init()
+    // this.init()
   },
   mounted() { },
   methods: {
-    init() {
-      // const value = getRuleItem(this.rule, this.activeValue)
-      // if (this.activeValue && value) {
-      //   const { ruleItem } = value
-      //   // if (['select', 'checkbox', 'radio'].includes(this.ruleItemType)) {
-      //   //   this.setSelectModel = ruleItem.options
-      //   //   console.log(this.setSelectModel, " this.setSelectModel");
-      //   // }
-      // }
-    },
+    init() { },
     //change事件 用来改变外部的参数设置
     handleChangeModel() {
       const defaultFormData = this.formModel.getFormData()

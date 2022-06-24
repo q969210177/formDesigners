@@ -252,47 +252,22 @@ export function returnSlots($slots, fileId) {
   }
 }
 
-//
-//把外部注册的规则和内部方法做一个绑定
-export function setInstallRule(eventObj, callback = () => {}) {
-  /**
-   *  @eventObj blur:($event)=>{}
-   */
-  // const a = {
-  //   blur: ($e) => {
-  //     console.log($e);
-  //     callback();
-  //     eventObj.blur($e);
-  //   },
-  //   change: (v) => {
-  //     console.log(v);
-  //     eventObj.change(v);
-  //   },
-  // };
-  // return a;
-  // //当rule为真
-  // if (rule) {
-  //   //存储一下rule的长度
-  //   const length = rule.length;
-  //   //循环遍历
-  //   for (let index = 0; index < length; index++) {
-  //     const ruleItem = rule[index];
-  //     let defaultEvent = {};
-  //     // let newEvent = {};
-  //     //当他传了触发时机..
-  //     if (ruleItem.on) {
-  //       defaultEvent = clone(ruleItem.on);
-  //       for (const key in defaultEvent) {
-  //         if (Object.hasOwnProperty.call(defaultEvent, key)) {
-  //           const item = defaultEvent[key];
-  //           console.log(item);
-  //           ruleItem.on[key] = () => {
-  //             // item();
-  //             callback();
-  //           };
-  //         }
-  //       }
-  //     }
-  //   }
-  // }
+//给tree形的结构增加插槽
+export function handleTreeDataSlot(treeData, childrenKey = "children") {
+  if (getDataType(treeData) !== "Array")
+    throw "handleTreeDataSlot方法的tree 的类型不是array类型";
+  const scopedSlots = {
+    title: "title",
+  };
+  const setLevel = (array, level = 0) => {
+    level++;
+    return array.map((v) => {
+      v.level = level;
+      v.scopedSlots = scopedSlots;
+      const child = v[childrenKey];
+      if (child && child.length) setLevel(child, level);
+      return v;
+    });
+  };
+  return setLevel(treeData);
 }

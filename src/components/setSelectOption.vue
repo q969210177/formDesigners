@@ -4,12 +4,11 @@
       <span class="label">{{ setOptionsValue() }}</span>
       <a-button size="small" type="link" @click="formModelConfig.show = true">打开</a-button>
     </div>
-    <a-modal :destroyOnClose="true" title="设置select的option" :width="800" cancelText="取消" okText="确定"
+    <a-modal :z-index="2000" :destroyOnClose="true" title="设置select的option" :width="800" cancelText="取消" okText="确定"
       @ok="handleSubmitOptions" v-model="formModelConfig.show">
       <div class="model_table_header">
         <a-button size="small" @click="handleAddTableData">添加</a-button>
       </div>
-      {{ value }}
       <a-table :pagination="false" :columns="columns" :data-source="options" bordered>
         <template slot="label" slot-scope="label,row">
           <a-input v-model="row.label"></a-input>
@@ -36,11 +35,12 @@ export default {
       }
     }
   },
-  watch: {
-    value(newV) {
-      this.options = newV
+  computed: {
+    options() {
+      return this.value
     }
   },
+
   data() {
     return {
       formModelConfig: {
@@ -76,11 +76,10 @@ export default {
           scopedSlots: { customRender: 'operate' }
         }
       ],
-      options: []
     }
   },
   mounted() {
-    this.options = this.value
+    // this.options = this.value
   },
   methods: {
     //点击新增一条表单的数据

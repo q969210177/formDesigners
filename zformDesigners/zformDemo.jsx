@@ -131,14 +131,29 @@ export default {
     //返回样式组件
     returnStyleItem(h, ruleItem) {
       const com = componentsObj[ruleItem.type];
+      const { fileId } = ruleItem;
       const dom = h(com, {
         ...this.returnCompoentsProps(ruleItem),
       });
-      return dom;
+      return (
+        <div class="rule_item_form">
+          <div class="item_form">{dom}</div>
+          <div
+            class={[
+              ruleItem.fileId,
+              "item_form_mask",
+              { rule_item_form_active: this.activeValue === fileId },
+              { rule_item_form_noactive: this.activeValue !== fileId },
+            ]}
+          ></div>
+          {this.returnOperateDom(ruleItem)}
+        </div>
+      );
     },
     //返回form组件
     returnFormItem(h, ruleItem) {
       const { colonStatus, labelWidth } = this.formConfig;
+      const { fileId } = ruleItem;
       //设置 formItem的props 并给上默认值
       const formModelItemProps = {
         required: isHaveDefaultValue(ruleItem.formProps, "required", false),
@@ -189,27 +204,41 @@ export default {
       }
       const com = componentsObj[ruleItem.type];
       return (
-        <div class="item_form">
-          <a-form-model-item
-            scopedSlots={labelSlot}
-            props={{ ...formModelItemProps }}
-          >
-            {h(
-              com,
-              {
-                ...this.returnCompoentsProps(ruleItem),
-                on: {
-                  ...eventLoop,
-                  input: ($event) => {
-                    const value = this.validatorIsEvent(ruleItem.type, $event);
-                    ruleItem.value = value;
-                    this.$emit("valueChange");
+        <div class="rule_item_form">
+          <div class="item_form">
+            <a-form-model-item
+              scopedSlots={labelSlot}
+              props={{ ...formModelItemProps }}
+            >
+              {h(
+                com,
+                {
+                  ...this.returnCompoentsProps(ruleItem),
+                  on: {
+                    ...eventLoop,
+                    input: ($event) => {
+                      const value = this.validatorIsEvent(
+                        ruleItem.type,
+                        $event
+                      );
+                      ruleItem.value = value;
+                      this.$emit("valueChange");
+                    },
                   },
                 },
-              },
-              {}
-            )}
-          </a-form-model-item>
+                {}
+              )}
+            </a-form-model-item>
+          </div>
+          <div
+            class={[
+              ruleItem.fileId,
+              "item_form_mask",
+              { rule_item_form_active: this.activeValue === fileId },
+              { rule_item_form_noactive: this.activeValue !== fileId },
+            ]}
+          ></div>
+          {this.returnOperateDom(ruleItem)}
         </div>
       );
     },
@@ -294,8 +323,6 @@ export default {
         </div>
       );
     },
-    //设置组件的rule
-    // setFormRule(fileId, rule) {},
   },
   render(h) {
     const formConfig = Object.assign(
@@ -333,96 +360,52 @@ export default {
                   <a-col span={ruleItem.span ? ruleItem.span : 24}>
                     <div
                       draggable
-                      class={[
-                        {
-                          rule_item_active:
-                            ruleItem.fileId === this.activeValue,
-                        },
-                        "rule_item",
-                      ]}
+                      class="rule_item"
                       onClick={() => {
                         this.$emit("rowClick", ruleItem.fileId);
                         this.$emit("update:activeValue", ruleItem.fileId);
                         this.$emit("update:ruleItemType", ruleItem.type);
                       }}
                     >
-                      <div
+                      {/* 用来展示显示的组件部分 但是是在z轴的最下层 */}
+                      <slot name={ruleItem.fileId} data={ruleItem}>
+                        {this.renderCompoents(ruleItem.itemType, h, ruleItem)}
+                      </slot>
+                      {/* class="rule_item_operating" */}
+                      {/* <div
                         class={[
+                          ruleItem.fileId,
+                          "rule_item_operating",
                           {
-                            form_item_active:
+                            rule_item_operating_active:
                               ruleItem.fileId === this.activeValue,
                           },
-                          "form_item_dialog",
+                          {
+                            rule_item_operating_no_active:
+                              ruleItem.fileId !== this.activeValue,
+                          },
                         ]}
-                      >
-                        <div class="form_item_dialog_btn">
-                          {this.returnOperateDom(ruleItem)}
-                        </div>
-                      </div>
-                      <div>
-                        <slot name={ruleItem.fileId} data={ruleItem}>
-                          {this.renderCompoents(ruleItem.itemType, h, ruleItem)}
-                        </slot>
-                      </div>
+                      ></div> */}
                     </div>
-                    {/* <div
-                      class={{
-                        rule_item: true,
-                      }}
-                      
-                    >
-                      <div
-                        class={{
-                          rule_item_form: true,
-                        }}
-                        style={{ "margin-bottom": "2px" }}
-                      >
-                        <slot name={i.fileId} data={i}>
-                          <zformDemoItem
-                            onHandleZformDemoItemCopyClick={(formItem) => {
-                              this.$emit(
-                                "handleZformDemoCopyClick",
-                                formItem,
-                                k
-                              );
-                            }}
-                            onHandleZformDemoItemDelClick={(formItem) => {
-                              this.$emit(
-                                "handleZformDemoDelClick",
-                                formItem,
-                                k
-                              );
-                            }}
-                            onHandleZformDemoItemUpClick={(formItem) => {
-                              this.$emit(
-                                "handleZformDemoItemUpClick",
-                                formItem,
-                                k
-                              );
-                            }}
-                            onHandleZformDemoItemDownClick={(formItem) => {
-                              this.$emit(
-                                "handleZformDemoItemDownClick",
-                                formItem,
-                                k
-                              );
-                            }}
-                            // onValueChange={() => this.getFormData()}
-                            formConfig={formConfig}
-                            formItem={i}
-                            eventLoop={eventLoop}
-                            activeValue={i.fileId === this.activeValue}
-                          >
-                            {returnSlots(this.$slots, i.fileId)
-                              ? returnSlots(this.$slots, i.fileId)
-                              : ""}
-                          </zformDemoItem>
-                        </slot>
-                      </div>
-                      <div class={[i.fileId, "default_item_hover"]}></div>
-                    </div> */}
                   </a-col>
                 );
+
+                // <a-col span={ruleItem.span ? ruleItem.span : 24}>
+
+                //     <div
+                //       class={[
+
+                //         "form_item_dialog",
+                //       ]}
+                //     >
+                //       <div class="form_item_dialog_btn">
+                //         {this.returnOperateDom(ruleItem)}
+                //       </div>
+                //     </div>
+
+                //   </div>
+                //   {/* <div class={[ruleItem.fileId, "default_item_hover"]}></div> */}
+                // </a-col>
               }
             })}
           </a-row>

@@ -2,9 +2,10 @@ var shell = require("shelljs");
 const readline = require("readline");
 const fs = require("fs");
 const path = require("path");
-// const page = require("../formCreate.js");
+const page = require("../package.json");
 
-// const newVersion = page.version.split(".");
+const newVersion = page.dependencies.zformcreate.split(".");
+newVersion[2] = Number(newVersion[2]) + 1 + "";
 // if (newVersion[2] === 9) {
 //   newVersion[1] = Number(newVersion[1]) + 1 + "";
 // } else if (newVersion[1] === 9) {
@@ -15,7 +16,7 @@ const path = require("path");
 
 // const newPackage = {
 //   name: "zformcreate",
-//   version: newVersion.join("."),
+//   version:
 //   description: "根据特地规则生成表单",
 //   main: "index.js",
 //   files: ["index.js"],
@@ -33,7 +34,7 @@ fs.writeFile(
   `
   {
     "name":"zformcreate",
-    "version":"0.0.1",
+    "version":"${newVersion.join(".")}",
     "description":"根据特地规则生成表单",
     "main":"index.js",
     "files":["index.js","index.d.ts"],

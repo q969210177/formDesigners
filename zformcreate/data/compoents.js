@@ -1,3 +1,5 @@
+import cAlert from "../components/cAlert.vue";
+import cCascader from "../components/cCascader.vue";
 import cCheckbox from "../components/cCheckbox.vue";
 import cDataPick from "../components/cDataPick.vue";
 import cDivider from "../components/cDivider.vue";
@@ -11,6 +13,8 @@ import cSwitch from "../components/cSwitch.vue";
 import cTip from "../components/cTip.vue";
 import cTree from "../components/cTree.vue";
 export const componentsObj = {
+  alert: cAlert,
+  cascader: cCascader,
   checkbox: cCheckbox,
   datapick: cDataPick,
   divider: cDivider,

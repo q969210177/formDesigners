@@ -1,12 +1,7 @@
 <template>
   <div class="cCascader">
-    <a-cascader
-      v-model="defaultValue"
-      @change="handleChange"
-      :options="options"
-      v-bind="$attrs"
-      v-on="$listeners"
-    />
+    <a-cascader :getPopupContainer="() => $el" v-model="defaultValue" @change="handleChange" :options="options"
+      v-bind="$attrs" v-on="$listeners" />
   </div>
 </template>
 <script>
@@ -41,15 +36,15 @@ export default {
   },
   methods: {
     handleChange(v) {
-      console.log(v, "v");
       this.$emit("input", v);
     }
   }
 };
 </script>
-<style lang="less" scoped>
+<style lang="scss" scoped>
 .cCascader {
   width: 100%;
   height: 100%;
+  position: relative;
 }
 </style>

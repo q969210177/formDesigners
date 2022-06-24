@@ -4,14 +4,14 @@
       <slot name="header"></slot>
       <a-button @click="handleSetFormConfigClick">设置表单默认配置</a-button>
       <a-button @click="handleLookVueCode">下载vue文件</a-button>
-      <a-button type="link"> <a href="https://gitee.com/zuzu5201314/form-designers">源码地址</a></a-button>
+      <a-button type="link"> <a href="https://github.com/q969210177/formDesigners">源码地址</a></a-button>
 
     </header>
     <div class="main">
       <div class="left_menu_box">
         <componentsMenu></componentsMenu>
       </div>
-      <div class="main_content" @drop="handleDropEvent" @dragover="handleDragoverEvent" @dragend="handleTest">
+      <div class="main_content" @drop="handleDropEvent" @dragover="handleDragoverEvent">
         <div class="main_content_operating">
           <a-button size="small" @click="handleOpenForm">预览</a-button>
           <!-- <a-button size="small">清空{{ruleItemType}}</a-button> -->
@@ -148,7 +148,7 @@ export default {
     //   //释放区域的拖拽结束事件
     handleDropEvent($event) {
       $event.preventDefault()
-      const { toElement, dataTransfer } = $event
+      const { toElement, } = $event
       const { className, classList } = toElement
 
       //当是直接可以push的时候
@@ -161,11 +161,11 @@ export default {
         this.storageRule()
         return
       }
-      // console.dir(toElement, 'className');
       // console.clear()
+      // console.dir(toElement, 'className');
+      //当是拖动到现有的表单上的时候  就根据查询到的数据 插在那个后面
       const value = getRuleItem(this.userInfoRule, classList[0])
       if (value) {
-        classList.remove("item_hover")
         const { ruleItem, index } = value
         $event.dataTransfer.dropEffect = 'move'
         const data = JSON.parse($event.dataTransfer.getData('text/plain'))
@@ -179,17 +179,14 @@ export default {
     //   //拖拽中的事件
     handleDragoverEvent($event) {
       $event.preventDefault()
-      const { toElement, dataTransfer } = $event
-      const { classList } = toElement
-      const value = getRuleItem(this.userInfoRule, classList[0])
-      if (value) {
-        classList.add("item_hover")
-      }
+      // const { toElement, dataTransfer } = $event
+      // const { classList } = toElement
+      // const value = getRuleItem(this.userInfoRule, classList[0])
+      // if (value) {
+      //   classList.add("item_hover")
+      // }
     },
-    //
-    handleTest($e) {
-      console.log($e, "111");
-    },
+
     //设置表单config的弹窗确定事件
     handleDefaultformConfigSubmitClick(newFormConfig) {
       this.formConfig = newFormConfig

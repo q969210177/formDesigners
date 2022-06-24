@@ -23,6 +23,7 @@ import {
   Pagination,
   Spin,
   Tree,
+  Cascader,
 } from "ant-design-vue";
 import "ant-design-vue/dist/antd.css";
 Vue.prototype.$message = message;
@@ -48,6 +49,7 @@ const componentsArr = [
   Pagination,
   Spin,
   Tree,
+  Cascader,
 ];
 componentsArr.forEach((i) => {
   Vue.use(i);

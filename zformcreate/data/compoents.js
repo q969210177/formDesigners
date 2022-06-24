@@ -5,6 +5,7 @@ import cDataPick from "../components/cDataPick.vue";
 import cDivider from "../components/cDivider.vue";
 import cInput from "../components/cInput.vue";
 import cInputNumber from "../components/cInputNumber.vue";
+import cMultipleSelect from "../components/cMultipleSelect.vue";
 import cRadio from "../components/cRadio.vue";
 import cRangePick from "../components/cRangePick.vue";
 import cSelect from "../components/cSelect.vue";
@@ -20,6 +21,7 @@ export const componentsObj = {
   divider: cDivider,
   input: cInput,
   inputnumber: cInputNumber,
+  multipleselect: cMultipleSelect,
   radio: cRadio,
   rangepick: cRangePick,
   select: cSelect,

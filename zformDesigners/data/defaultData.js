@@ -49,6 +49,23 @@ export const defaultMenuArr = [
         },
       },
       {
+        name: "多选下拉框",
+        activeValue: "multipleselect",
+        icon: "icon-xialakuang",
+        data: {
+          type: "multipleselect",
+          value: [],
+          itemType: "form",
+          label: "",
+          props: {},
+          options: [],
+          rules: [],
+          span: 24,
+          formProps: { isRequired: false },
+        },
+      },
+      //
+      {
         name: "单选框",
         activeValue: "radio",
         icon: "icon-danxuanfill",
@@ -288,7 +305,7 @@ export let compoentsRule = [
     attrArr: ["divider"],
   },
   {
-    type: "number",
+    type: "inputnumber",
     label: "高度",
     fileId: "height",
     value: 50,
@@ -302,8 +319,33 @@ export let compoentsRule = [
     fileId: "options",
     value: [],
     span: 24,
-    attrArr: ["select", "checkbox", "radio"],
+    attrArr: ["select", "checkbox", "radio", "multipleselect"],
   },
+  {
+    type: "inputnumber",
+    label: "最大显示的文本长度",
+    fileId: "maxTagTextLength",
+    value: 0,
+    span: 24,
+    attrArr: ["select", "checkbox", "radio", "multipleselect"],
+  },
+  {
+    type: "inputnumber",
+    label: "最多同时展示多少tag",
+    fileId: "maxTagCount",
+    value: 5,
+    span: 24,
+    attrArr: ["select", "checkbox", "radio", "multipleselect"],
+  },
+  {
+    type: "switch",
+    label: "清除图标",
+    fileId: "allowClear",
+    value: false,
+    span: 24,
+    attrArr: ["input", "select", "multipleselect"],
+  },
+  // maxTagCount
   {
     type: "setTreeRuleData",
     label: "配置数据",
@@ -353,15 +395,7 @@ export let compoentsRule = [
 
     attrArr: ["divider"],
   },
-  {
-    type: "switch",
-    label: "清除图标",
-    fileId: "allowClear",
-    value: false,
-    span: 24,
 
-    attrArr: ["input", "select"],
-  },
   // {
   //   type: "activeIcon",
   //   label: "前置按钮",
@@ -395,7 +429,7 @@ export let compoentsRule = [
     attrArr: ["switch"],
   },
   {
-    type: "number",
+    type: "inputnumber",
     label: "最大长度",
     fileId: "maxLength",
     value: 10,
@@ -404,7 +438,7 @@ export let compoentsRule = [
     attrArr: ["input"],
   },
   {
-    type: "number",
+    type: "inputnumber",
     label: "最大值",
     fileId: "max",
     value: 10,
@@ -413,7 +447,7 @@ export let compoentsRule = [
     attrArr: ["slider"],
   },
   {
-    type: "number",
+    type: "inputnumber",
     label: "最小值",
     fileId: "min",
     value: 10,

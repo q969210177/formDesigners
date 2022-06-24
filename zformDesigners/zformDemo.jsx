@@ -54,7 +54,7 @@ export default {
   },
   watch: {
     rule(newV) {
-      this.copyRule = _.cloneDeep(this.rule);
+      this.copyRule = (this.rule);
     },
   },
   data() {
@@ -75,7 +75,7 @@ export default {
     });
   },
   mounted() {
-    this.copyRule = _.cloneDeep(this.rule);
+    this.copyRule =(this.rule);
   },
   methods: {
     //获取json格式的数据
@@ -97,11 +97,11 @@ export default {
     },
     //将rule重置成最开始的状态
     resetRule() {
-      this.copyRule = _.cloneDeep(this.rule);
+      this.copyRule = (this.rule);
     },
     //重新给copyrule赋值
     updateRule() {
-      this.copyRule = _.cloneDeep(this.rule);
+      this.copyRule =(this.rule);
     },
     //设置组件的option
     setRuleItemOptions(fileId, data) {

@@ -296,12 +296,72 @@ export const setFormRule = (newRule) => {
 //右侧的组件配置里面的组件部分
 export let compoentsRule = [
   {
+    type: "switch",
+    label: "清除图标",
+    fileId: "allowClear",
+    value: false,
+    span: 24,
+    attrArr: ["input", "select", "multipleselect"],
+  },
+  // {
+  //   type: "activeIcon",
+  //   label: "前置按钮",
+  //   fileId: "prefix",
+  //   value: "",
+  //   span: 24,
+  //   attrArr: ["input", "select"],
+  // },
+  {
+    type: "inputnumber",
+    label: "最大长度",
+    fileId: "maxLength",
+    value: 10,
+    span: 24,
+    attrArr: ["input"],
+  },
+  {
+    type: "switch",
+    label: "是否禁用",
+    fileId: "disabled",
+    value: false,
+    span: 24,
+
+    attrArr: [
+      "input",
+      "datapick",
+      "rangePicker",
+      "select",
+      "radio",
+      "checkbox",
+      "switch",
+      "slider",
+    ],
+  },
+  {
+    type: "radio",
+    label: "组件大小",
+    fileId: "size",
+    value: "",
+    span: 24,
+    options: [
+      {
+        label: "默认",
+        value: "default",
+      },
+      {
+        label: "小",
+        value: "small",
+      },
+    ],
+
+    attrArr: ["input", "datapick", "rangePicker", "select", "switch", "slider"],
+  },
+  {
     type: "input",
     label: "展示的标题",
     fileId: "text",
     value: "",
     span: 24,
-
     attrArr: ["divider"],
   },
   {
@@ -337,14 +397,7 @@ export let compoentsRule = [
     span: 24,
     attrArr: ["select", "checkbox", "radio", "multipleselect"],
   },
-  {
-    type: "switch",
-    label: "清除图标",
-    fileId: "allowClear",
-    value: false,
-    span: 24,
-    attrArr: ["input", "select", "multipleselect"],
-  },
+
   // maxTagCount
   {
     type: "setTreeRuleData",
@@ -396,14 +449,6 @@ export let compoentsRule = [
     attrArr: ["divider"],
   },
 
-  // {
-  //   type: "activeIcon",
-  //   label: "前置按钮",
-  //   fileId: "prefix",
-  //   value: "",
-  //   span: 24,
-  //   attrArr: ["input", "select"],
-  // },
   {
     type: "input",
     label: "未选中的文字内容",
@@ -413,7 +458,6 @@ export let compoentsRule = [
     props: {
       maxLength: 2,
     },
-
     attrArr: ["switch"],
   },
   {
@@ -428,15 +472,7 @@ export let compoentsRule = [
 
     attrArr: ["switch"],
   },
-  {
-    type: "inputnumber",
-    label: "最大长度",
-    fileId: "maxLength",
-    value: 10,
-    span: 24,
 
-    attrArr: ["input"],
-  },
   {
     type: "inputnumber",
     label: "最大值",
@@ -456,43 +492,6 @@ export let compoentsRule = [
     attrArr: ["slider"],
   },
   // max
-  {
-    type: "switch",
-    label: "是否禁用",
-    fileId: "disabled",
-    value: false,
-    span: 24,
-
-    attrArr: [
-      "input",
-      "datapick",
-      "rangePicker",
-      "select",
-      "radio",
-      "checkbox",
-      "switch",
-      "slider",
-    ],
-  },
-  {
-    type: "radio",
-    label: "组件大小",
-    fileId: "size",
-    value: "",
-    span: 24,
-    options: [
-      {
-        label: "默认",
-        value: "default",
-      },
-      {
-        label: "小",
-        value: "small",
-      },
-    ],
-
-    attrArr: ["input", "datapick", "rangePicker", "select", "switch", "slider"],
-  },
 ];
 export const setCompoentsRule = (newRule) => {
   compoentsRule.concat(newRule);

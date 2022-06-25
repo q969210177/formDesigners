@@ -304,6 +304,23 @@ export let compoentsRule = [
     span: 24,
     attrArr: ["input", "select", "multipleselect"],
   },
+  {
+    type: "input",
+    label: "默认提示语",
+    fileId: "placeholder",
+    value: "",
+    span: 24,
+    attrArr: [
+      "input",
+      "datapick",
+      "rangePicker",
+      "select",
+      "radio",
+      "checkbox",
+      "switch",
+      "slider",
+    ],
+  },
   // {
   //   type: "activeIcon",
   //   label: "前置按钮",

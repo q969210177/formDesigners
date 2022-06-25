@@ -1,56 +1,104 @@
 <template>
   <div class="cRadio">
-    <a-radio-group v-model="radioValue" @change="handleChange" v-bind="$attrs" v-on="$listeners">
-      <a-radio :value="v[valueKey]" v-for="(v, k) in options" :key="v.value + k">{{ v[labelKey] }}</a-radio>
-    </a-radio-group>
+    <template v-if="isButton === 'btn'">
+      <a-radio-group
+        v-model="radioValue"
+        @change="handleChange"
+        v-bind="attrs"
+        buttonStyle="solid"
+        v-on="$listeners"
+      >
+        <a-radio-button
+          :value="v[valueKey]"
+          v-for="(v, k) in options"
+          :key="v[valueKey] + k"
+        >
+          {{ v[labelKey] }}
+        </a-radio-button>
+      </a-radio-group>
+    </template>
+    <template v-else>
+      <a-radio-group
+        v-model="radioValue"
+        @change="handleChange"
+        v-bind="attrs"
+        buttonStyle="solid"
+        v-on="$listeners"
+      >
+        <a-radio
+          :value="v[valueKey]"
+          v-for="(v, k) in options"
+          :key="v[valueKey] + k"
+        >
+          {{ v[labelKey] }}
+        </a-radio>
+      </a-radio-group>
+    </template>
+    <!-- </a-radio-group> -->
   </div>
 </template>
 <script>
 export default {
-  name: 'CRadio',
+  name: "CRadio",
   props: {
     value: {
       type: [String, Number],
-      require: true
+      require: true,
+    },
+    isButton: {
+      type: String,
+      validator: (v) => {
+        return ["btn", "radio"].includes(v);
+      },
     },
     options: {
       type: Array,
       default: () => {
-        return []
-      }
+        return [];
+      },
     },
     labelKey: {
       type: String,
-      default: 'label'
+      default: "label",
     },
     valueKey: {
       type: String,
-      default: 'value'
-    }
+      default: "value",
+    },
   },
   data() {
     return {
-      radioValue: null
-    }
+      radioValue: null,
+    };
+  },
+  computed: {
+    attrs() {
+      console.log(this.$attrs, "this.$attrs");
+      if (this.$attrs.options) {
+        //
+        delete this.$attrs.options;
+      }
+      return this.$attrs;
+    },
   },
   watch: {
     value(newV) {
-      this.radioValue = newV
-    }
+      this.radioValue = newV;
+    },
   },
   mounted() {
-    this.radioValue = this.value
+    this.radioValue = this.value;
   },
   methods: {
     handleChange(v) {
       const {
-        target: { value }
-      } = v
-      this.$emit('input', value)
-      this.$emit('change', value)
-    }
-  }
-}
+        target: { value },
+      } = v;
+      this.$emit("input", value);
+      this.$emit("change", value);
+    },
+  },
+};
 </script>
 <style lang="scss" scoped>
 .cRadio {

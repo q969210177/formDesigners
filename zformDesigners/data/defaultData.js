@@ -293,8 +293,9 @@ export let formRule = [];
 export const setFormRule = (newRule) => {
   formRule.concat(newRule);
 };
-//右侧的组件配置里面的组件部分
+//右侧的组件配置里面的组件部分  用注释分割了每一个组件的配置数据
 export let compoentsRule = [
+  //input开始
   {
     type: "switch",
     label: "清除图标",
@@ -354,8 +355,67 @@ export let compoentsRule = [
       },
     ],
 
-    attrArr: ["input", "datapick", "rangePicker", "select", "switch", "slider"],
+    attrArr: [
+      "input",
+      "datapick",
+      "rangePicker",
+      "select",
+      "switch",
+      "slider",
+      "radio",
+    ],
   },
+  // input结束
+
+  //select结束开始
+  {
+    type: "setSelectOption",
+    label: "配置数据",
+    fileId: "options",
+    value: [],
+    span: 24,
+    attrArr: ["select", "checkbox", "radio", "multipleselect"],
+  },
+  {
+    type: "inputnumber",
+    label: "最大显示的文本长度",
+    fileId: "maxTagTextLength",
+    value: 0,
+    span: 24,
+    attrArr: ["select", "multipleselect"],
+  },
+  // select结束
+
+  //multipleselect结束开始
+  {
+    type: "inputnumber",
+    label: "最多同时展示多少tag",
+    fileId: "maxTagCount",
+    value: 5,
+    span: 24,
+    attrArr: ["multipleselect"],
+  },
+  // multipleselect结束
+
+  //radio开始
+  {
+    type: "radio",
+    label: "显示模式",
+    fileId: "isButton",
+    value: "",
+    options: [
+      { label: "按钮", value: "btn" },
+      { label: "radio", value: "radio" },
+    ],
+    span: 24,
+    attrArr: ["radio"],
+  },
+  // radio结束
+
+  //checkbox开始
+  //checkbox结束
+
+  //datapick开始
   {
     type: "input",
     label: "展示的标题",
@@ -373,32 +433,7 @@ export let compoentsRule = [
 
     attrArr: ["divider"],
   },
-  {
-    type: "setSelectOption",
-    label: "配置数据",
-    fileId: "options",
-    value: [],
-    span: 24,
-    attrArr: ["select", "checkbox", "radio", "multipleselect"],
-  },
-  {
-    type: "inputnumber",
-    label: "最大显示的文本长度",
-    fileId: "maxTagTextLength",
-    value: 0,
-    span: 24,
-    attrArr: ["select", "checkbox", "radio", "multipleselect"],
-  },
-  {
-    type: "inputnumber",
-    label: "最多同时展示多少tag",
-    fileId: "maxTagCount",
-    value: 5,
-    span: 24,
-    attrArr: ["select", "checkbox", "radio", "multipleselect"],
-  },
 
-  // maxTagCount
   {
     type: "setTreeRuleData",
     label: "配置数据",
@@ -415,7 +450,6 @@ export let compoentsRule = [
     span: 24,
     attrArr: ["tree"],
   },
-  //checkable
   {
     type: "setTreeRuleData",
     label: "配置数据",

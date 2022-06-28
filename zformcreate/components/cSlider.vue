@@ -1,33 +1,39 @@
 <template>
   <div class="cSlider">
-    <a-slider @change="handleSelectChange" v-model="defaultValue" v-bind="$attrs" v-on="$listeners"></a-slider>
+    <a-slider
+      :getTooltipPopupContainer="() => $el"
+      @change="handleSelectChange"
+      v-model="defaultValue"
+      v-bind="$attrs"
+      v-on="$listeners"
+    ></a-slider>
   </div>
 </template>
 <script>
 export default {
-  name: 'cSlider',
+  name: "cSlider",
   props: {
-    value: {}
+    value: {},
   },
   watch: {
     value(newV) {
-      this.defaultValue = newV
-    }
+      this.defaultValue = newV;
+    },
   },
   data() {
     return {
-      defaultValue: 0
-    }
+      defaultValue: 0,
+    };
   },
   mounted() {
-    this.defaultValue = this.value
+    this.defaultValue = this.value;
   },
   methods: {
     handleSelectChange(v) {
-      this.$emit('input', v)
-    }
-  }
-}
+      this.$emit("input", v);
+    },
+  },
+};
 </script>
 <style lang="scss" scoped>
 .cSlider {

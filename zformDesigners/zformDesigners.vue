@@ -24,7 +24,8 @@
           <!-- <a-button size="small">清空{{ruleItemType}}</a-button> -->
         </div>
         <div class="main_content_form">
-          <!-- style="background: #fff;padding:4px" -->
+          <!-- @rowClick="handleZformDemoRowClick" -->
+          <!-- style="background: #fff;padding:4px"  -->
           <zformDemo
             ref="zformDemo"
             v-model="userInfoModel"
@@ -125,9 +126,11 @@ export default {
     };
   },
   watch: {
-    activeValue() {
+    activeValue(newV) {
       if (this.$refs.componentsConfig) {
-        this.$refs.componentsConfig.init();
+        console.log(newV, "watch");
+
+        this.$refs.componentsConfig.init(newV);
       }
     },
   },
@@ -138,6 +141,10 @@ export default {
     }
   },
   methods: {
+    //行点击事件
+    handleZformDemoRowClick() {
+      // this.$refs.componentsConfig.init();
+    },
     //点击下移位置
     handleZformDemoItemDownClick(ruleItem, index) {
       console.log(index, "index");

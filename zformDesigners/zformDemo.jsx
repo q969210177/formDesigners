@@ -75,7 +75,7 @@ export default {
     });
   },
   mounted() {
-    this.copyRule =(this.rule);
+    this.copyRule =this.rule
   },
   methods: {
     //获取json格式的数据

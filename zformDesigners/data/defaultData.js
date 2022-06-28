@@ -132,7 +132,7 @@ export const defaultMenuArr = [
       {
         name: "滑块",
         activeValue: "slider",
-        icon: "icon-kaiguanguan",
+        icon: "icon-ic_guiji",
         data: {
           type: "slider",
           itemType: "form",
@@ -302,7 +302,7 @@ export let compoentsRule = [
     fileId: "allowClear",
     value: false,
     span: 24,
-    attrArr: ["input", "select", "multipleselect"],
+    attrArr: ["input", "select", "multipleselect", "datapick"],
   },
   {
     type: "input",
@@ -310,16 +310,7 @@ export let compoentsRule = [
     fileId: "placeholder",
     value: "",
     span: 24,
-    attrArr: [
-      "input",
-      "datapick",
-      "rangePicker",
-      "select",
-      "radio",
-      "checkbox",
-      "switch",
-      "slider",
-    ],
+    attrArr: ["input", "datapick", "rangePicker", "select"],
   },
   // {
   //   type: "activeIcon",
@@ -343,7 +334,6 @@ export let compoentsRule = [
     fileId: "disabled",
     value: false,
     span: 24,
-
     attrArr: [
       "input",
       "datapick",
@@ -372,15 +362,7 @@ export let compoentsRule = [
       },
     ],
 
-    attrArr: [
-      "input",
-      "datapick",
-      "rangePicker",
-      "select",
-      "switch",
-      "slider",
-      "radio",
-    ],
+    attrArr: ["input", "datapick", "rangePicker", "select", "switch", "radio"],
   },
   // input结束
 
@@ -433,6 +415,86 @@ export let compoentsRule = [
   //checkbox结束
 
   //datapick开始
+  {
+    type: "checkbox",
+    fileId: "formatArr",
+    label: "配置时间格式",
+    value: [],
+    options: [
+      { label: "年", value: "YYYY-" },
+      { label: "月", value: "MM-" },
+      { label: "日", value: "DD " },
+      { label: "时", value: "HH:" },
+      { label: "分", value: "mm:" },
+      { label: "秒", value: "SS" },
+    ],
+    attrArr: ["datapick"],
+  },
+  {
+    type: "radio",
+    fileId: "type",
+    label: "展示模式",
+    value: "",
+    options: [
+      { label: "日期选择器", value: "date" },
+      { label: "月份选择器", value: "month" },
+    ],
+    attrArr: ["datapick"],
+  },
+  //datapick结束
+  //switch开始
+
+  {
+    type: "input",
+    label: "未选中的文字内容",
+    fileId: "unCheckedChildren",
+    value: "",
+    span: 24,
+    props: {
+      maxLength: 2,
+    },
+    attrArr: ["switch"],
+  },
+  {
+    type: "input",
+    label: "选中的文字内容",
+    fileId: "checkedChildren",
+    value: "",
+    span: 24,
+    props: {
+      maxLength: 2,
+    },
+
+    attrArr: ["switch"],
+  },
+  //switch结束
+
+  //slider开始
+  {
+    type: "switch",
+    fileId: "tooltipVisible",
+    label: "是否显示tooltip",
+    value: false,
+    span: 24,
+    attrArr: ["slider"],
+  },
+  {
+    type: "inputnumber",
+    label: "最大值",
+    fileId: "max",
+    value: 10,
+    span: 24,
+    attrArr: ["slider"],
+  },
+  {
+    type: "inputnumber",
+    label: "最小值",
+    fileId: "min",
+    value: 0,
+    span: 24,
+    attrArr: ["slider"],
+  },
+  //slider结束
   {
     type: "input",
     label: "展示的标题",
@@ -500,48 +562,6 @@ export let compoentsRule = [
     attrArr: ["divider"],
   },
 
-  {
-    type: "input",
-    label: "未选中的文字内容",
-    fileId: "unCheckedChildren",
-    value: "",
-    span: 24,
-    props: {
-      maxLength: 2,
-    },
-    attrArr: ["switch"],
-  },
-  {
-    type: "input",
-    label: "选中的文字内容",
-    fileId: "checkedChildren",
-    value: "",
-    span: 24,
-    props: {
-      maxLength: 2,
-    },
-
-    attrArr: ["switch"],
-  },
-
-  {
-    type: "inputnumber",
-    label: "最大值",
-    fileId: "max",
-    value: 10,
-    span: 24,
-
-    attrArr: ["slider"],
-  },
-  {
-    type: "inputnumber",
-    label: "最小值",
-    fileId: "min",
-    value: 10,
-    span: 24,
-
-    attrArr: ["slider"],
-  },
   // max
 ];
 export const setCompoentsRule = (newRule) => {

@@ -84,11 +84,12 @@ export default {
   methods: {
     //获取json格式的数据
     getFormData() {
+      const formData = {}
       this.copyRule.forEach((i) => {
         // this.formData[i.fileId] = i.value
-        this.$set(this.formData, i.fileId, i.value);
+        this.$set(formData, i.fileId, i.value);
       });
-      return _.cloneDeep(this.formData);
+      return formData
     },
     //设置组件的value
     setValue(fileId, newV) {

@@ -73,9 +73,7 @@ export default {
   },
   computed: {
     attrs() {
-      console.log(this.$attrs, "this.$attrs");
       if (this.$attrs.options) {
-        //
         delete this.$attrs.options;
       }
       return this.$attrs;

@@ -5,7 +5,7 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "buildZformcreate": "webpack --config build/buildZformcreate.js&& npm run autoZformcreate",
-    "buildZformDesigners": "webpack --config build/buildZformDesigners.js",
+    "buildZformDesigners": "webpack --config build/buildZformDesigners.js&&node build/autoZformDesigners.js",
     "setFormCreateCompoentsData": "node build/setFormCreateCompoentsData.js",
     "lint": "vue-cli-service lint",
     "icon": "node build/getIconArr.js",
@@ -17,7 +17,7 @@
     "core-js": "^3.6.5",
     "css-loader": "^5.2.7",
     "vue": "^2.6.11",
-    "z-form-designers": "0.0.2",
+    "z-form-designers": "0.0.6",
     "zformcreate": "0.0.13"
   },
   "devDependencies": {

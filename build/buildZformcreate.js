@@ -6,7 +6,7 @@ const TerserPlugin = require("terser-webpack-plugin");
 module.exports = {
   mode: "production",
   entry: {
-    app: [path.resolve(__dirname, "../formCreate.js")],
+    app: [path.resolve(__dirname, "../zformcreate/index.js")],
   },
   output: {
     path: path.resolve(process.cwd(), "./lib/zformcreate"),

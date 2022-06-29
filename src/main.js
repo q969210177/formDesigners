@@ -5,7 +5,7 @@ import "@/utils/autoCompoents.js";
 import zformDesigners from "../lib/zFormDesigners/index";
 // import zformDesigners from "z-form-designers";
 import "@/assets/iconFont/iconfont.css";
-console.log(zformDesigners, "zformDesigners");
+import "z-form-designers/index.css";
 Vue.use(zformDesigners);
 Vue.config.productionTip = false;
 new Vue({

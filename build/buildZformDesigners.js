@@ -3,25 +3,23 @@ const ProgressBarPlugin = require("progress-bar-webpack-plugin");
 const VueLoaderPlugin = require("vue-loader/lib/plugin");
 const TerserPlugin = require("terser-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-
+const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 module.exports = {
   mode: "production",
   entry: {
-    app: [path.resolve(__dirname, "../formDesigners.js")],
+    // zformDesigners/index.js
+    // app: [path.resolve(__dirname, "../formDesigners.js")],
+    app: [path.resolve(__dirname, "../zformDesigners/index.js")],
   },
   output: {
     path: path.resolve(process.cwd(), "./lib/zFormDesigners"),
-    publicPath: "/",
+    publicPath: "./",
     filename: "index.js",
-    chunkFilename: "[id].js",
     libraryTarget: "umd",
     libraryExport: "default",
-    library: "chen",
-    umdNamedDefine: true,
-    globalObject: "typeof self !== 'undefined' ? self : this",
   },
   resolve: {
-    extensions: [".js", ".vue", ".json", "scss"],
+    extensions: [".js", ".vue", ".json", "scss", "woff2", "css", "tff"],
     alias: {
       "@": path.resolve(__dirname, "../src"),
       "~@": path.resolve(__dirname, "../src"),
@@ -35,30 +33,11 @@ module.exports = {
       amd: "vue",
     },
   },
-  optimization: {
-    minimizer: [
-      new TerserPlugin({
-        terserOptions: {
-          output: {
-            comments: false,
-          },
-        },
-      }),
-    ],
-  },
-  performance: {
-    hints: false,
-  },
-  stats: {
-    children: false,
-  },
   module: {
     rules: [
       {
         test: /\.(jsx?|babel|es6)$/,
         include: process.cwd(),
-
-        // exclude: config.jsexclude,
         exclude: /node_modules|utils\/popper\.js|utils\/date\.js/,
         loader: "babel-loader",
       },
@@ -71,25 +50,84 @@ module.exports = {
           },
         },
       },
-      // {
-      //   test: /\.s[ac]ss$/i,
-      //   use: [
-      //     // 将 JS 字符串生成为 style 节点
-      //     "style-loader",
-      //     // 将 CSS 转化成 CommonJS 模块
-      //     "css-loader",
-      //     // 将 Sass 编译成 CSS
-      //     "sass-loader",
-      //   ],
-      // },
+      {
+        // test: /\.s[ac]ss$/i,
+        test: /\.scss$/i,
+        use: [
+          // 将 JS 字符串生成为 style 节点
+          MiniCssExtractPlugin.loader,
+          // 将 CSS 转化成 CommonJS 模块
+          {
+            loader: "css-loader",
+            options: {
+              sourceMap: true,
+            },
+          },
+          // 将 Sass 编译成 CSS
+          "sass-loader",
+        ],
+      },
+      {
+        test: /\.css$/i,
+        use: [
+          MiniCssExtractPlugin.loader,
+          // 将 CSS 转化成 CommonJS 模块
+          "css-loader",
+        ],
+      },
+      {
+        test: /\.(tff|woff2?|woff)$/,
+        loader: "file-loader",
+        options: {
+          outputPath: "assets",
+        },
+        // use: ["file-loader"],
+      },
     ],
+  },
+  optimization: {
+    minimizer: [
+      new TerserPlugin({
+        terserOptions: {
+          output: {
+            comments: false,
+          },
+        },
+      }),
+    ],
+  },
+  stats: {
+    children: false,
+  },
+  performance: {
+    hints: false,
   },
   plugins: [
     new ProgressBarPlugin(),
     new VueLoaderPlugin(),
+    // new CssMinimizerPlugin(),
     new MiniCssExtractPlugin({
-      filename: "[name].[hash].css",
-      chunkFilename: "[id].[hash].css",
+      filename: "./index.css",
     }),
   ],
 };
+// module.exports = {
+//   mode: "production",
+
+//   output: {
+//     path: path.resolve(process.cwd(), "./lib/zFormDesigners"),
+//     publicPath: "/",
+//     filename: "index.js",
+// chunkFilename: "[id].js",
+//     libraryExport: "default",
+//     library: "chen",
+//     umdNamedDefine: true,
+//     globalObject: "typeof self !== 'undefined' ? self : this",
+//   },
+
+//     rules: [
+
+//     ],
+//   },
+
+// };

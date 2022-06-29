@@ -1,4 +1,5 @@
 import zformDesigners from "./zformDesigners.vue";
+import "@/assets/iconFont/iconfont.css";
 import {
   setDefaultFormConfig,
   setFormRule,

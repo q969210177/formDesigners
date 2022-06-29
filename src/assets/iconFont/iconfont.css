@@ -1,9 +1,16 @@
 @font-face {
-  font-family: "iconfont"; /* Project id 1416879 */
-  src: url('iconfont.woff2?t=1655994651767') format('woff2'),
-       url('iconfont.woff?t=1655994651767') format('woff'),
-       url('iconfont.ttf?t=1655994651767') format('truetype');
+  font-family: "iconfont"; 
+  src: url('./iconfont.woff2');
+       /* url('./iconfont.woff'), */
+       /* url('./iconfont.ttf'); */
 }
+
+/* @font-face {
+  font-family: "iconfont"; 
+  src: url('./iconfont.woff2') format('woff2'),
+       url('./iconfont.woff') format('woff'),
+       url('./iconfont.ttf') format('truetype');
+} */
 
 .iconfont {
   font-family: "iconfont" !important;

@@ -1,10 +1,10 @@
 
   {
     "name":"z-form-designers",
-    "version":"0.0.13",
+    "version":"0.0.4",
     "description":"根据特地规则生成表单",
     "main":"index.js",
-    "files":["index.js","index.d.ts"],
+    "files":["index.js","index.d.ts","index.css","assets"],
     "typings":"index.d.ts",
     "keywords":["form","vue","antd"],
     "license":"MIT",

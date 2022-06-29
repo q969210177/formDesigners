@@ -1,6 +1,6 @@
 
   import Vue, { VNode } from "vue";
-  export declare class ElementUIComponent extends Vue {
+  export declare class zformcreate extends Vue {
     static install(vue: typeof Vue): void;
     static components(components: VNode): void;
   }

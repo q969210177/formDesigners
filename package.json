@@ -9,14 +9,16 @@
     "setFormCreateCompoentsData": "node build/setFormCreateCompoentsData.js",
     "lint": "vue-cli-service lint",
     "icon": "node build/getIconArr.js",
-    "autoZformcreate": "node build/autoZformcreate.js"
+    "autoZformcreate": "node build/autoZformcreate.js",
+    "autoZformDesignerseate": "node build/autoZformDesigners.js"
   },
   "dependencies": {
     "ant-design-vue": "^1.7.8",
     "core-js": "^3.6.5",
     "css-loader": "^5.2.7",
     "vue": "^2.6.11",
-    "zformcreate": "0.0.12"
+    "z-form-designers": "0.0.2",
+    "zformcreate": "0.0.13"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",

@@ -1,7 +1,7 @@
 //自动注册compoents下的组件
 import Vue from "vue";
 // import CreateForm from "../../zformcreate/index";
-import CreateForm from "../../lib/zformcreate/index";
+import CreateForm from "zformcreate";
 Vue.use(CreateForm);
 
 const requireComponent = require.context(

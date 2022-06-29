@@ -1,5 +1,5 @@
 import "./style/aDetailContent.scss";
-import aDetailContentItem from "./aDetailContentItem";
+import aDetailContentItem from "./aDetailContentItem.jsx";
 export default {
   name: "aDetailContent",
   components: {

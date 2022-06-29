@@ -30,10 +30,10 @@ newVersion[2] = Number(newVersion[2]) + 1 + "";
 //   },
 // };
 fs.writeFile(
-  path.resolve(__dirname, "../lib/zformcreate/package.json"),
+  path.resolve(__dirname, "../lib/zFormDesigners/package.json"),
   `
   {
-    "name":"zformcreate",
+    "name":"z-form-designers",
     "version":"${newVersion.join(".")}",
     "description":"根据特地规则生成表单",
     "main":"index.js",
@@ -52,14 +52,15 @@ fs.writeFile(
     console.log("运行完毕");
   }
 );
-
 fs.writeFile(
-  path.resolve(__dirname, "../lib/zformcreate/index.d.ts"),
+  path.resolve(__dirname, "../lib/zFormDesigners/index.d.ts"),
   `
   import Vue, { VNode } from "vue";
-  export declare class zformcreate extends Vue {
+  export declare class zFormDesigners extends Vue {
     static install(vue: typeof Vue): void;
-    static components(components: VNode): void;
+    static setDefaultFormConfig(newFormConfig: {[x:string]:any}): void;
+    static addFormRule(newRule: any[]): void;
+    static addCompoentsRule(newRule:any[]): void;
   }
   `,
   () => {
@@ -67,8 +68,7 @@ fs.writeFile(
   }
 );
 // shell.exec(`
-//   cd ./lib/zformcreate/;
-//   ls -l;
-//   // npm publish
-//   `);
-// shell.exec(`npm publish`);
+//   cd ./lib/zformcreate/
+//   ls -l
+//   npm publish
+// `);

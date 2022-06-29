@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 // import zformDemoItem from "./zformDemoItem";
-import aGridLayout from "@/components/aGridLayout";
-import aGridLayoutItem from "@/components/aGridLayoutItem";
+// import aGridLayout from "@/components/aGridLayout";
+// import aGridLayoutItem from "@/components/aGridLayoutItem";
 import {
   returnEvent,
   getRuleItem,
@@ -12,7 +12,6 @@ import {
 } from "@/utils/utils";
 import { componentsObj } from "../zformcreate/data/compoents";
 import "./style/zformDemo.scss";
-import _ from "lodash";
 export default {
   name: "zformDemo",
   components: {
@@ -54,7 +53,7 @@ export default {
   },
   watch: {
     rule(newV) {
-      this.copyRule = (this.rule);
+      this.copyRule = this.rule;
     },
   },
   data() {
@@ -80,11 +79,12 @@ export default {
   methods: {
     //获取json格式的数据
     getFormData() {
+      const formData={}
       this.copyRule.forEach((i) => {
-        // this.formData[i.fileId] = i.value
-        this.$set(this.formData, i.fileId, i.value);
+        formData[i.fileId] = i.value
+        // this.$set(this.formData, i.fileId, i.value);
       });
-      return _.cloneDeep(this.formData);
+      return  formData
     },
     //设置组件的value
     setValue(fileId, newV) {
@@ -374,41 +374,12 @@ export default {
                       <slot name={ruleItem.fileId} data={ruleItem}>
                         {this.renderCompoents(ruleItem.itemType, h, ruleItem,k)}
                       </slot>
-                      {/* class="rule_item_operating" */}
-                      {/* <div
-                        class={[
-                          ruleItem.fileId,
-                          "rule_item_operating",
-                          {
-                            rule_item_operating_active:
-                              ruleItem.fileId === this.activeValue,
-                          },
-                          {
-                            rule_item_operating_no_active:
-                              ruleItem.fileId !== this.activeValue,
-                          },
-                        ]}
-                      ></div> */}
+                    
                     </div>
                   </a-col>
                 );
 
-                // <a-col span={ruleItem.span ? ruleItem.span : 24}>
-
-                //     <div
-                //       class={[
-
-                //         "form_item_dialog",
-                //       ]}
-                //     >
-                //       <div class="form_item_dialog_btn">
-                //         {this.returnOperateDom(ruleItem)}
-                //       </div>
-                //     </div>
-
-                //   </div>
-                //   {/* <div class={[ruleItem.fileId, "default_item_hover"]}></div> */}
-                // </a-col>
+               
               }
             })}
           </a-row>

@@ -94,7 +94,7 @@
 import componentsMenu from "./compoents/componentsMenu.vue";
 import componentsConfig from "./compoents/componentsConfig.vue";
 import defaultformConfig from "./compoents/defaultformConfig.vue";
-import zformDemo from "./zformDemo";
+import zformDemo from "./zformDemo.jsx";
 import { defaultFormConfig, setDefaultFormConfig } from "./data/defaultData.js";
 import { setCompoentId, getRuleItem, setRuleItem } from "@/utils/utils";
 export default {

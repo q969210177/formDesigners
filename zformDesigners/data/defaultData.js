@@ -155,50 +155,8 @@ export const defaultMenuArr = [
           itemType: "form",
           value: [],
           label: "",
+          options: [],
           props: {
-            treeData: [
-              {
-                title: "0-0",
-                key: "0-0",
-                children: [
-                  {
-                    title: "0-0-0",
-                    key: "0-0-0",
-                    children: [
-                      { title: "0-0-0-0", key: "0-0-0-0" },
-                      { title: "0-0-0-1", key: "0-0-0-1" },
-                      { title: "0-0-0-2", key: "0-0-0-2" },
-                    ],
-                  },
-                  {
-                    title: "0-0-1",
-                    key: "0-0-1",
-                    children: [
-                      { title: "0-0-1-0", key: "0-0-1-0" },
-                      { title: "0-0-1-1", key: "0-0-1-1" },
-                      { title: "0-0-1-2", key: "0-0-1-2" },
-                    ],
-                  },
-                  {
-                    title: "0-0-2",
-                    key: "0-0-2",
-                  },
-                ],
-              },
-              {
-                title: "0-1",
-                key: "0-1",
-                children: [
-                  { title: "0-1-0-0", key: "0-1-0-0" },
-                  { title: "0-1-0-1", key: "0-1-0-1" },
-                  { title: "0-1-0-2", key: "0-1-0-2" },
-                ],
-              },
-              {
-                title: "0-2",
-                key: "0-2",
-              },
-            ],
             checkable: true,
           },
           rules: [],
@@ -215,40 +173,7 @@ export const defaultMenuArr = [
           value: [],
           label: "",
           props: {},
-          options: [
-            {
-              value: "zhejiang",
-              label: "Zhejiang",
-              children: [
-                {
-                  value: "hangzhou",
-                  label: "Hangzhou",
-                  children: [
-                    {
-                      value: "xihu",
-                      label: "West Lake",
-                    },
-                  ],
-                },
-              ],
-            },
-            {
-              value: "jiangsu",
-              label: "Jiangsu",
-              children: [
-                {
-                  value: "nanjing",
-                  label: "Nanjing",
-                  children: [
-                    {
-                      value: "zhonghuamen",
-                      label: "Zhong Hua Men",
-                    },
-                  ],
-                },
-              ],
-            },
-          ],
+          options: [],
           rules: [],
           span: 24,
         },
@@ -343,6 +268,7 @@ export let compoentsRule = [
       "checkbox",
       "switch",
       "slider",
+      "tree",
     ],
   },
   {
@@ -443,7 +369,6 @@ export let compoentsRule = [
   },
   //datapick结束
   //switch开始
-
   {
     type: "input",
     label: "未选中的文字内容",
@@ -495,6 +420,49 @@ export let compoentsRule = [
     attrArr: ["slider"],
   },
   //slider结束
+
+  //tree开始
+  {
+    type: "switch",
+    label: "复选框模式",
+    fileId: "checkable",
+    value: false,
+    span: 24,
+    attrArr: ["tree"],
+  },
+  {
+    type: "setTreeRuleData",
+    label: "配置数据",
+    fileId: "options",
+    value: [],
+    span: 24,
+    attrArr: ["tree"],
+  },
+  {
+    type: "switch",
+    fileId: "blockNode",
+    label: "子节点是否独占一行",
+    value: false,
+    span: 24,
+    attrArr: ["tree"],
+  },
+  {
+    type: "switch",
+    fileId: "showLine",
+    label: "是否展示连线",
+    value: false,
+    span: 24,
+    attrArr: ["tree"],
+  },
+  // {
+  //   type: "switch",
+  //   fileId: "blockNode",
+  //   label: "子节点是否独占一行",
+  //   value: false,
+  //   span: 24,
+  //   attrArr: ["tree"],
+  // },
+  //tree结束
   {
     type: "input",
     label: "展示的标题",
@@ -513,30 +481,15 @@ export let compoentsRule = [
     attrArr: ["divider"],
   },
 
-  {
-    type: "setTreeRuleData",
-    label: "配置数据",
-    fileId: "options",
-    value: [],
-    span: 24,
-    attrArr: ["cascader"],
-  },
-  {
-    type: "switch",
-    label: "复选框模式",
-    fileId: "checkable",
-    value: false,
-    span: 24,
-    attrArr: ["tree"],
-  },
-  {
-    type: "setTreeRuleData",
-    label: "配置数据",
-    fileId: "treeData",
-    value: [],
-    span: 24,
-    attrArr: ["tree"],
-  },
+  // {
+  //   type: "setTreeRuleData",
+  //   label: "配置数据",
+  //   fileId: "options",
+  //   value: [],
+  //   span: 24,
+  //   attrArr: ["cascader"],
+  // },
+
   //
   {
     type: "switch",

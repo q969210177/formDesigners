@@ -1,5 +1,6 @@
 <template>
   <div class="setTreeRuleData">
+    {{ expandedKeys }}
     <div>
       <span class="label">{{ setOptionsValue() }}</span>
       <a-button size="small" type="link" @click="formModelConfig.show = true"
@@ -16,7 +17,11 @@
       v-model="formModelConfig.show"
     >
       <a-button @click="handleAddOptions(1)">新增一级数据</a-button>
-      <a-tree :treeData="options" :blockNode="true">
+      <a-tree
+        :expandedKeys.sync="expandedKeys"
+        :treeData="options"
+        :blockNode="true"
+      >
         <template slot="title" slot-scope="tree">
           <div class="tree_title">
             <input
@@ -25,9 +30,7 @@
               type="text"
               placeholder="请输入"
             />
-            <span>
-              {{ tree.dataRef.level }}
-            </span>
+
             <a-button
               type="link"
               @click="handleAddOptionsChild(tree, tree.dataRef.level + 1)"
@@ -69,6 +72,7 @@ export default {
         show: false,
       },
       options: [],
+      expandedKeys: [],
     };
   },
   methods: {
@@ -83,6 +87,7 @@ export default {
         children: [],
         scopedSlots: { title: "title" },
       };
+      this.expandedKeys.push(addObj.key);
       this.options.push(addObj);
     },
     //新增树形下面的一条
@@ -100,6 +105,7 @@ export default {
         this.$set(dataRef, "children", []);
         dataRef.children.push(addObj);
       }
+      this.expandedKeys.push(dataRef.key);
     },
     //点击删除数据
     handleDelTableData(k) {
@@ -127,6 +133,8 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+@import "~@/assets/layout.scss";
+
 .setTreeRuleData {
   width: 100%;
   height: 100%;
@@ -136,8 +144,13 @@ input {
   border: 0;
   outline: none;
   background: transparent;
+  height: 100%;
 }
 
 .tree_title {
+  width: 100%;
+  @include flex-row-s-c;
+  // border: 1px solid red;
+  height: 100%;
 }
 </style>

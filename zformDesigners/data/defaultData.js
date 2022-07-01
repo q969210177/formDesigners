@@ -172,7 +172,13 @@ export const defaultMenuArr = [
           itemType: "form",
           value: [],
           label: "",
-          props: {},
+          props: {
+            fieldNames: {
+              label: "title",
+              value: "key",
+              children: "children",
+            },
+          },
           options: [],
           rules: [],
           span: 24,
@@ -227,7 +233,7 @@ export let compoentsRule = [
     fileId: "allowClear",
     value: false,
     span: 24,
-    attrArr: ["input", "select", "multipleselect", "datapick"],
+    attrArr: ["input", "select", "multipleselect", "datapick", "cascader"],
   },
   {
     type: "input",
@@ -235,7 +241,7 @@ export let compoentsRule = [
     fileId: "placeholder",
     value: "",
     span: 24,
-    attrArr: ["input", "datapick", "rangePicker", "select"],
+    attrArr: ["input", "datapick", "rangePicker", "select", "cascader"],
   },
   // {
   //   type: "activeIcon",
@@ -269,6 +275,7 @@ export let compoentsRule = [
       "switch",
       "slider",
       "tree",
+      "cascader",
     ],
   },
   {
@@ -436,7 +443,7 @@ export let compoentsRule = [
     fileId: "options",
     value: [],
     span: 24,
-    attrArr: ["tree"],
+    attrArr: ["tree", "cascader"],
   },
   {
     type: "switch",
@@ -454,15 +461,24 @@ export let compoentsRule = [
     span: 24,
     attrArr: ["tree"],
   },
-  // {
-  //   type: "switch",
-  //   fileId: "blockNode",
-  //   label: "子节点是否独占一行",
-  //   value: false,
-  //   span: 24,
-  //   attrArr: ["tree"],
-  // },
   //tree结束
+
+  //cascader开始
+  {
+    type: "hide",
+    fileId: "fieldNames",
+    value: { label: "title", value: "key", children: "children" },
+    span: 24,
+    attrArr: ["cascader"],
+  },
+  {
+    type: "switch",
+    fileId: "changeOnSelect",
+    value: false,
+    label: "是否每级都可选择",
+    attrArr: ["cascader"],
+  },
+  //cascader结束
   {
     type: "input",
     label: "展示的标题",

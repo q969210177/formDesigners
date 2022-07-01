@@ -1,6 +1,5 @@
 <template>
   <div class="setTreeRuleData">
-    {{ expandedKeys }}
     <div>
       <span class="label">{{ setOptionsValue() }}</span>
       <a-button size="small" type="link" @click="formModelConfig.show = true"
@@ -10,13 +9,15 @@
     <a-modal
       :destroyOnClose="true"
       title="设置数据"
-      :width="800"
+      :width="1000"
       cancelText="取消"
       okText="确定"
       @ok="handleSubmitOptions"
       v-model="formModelConfig.show"
     >
-      <a-button @click="handleAddOptions(1)">新增一级数据</a-button>
+      <a-button type="primary" @click="handleAddOptions(1)"
+        >新增一级数据</a-button
+      >
       <a-tree
         :expandedKeys.sync="expandedKeys"
         :treeData="options"

@@ -6,6 +6,7 @@
     "serve": "vue-cli-service serve",
     "buildZformcreate": "webpack --config build/buildZformcreate.js&& npm run autoZformcreate",
     "buildZformDesigners": "webpack --config build/buildZformDesigners.js&&node build/autoZformDesigners.js",
+    "buildHtml": "vue-cli-service build",
     "setFormCreateCompoentsData": "node build/setFormCreateCompoentsData.js",
     "lint": "vue-cli-service lint",
     "icon": "node build/getIconArr.js",

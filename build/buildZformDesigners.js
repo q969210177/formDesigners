@@ -7,8 +7,6 @@ const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 module.exports = {
   mode: "production",
   entry: {
-    // zformDesigners/index.js
-    // app: [path.resolve(__dirname, "../formDesigners.js")],
     app: [path.resolve(__dirname, "../zformDesigners/index.js")],
   },
   output: {

@@ -18,8 +18,8 @@
     "core-js": "^3.6.5",
     "css-loader": "^5.2.7",
     "vue": "^2.6.11",
-    "z-form-designers": "0.0.6",
-    "zformcreate": "0.0.14"
+    "z-form-designers": "0.0.8",
+    "zformcreate": "0.0.15"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",

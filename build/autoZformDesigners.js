@@ -31,7 +31,6 @@ function writeFilenamePackageJson() {
       shell.exec(`
       cd ./lib/zFormDesigners/
       ls -l
-      npm link
     `);
       // shell.exec(`npm uninstall z-form-designers`);
       // shell.exec(`npm i z-form-designers -S`);

@@ -86,7 +86,7 @@ export default {
     getFormData() {
       const formData = {}
       this.copyRule.forEach((i) => {
-        // this.formData[i.fileId] = i.value
+        this.$set(this.formData, i.fileId, i.value);
         this.$set(formData, i.fileId, i.value);
       });
       return formData

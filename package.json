@@ -19,7 +19,7 @@
     "css-loader": "^5.2.7",
     "vue": "^2.6.11",
     "z-form-designers": "0.0.8",
-    "zformcreate": "0.0.19"
+    "zformcreate": "0.0.20"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",

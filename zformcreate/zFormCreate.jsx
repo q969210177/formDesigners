@@ -64,6 +64,20 @@ export default {
     rule() {
       this.updateRule();
     },
+    value(newV){
+      if (Object.keys(newV).length===0) {
+        this.$emit("input", {
+          getFormData: this.getFormData,
+          setValue: this.setValue,
+          validate: this.zCreateFormValidate,
+          resetRule: this.resetRule,
+          updateRule: this.updateRule,
+          setRuleItemOptions: this.setRuleItemOptions,
+          getRuleItemSomeOne: this.getRuleItemSomeOne,
+          updateRuleItemProps: this.updateRuleItemProps,
+        });
+      }
+    }
   },
   created() {
     this.$emit("input", {

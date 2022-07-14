@@ -1,8 +1,8 @@
 import Vue from "vue";
 import App from "./App.vue";
 import "@/utils/installAntdFormCompoent.js";
-// import zformcreate from "../zformcreate/index";
-import zformcreate from "zformcreate";
+import zformcreate from "../zformcreate/index";
+// import zformcreate from "zformcreate";
 const requireComponent = require.context(
   "@/components/",
   false,
@@ -14,8 +14,8 @@ requireComponent.keys().forEach((name) => {
   zformcreate.components(compoents);
 });
 // import zformDesigners from "../lib/zFormDesigners/index";
-// import zformDesigners from "../zformDesigners/index";
-import zformDesigners from "z-form-designers";
+import zformDesigners from "../zformDesigners/index";
+// import zformDesigners from "z-form-designers";
 import "@/assets/iconFont/iconfont.css";
 import "z-form-designers/index.css";
 Vue.use(zformDesigners);

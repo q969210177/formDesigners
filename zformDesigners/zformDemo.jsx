@@ -119,6 +119,7 @@ export default {
     },
     //返回组件
     renderCompoents(type, h, ruleItem,index) {
+      console.log(returnSlots(this.$slots,ruleItem.fileId));
       const returnObj = {
         form: this.returnFormItem,
         style: this.returnStyleItem,
@@ -371,10 +372,7 @@ export default {
                       }}
                     >
                       {/* 用来展示显示的组件部分 但是是在z轴的最下层 */}
-                      <slot name={ruleItem.fileId} data={ruleItem}>
-                        {this.renderCompoents(ruleItem.itemType, h, ruleItem,k)}
-                      </slot>
-                    
+                        {this.renderCompoents(ruleItem.itemType, h, ruleItem,k)}                    
                     </div>
                   </a-col>
                 );

@@ -133,6 +133,20 @@ export default {
         form: this.returnFormItem,
         style: this.returnStyleItem,
       };
+      console.log(this.$slots,"this.$slots[ruleItem.fileId]");
+
+      if (returnSlots(this.$slots,ruleItem.fileId)) {
+        // const slot = {
+        //   [`${ruleItem.fileId}`]:(ruleItem) => {
+        //     console.log(ruleItem,"scopedSlots");
+        //     return this.$slots[ruleItem.fileId]
+        //   }
+        // }
+        // this.$slots[ruleItem.fileId]
+        return h('div',{
+          attrs:{...ruleItem}
+        },[this.$slots[ruleItem.fileId]]) 
+      }
       if (returnObj[type]) {
         return returnObj[type](h, ruleItem);
       }
@@ -294,9 +308,10 @@ export default {
                       }}
                     >
                       <div class="rule_item_form">
-                        <slot name={i.fileId} data={i}>
-                          {this.renderCompoents(i.itemType, h, i)}
-                        </slot>
+                        {this.renderCompoents(i.itemType, h, i)}
+                        {/* <slot name={i.fileId} data={i}>
+                         
+                        </slot> */}
                       </div>
                     </div>
                   </a-col>

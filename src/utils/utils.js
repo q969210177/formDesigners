@@ -246,10 +246,11 @@ export function getWordsWidth(words, wordStyle = { font: "12px sans-serif" }) {
 }
 //分发插槽
 export function returnSlots($slots, fileId) {
-  if (getDataType($slots) !== "Object") return;
+  // if (getDataType($slots) !== "Object") return false;
   if ($slots[fileId]) {
-    return $slots[fileId];
+    return true;
   }
+  return false;
 }
 
 //给tree形的结构增加插槽

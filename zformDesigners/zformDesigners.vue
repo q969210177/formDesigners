@@ -24,8 +24,7 @@
           <!-- <a-button size="small">清空{{ruleItemType}}</a-button> -->
         </div>
         <div class="main_content_form">
-          <!-- @rowClick="handleZformDemoRowClick" -->
-          <!-- style="background: #fff;padding:4px"  -->
+          {{ slotArr }}
           <zformDemo
             ref="zformDemo"
             v-model="userInfoModel"
@@ -124,6 +123,28 @@ export default {
       activeValue: "",
       ruleItemType: "",
     };
+  },
+  computed: {
+    slotArr() {
+      const slotArr = [];
+      for (const key in this.$slots) {
+        if (Object.hasOwnProperty.call(this.$slots, key)) {
+          const element = this.$slots[key];
+          console.log(element, key, "element");
+        }
+      }
+      // this.tableColumns.forEach((v) => {
+      //   if (v.scopedSlots) {
+      //     for (const key in v.scopedSlots) {
+      //       if (Object.hasOwnProperty.call(v.scopedSlots, key)) {
+      //         const element = v.scopedSlots[key];
+      //         slotArr.push({ type: key, name: element });
+      //       }
+      //     }
+      //   }
+      // });
+      return slotArr;
+    },
   },
   watch: {
     activeValue(newV) {

@@ -4,8 +4,8 @@
     "lib:formDesigners": "vue-cli-service build --target lib --inline-vue --name zformDesigners formDesigners.js",
     "lib:formCreate": "vue-cli-service build --target lib --inline-vue --name zformcreate formCreate.js",-->
     <ZFormCreate :rule="rule" v-model="api">
-      <template slot="a" slot-scope="{ fileId }">
-        <a-button @click="test(fileId)">1111</a-button>
+      <template slot="a" slot-scope="ruleItem">
+        <a-button @click="test(ruleItem)">1111</a-button>
       </template>
     </ZFormCreate>
     <!-- <zformDesigners>
@@ -41,7 +41,7 @@ export default {
   methods: {
     test(data) {
       console.log(this.api.getFormData());
-      // console.log(data, "test");
+      console.log(data, "test");
     },
   },
 };

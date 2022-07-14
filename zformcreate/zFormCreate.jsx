@@ -133,9 +133,10 @@ export default {
         form: this.returnFormItem,
         style: this.returnStyleItem,
       };
-      console.log(this.$slots,"this.$slots[ruleItem.fileId]");
 
-      if (returnSlots(this.$slots,ruleItem.fileId)) {
+      if (returnSlots(this.$scopedSlots,ruleItem.fileId)) {
+      // console.log(,"this.$slots[ruleItem.fileId]");
+
         // const slot = {
         //   [`${ruleItem.fileId}`]:(ruleItem) => {
         //     console.log(ruleItem,"scopedSlots");
@@ -143,9 +144,7 @@ export default {
         //   }
         // }
         // this.$slots[ruleItem.fileId]
-        return h('div',{
-          attrs:{...ruleItem}
-        },[this.$slots[ruleItem.fileId]]) 
+        return this.$scopedSlots[ruleItem.fileId](ruleItem)
       }
       if (returnObj[type]) {
         return returnObj[type](h, ruleItem);

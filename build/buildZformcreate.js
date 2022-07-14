@@ -2,7 +2,7 @@ const path = require("path");
 const ProgressBarPlugin = require("progress-bar-webpack-plugin");
 const VueLoaderPlugin = require("vue-loader/lib/plugin");
 const TerserPlugin = require("terser-webpack-plugin");
-// const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
 module.exports = {
   mode: "production",
@@ -84,5 +84,9 @@ module.exports = {
       },
     ],
   },
-  plugins: [new ProgressBarPlugin(), new VueLoaderPlugin()],
+  plugins: [
+    new ProgressBarPlugin(),
+    new VueLoaderPlugin(),
+    new CleanWebpackPlugin({}),
+  ],
 };

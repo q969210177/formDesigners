@@ -1,0 +1,17 @@
+
+    {
+      "name":"z-form-designers",
+      "version":"0.0.9",
+      "description":"拖拽生成zformcreate的规则",
+      "main":"index.js",
+      "files":["index.js","index.d.ts","assets","index.css"],
+      "typings":"index.d.ts",
+      "keywords":["zformcreate","vue","form","antd","drop"],
+      "license":"MIT",
+      "peerDependencies":{
+          "vue":"^2.5.17",
+          "ant-design-vue":"^1.7.8",
+          "core-js":"^3.6.5"
+      }
+    }
+    

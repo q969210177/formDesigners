@@ -3,23 +3,18 @@
     <!--    "build": "vue-cli-service build",    
     "lib:formDesigners": "vue-cli-service build --target lib --inline-vue --name zformDesigners formDesigners.js",
     "lib:formCreate": "vue-cli-service build --target lib --inline-vue --name zformcreate formCreate.js",-->
-    <ZFormCreate :rule="rule" v-model="api">
+    <!-- <ZFormCreate :rule="rule" v-model="api">
       <template slot="a" slot-scope="ruleItem">
         <a-button @click="test(ruleItem)">1111</a-button>
       </template>
-    </ZFormCreate>
-    <!-- <zformDesigners>
-      
-    </zformDesigners> -->
+    </ZFormCreate> -->
+    <zformDesigners> </zformDesigners>
   </div>
 </template>
 <script>
-// import test from "./test.jsx"
 export default {
   name: "App",
-  components: {
-    // test
-  },
+  components: {},
   data() {
     return {
       api: {},

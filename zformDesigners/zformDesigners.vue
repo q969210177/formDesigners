@@ -24,7 +24,6 @@
           <!-- <a-button size="small">清空{{ruleItemType}}</a-button> -->
         </div>
         <div class="main_content_form">
-          {{ slotArr }}
           <zformDemo
             ref="zformDemo"
             v-model="userInfoModel"

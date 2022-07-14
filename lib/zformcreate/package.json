@@ -1,7 +1,7 @@
 
     {
       "name":"zformcreate",
-      "version":"0.0.20",
+      "version":"0.0.21",
       "description":"根据特地规则生成表单",
       "main":"index.js",
       "files":["index.js","index.d.ts"],

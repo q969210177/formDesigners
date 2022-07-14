@@ -65,6 +65,7 @@ export default {
       this.updateRule();
     },
     value(newV){
+      console.log(newV,"formcreate");
       if (Object.keys(newV).length===0) {
         this.$emit("input", {
           getFormData: this.getFormData,

@@ -50,8 +50,6 @@ export default {
   watch: {
     value(newV) {
       this.defaultValue = newV;
-      console.log(newV, "select");
-      this.$emit("change", newV);
     },
   },
   mounted() {

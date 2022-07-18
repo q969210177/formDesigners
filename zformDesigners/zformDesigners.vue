@@ -148,8 +148,7 @@ export default {
   watch: {
     activeValue(newV) {
       if (this.$refs.componentsConfig) {
-        console.log(newV, "watch");
-
+        // console.log(newV, "watch");
         this.$refs.componentsConfig.init(newV);
       }
     },

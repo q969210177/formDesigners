@@ -75,6 +75,9 @@ export default {
           updateRuleItemProps: this.updateRuleItemProps,
         });
       }
+    },
+    formData(newV){
+      this.$emit("formDataChange",newV)
     }
   },
   created() {
@@ -147,15 +150,6 @@ export default {
       };
 
       if (returnSlots(this.$scopedSlots,ruleItem.fileId)) {
-      // console.log(,"this.$slots[ruleItem.fileId]");
-
-        // const slot = {
-        //   [`${ruleItem.fileId}`]:(ruleItem) => {
-        //     console.log(ruleItem,"scopedSlots");
-        //     return this.$slots[ruleItem.fileId]
-        //   }
-        // }
-        // this.$slots[ruleItem.fileId]
         return this.$scopedSlots[ruleItem.fileId](ruleItem)
       }
       if (returnObj[type]) {
@@ -237,6 +231,7 @@ export default {
                   ...eventLoop,
                   input: ($event) => {
                     const value = this.validatorIsEvent(ruleItem.type, $event);
+                    this.$set(this.formData, ruleItem.fileId, value);
                     ruleItem.value = value;
                     this.$emit("valueChange");
                   },
@@ -320,9 +315,6 @@ export default {
                     >
                       <div class="rule_item_form">
                         {this.renderCompoents(i.itemType, h, i)}
-                        {/* <slot name={i.fileId} data={i}>
-                         
-                        </slot> */}
                       </div>
                     </div>
                   </a-col>

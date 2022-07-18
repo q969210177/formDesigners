@@ -58,7 +58,7 @@ export default {
   methods: {
     handleSelectChange(v) {
       this.$emit("input", v);
-      this.$emit("change", v);
+      this.$emit("change", v, this.options);
     },
   },
 };

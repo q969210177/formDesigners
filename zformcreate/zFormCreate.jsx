@@ -50,9 +50,7 @@ export default {
     };
   },
   computed: {
-    // copyRule() {
-    //   return this.rule;
-    // },
+   
   },
   watch: {
     //当外界需要改变这个rule的时候 比如说弹窗 或者说在弹窗打开之前
@@ -65,7 +63,6 @@ export default {
       this.updateRule();
     },
     value(newV){
-      console.log(newV,"formcreate");
       if (Object.keys(newV).length===0) {
         this.$emit("input", {
           getFormData: this.getFormData,

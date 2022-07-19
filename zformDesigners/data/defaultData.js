@@ -541,6 +541,8 @@ export let compoentsRule = [
     attrArr: ["cascader"],
   },
   //cascader结束
+
+  //divider开始
   {
     type: "input",
     label: "展示的标题",
@@ -563,17 +565,6 @@ export let compoentsRule = [
     },
     attrArr: ["divider"],
   },
-
-  // {
-  //   type: "setTreeRuleData",
-  //   label: "配置数据",
-  //   fileId: "options",
-  //   value: [],
-  //   span: 24,
-  //   attrArr: ["cascader"],
-  // },
-
-  //
   {
     type: "switch",
     label: "是否虚线",
@@ -602,8 +593,81 @@ export let compoentsRule = [
 
     attrArr: ["divider"],
   },
-
-  // max
+  //divider结束
+  //alert 开始
+  {
+    type: "switch",
+    label: "是否用作顶部公告",
+    fileId: "banner",
+    value: false,
+    span: 24,
+    on: {
+      change: () => {},
+    },
+    attrArr: ["alert"],
+  },
+  {
+    type: "switch",
+    label: "显示关闭按钮",
+    fileId: "closable",
+    value: false,
+    span: 24,
+    on: {
+      change: () => {},
+    },
+    attrArr: ["alert"],
+  },
+  // {
+  //   type: "switch",
+  //   label: "closeText",
+  //   fileId: "closeText",
+  //   value: false,
+  //   span: 24,
+  //   on: {
+  //     change: () => {},
+  //   },
+  //   attrArr: ["alert"],
+  // },
+  {
+    type: "input",
+    label: "提示的文字",
+    fileId: "description",
+    value: "",
+    span: 24,
+    on: {
+      change: () => {},
+    },
+    attrArr: ["alert"],
+  },
+  {
+    type: "switch",
+    label: "是否显示辅助图标",
+    fileId: "showIcon",
+    value: false,
+    span: 24,
+    on: {
+      change: () => {},
+    },
+    attrArr: ["alert"],
+  },
+  {
+    type: "radio",
+    label: "提示展示类型",
+    fileId: "type",
+    value: "",
+    options: [
+      { label: "成功", value: "success" },
+      { label: "普通", value: "info" },
+      { label: "警告", value: "warning" },
+      { label: "错误", value: "error" },
+    ],
+    span: 24,
+    on: {
+      change: () => {},
+    },
+    attrArr: ["alert"],
+  },
+  //alert结束
 ];
 export const setCompoentsRule = (newRule) => {
   compoentsRule.concat(newRule);

@@ -7,10 +7,9 @@
         </a-button> -->
     </header>
     <main class="main">
-      <div class="form_config">
+      <div class="form_config" v-if="formRule.length > 0">
         <h3>表单项配置</h3>
         <ZFormCreate
-          v-on="{ ...eventObj }"
           v-model="formModel"
           :formConfig="formRuleConfig"
           :rule="formRule"
@@ -130,7 +129,7 @@ export default {
             },
           },
           span: 24,
-          attrArr: ["form", "style"],
+          attrArr: ["form"],
         },
         {
           type: "input",

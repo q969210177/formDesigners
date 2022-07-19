@@ -27,6 +27,7 @@
           <zformDemo
             ref="zformDemo"
             v-model="userInfoModel"
+            @rowClick="handleZformDemoRowClick"
             @handleZformDemoDownClick="handleZformDemoItemDownClick"
             @handleZformDemoUpClick="handleZformDemoItemUpClick"
             @handleZformDemoCopyClick="handleZformDemoCopyClick"
@@ -146,12 +147,12 @@ export default {
     },
   },
   watch: {
-    activeValue(newV) {
-      if (this.$refs.componentsConfig) {
-        // console.log(newV, "watch");
-        this.$refs.componentsConfig.init(newV);
-      }
-    },
+    // activeValue(newV) {
+    //   if (this.$refs.componentsConfig) {
+    //     // console.log(newV, "watch");
+    //     this.$refs.componentsConfig.init(newV);
+    //   }
+    // },
   },
   mounted() {
     const userInfoRule = localStorage.getItem("rule");
@@ -161,8 +162,8 @@ export default {
   },
   methods: {
     //行点击事件
-    handleZformDemoRowClick() {
-      // this.$refs.componentsConfig.init();
+    handleZformDemoRowClick(fileId) {
+      this.$refs.componentsConfig.init(fileId);
     },
     //点击下移位置
     handleZformDemoItemDownClick(ruleItem, index) {

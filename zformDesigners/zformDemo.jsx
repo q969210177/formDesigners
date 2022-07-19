@@ -248,7 +248,6 @@ export default {
     },
     //分发input事件的默认值
     validatorIsEvent(type, event) {
-      // const typeArr = ['InputEvent', 'PointerEvent']
       if (event instanceof Event) {
         const {
           target: { value },
@@ -350,7 +349,6 @@ export default {
         >
           <a-row>
             {this.copyRule.map((ruleItem, k) => {
-              let eventLoop = {};
               // if (ruleItem.on) {
               //   eventLoop = {
               //     ...returnEvent(this.$listeners, ruleItem.fileId),
@@ -364,7 +362,6 @@ export default {
                 return (
                   <a-col span={ruleItem.span ? ruleItem.span : 24}>
                     <div
-                     
                       class="rule_item"
                       onClick={() => {
                         this.$emit("rowClick", ruleItem.fileId);

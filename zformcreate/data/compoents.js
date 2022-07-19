@@ -1,5 +1,4 @@
 import cAlert from "../components/cAlert.vue";
-import cButton from "../components/cButton.vue";
 import cCascader from "../components/cCascader.vue";
 import cCheckbox from "../components/cCheckbox.vue";
 import cDataPick from "../components/cDataPick.vue";
@@ -16,7 +15,6 @@ import cTip from "../components/cTip.vue";
 import cTree from "../components/cTree.vue";
 export const componentsObj = {
   alert: cAlert,
-  button: cButton,
   cascader: cCascader,
   checkbox: cCheckbox,
   datapick: cDataPick,

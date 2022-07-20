@@ -494,7 +494,9 @@ export let compoentsRule = [
     value: [],
     span: 24,
     on: {
-      handleSubmitOptions: () => {},
+      handleSubmitOptions: () => {
+        console.log(111);
+      },
     },
     attrArr: ["tree", "cascader"],
   },
@@ -635,7 +637,7 @@ export let compoentsRule = [
     value: "",
     span: 24,
     on: {
-      change: () => {},
+      blur: () => {},
     },
     attrArr: ["alert"],
   },

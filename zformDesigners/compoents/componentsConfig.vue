@@ -7,7 +7,7 @@
         </a-button> -->
     </header>
     <main class="main">
-      <div class="form_config" v-if="formRule.length > 0">
+      <div class="form_config" v-show="formRule.length > 1">
         <h3>表单项配置</h3>
         <ZFormCreate
           v-model="formModel"
@@ -69,7 +69,7 @@ export default {
     };
   },
   created() {
-    this.init();
+    // this.init();
   },
   mounted() {},
   methods: {
@@ -77,6 +77,7 @@ export default {
       const value = getRuleItem(this.rule, activeValue);
       if (activeValue && value) {
         const { ruleItem } = value;
+        console.log(ruleItem, "ruleItem");
         this.setCompoentsRule(ruleItem);
         this.setFormRule(ruleItem);
       }
@@ -85,7 +86,6 @@ export default {
     setCompoentsRule(ruleItem) {
       const props = ruleItem.props;
       const propsKey = Object.keys(props);
-      let options = [];
       this.compoentsRule = compoentsRule.filter((item) => {
         if (item.on) {
           for (const key in item.on) {
@@ -103,20 +103,18 @@ export default {
           item.value = props[item.fileId];
         }
         if (item.fileId === "options" && ruleItem.options) {
-          options = ruleItem.options;
-          //
+          item.value = ruleItem.options;
         }
         if (item.attrArr.includes(ruleItem.type)) {
           return item;
         }
       });
-      this.compoentsModel.setValue("options", options);
     },
     setFormRule(ruleItem) {
       const defaultArr = ["fileId", "label", "rules", "span"];
       const defaultFormRule = [
         {
-          type: "input",
+          type: ruleItem.itemType === "style" ? "hide" : "input",
           label: "fileId",
           fileId: "fileId",
           value: ruleItem.fileId,
@@ -129,7 +127,7 @@ export default {
             },
           },
           span: 24,
-          attrArr: ["form"],
+          attrArr: ["form", "style"],
         },
         {
           type: "input",
@@ -221,10 +219,6 @@ export default {
         newRuleItem.options = componentsFormData.options;
       }
       this.$emit("handleChangeConfig", newRuleItem, this.activeValue);
-    },
-    //
-    test(newFormData) {
-      console.log(newFormData, "newFormData");
     },
   },
 };

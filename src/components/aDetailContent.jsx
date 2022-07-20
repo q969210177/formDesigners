@@ -122,9 +122,7 @@ export default {
           rule={i.itemRule}
           data={i.data}
         >
-          {/* <template slot="zzz" slot-scope="i">
-                111
-            </template> */}
+         
         </aDetailContent>
       );
     },

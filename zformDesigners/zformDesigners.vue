@@ -146,14 +146,7 @@ export default {
       return slotArr;
     },
   },
-  watch: {
-    // activeValue(newV) {
-    //   if (this.$refs.componentsConfig) {
-    //     // console.log(newV, "watch");
-    //     this.$refs.componentsConfig.init(newV);
-    //   }
-    // },
-  },
+  watch: {},
   mounted() {
     const userInfoRule = localStorage.getItem("rule");
     if (userInfoRule) {

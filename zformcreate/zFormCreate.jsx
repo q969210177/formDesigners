@@ -149,9 +149,7 @@ export default {
         style: this.returnStyleItem,
       };
 
-      if (returnSlots(this.$scopedSlots,ruleItem.fileId)) {
-        return this.$scopedSlots[ruleItem.fileId](ruleItem)
-      }
+   
       if (returnObj[type]) {
         return returnObj[type](h, ruleItem);
       }
@@ -159,6 +157,10 @@ export default {
     },
     //返回样式组件
     returnStyleItem(h, ruleItem) {
+      //当 样式组件需要走插槽的时候 直接走插槽
+      if (returnSlots(this.$scopedSlots,ruleItem.fileId)) {
+        return this.$scopedSlots[ruleItem.fileId](ruleItem)
+      }
       const com = componentsObj[ruleItem.type];
       const dom = h(com, {
         ...this.returnCompoentsProps(ruleItem),
@@ -217,13 +219,19 @@ export default {
         eventLoop = returnEvent(this.$listeners, ruleItem.fileId);
       }
       const com = componentsObj[ruleItem.type];
+      const isSlots = returnSlots(this.$scopedSlots,ruleItem.fileId)
+      //判断是不是存在插槽
+      // if (returnSlots(this.$scopedSlots,ruleItem.fileId)) {
+      //   // com= this.$scopedSlots[ruleItem.fileId](ruleItem)
+      // }
       return (
         <div class="item_form">
           <a-form-model-item
             scopedSlots={labelSlot}
             props={{ ...formModelItemProps }}
-          >
-            {h(
+          > 
+            {/* 当存在插槽的时候直接渲染插槽 没有插槽才渲染 vnode */}
+            { isSlots?this.$scopedSlots[ruleItem.fileId](ruleItem): h(
               com,
               {
                 ...this.returnCompoentsProps(ruleItem),

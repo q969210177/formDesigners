@@ -40,7 +40,7 @@ export default {
     },
     value: {
       require: true,
-      default: "",
+      default: undefined,
     },
   },
   data() {

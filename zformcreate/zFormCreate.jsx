@@ -261,7 +261,7 @@ export default {
         if (value) {
           return value;
         }
-        return "";
+        return value;
       } else {
         return event;
       }

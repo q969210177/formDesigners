@@ -58,11 +58,13 @@ export default {
   },
   watch: {
     value(newV) {
-      this.defaultValue = newV === "" ? undefined : newV;
+      this.defaultValue = newV;
+      // this.defaultValue = newV === "" ? undefined : newV;
     },
   },
   mounted() {
-    this.defaultValue = this.value === "" ? undefined : this.value;
+    this.defaultValue = this.value;
+    // this.defaultValue = this.value === "" ? undefined : this.value;
   },
   methods: {
     handleSelectChange(v, selectNode) {

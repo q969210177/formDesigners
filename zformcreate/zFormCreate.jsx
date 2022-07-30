@@ -239,7 +239,6 @@ export default {
                   ...eventLoop,
                   input: ($event) => {
                     const value = this.validatorIsEvent(ruleItem.type, $event);
-                    console.log(value," form value input");
                     this.$set(this.formData, ruleItem.fileId, value);
                     ruleItem.value = value;
                     this.$emit("valueChange");
@@ -282,7 +281,6 @@ export default {
       if (i.options) {
         returnObj.props.options = i.options;
       }
-      console.log(returnObj,'returnObj');
       //当他是一个需要数据去渲染的组件的时候
       return returnObj;
     },

@@ -1,7 +1,6 @@
 <template>
   <div class="zformDesigners">
     <header class="header">
-      <slot name="header"></slot>
       <a-button @click="handleSetFormConfigClick">设置表单默认配置</a-button>
       <a-button @click="handleLookVueCode">下载vue文件</a-button>
       <a-button type="link">
@@ -9,6 +8,7 @@
           >源码地址</a
         ></a-button
       >
+      <slot name="header"></slot>
     </header>
     <div class="main">
       <div class="left_menu_box">
@@ -35,7 +35,7 @@
             :activeValue.sync="activeValue"
             :ruleItemType.sync="ruleItemType"
             :formConfig="formConfig"
-            :rule="userInfoRule"
+            :rule="rule"
           ></zformDemo>
         </div>
       </div>
@@ -44,7 +44,7 @@
           ref="componentsConfig"
           @handleChangeConfig="handleChangeConfig"
           :activeValue="activeValue"
-          :rule="userInfoRule"
+          :rule="rule"
           :ruleItemType="ruleItemType"
         ></componentsConfig>
       </div>
@@ -84,7 +84,7 @@
       <ZFormCreate
         v-model="userInfoModel"
         :formConfig="formConfig"
-        :rule="userInfoRule"
+        :rule="rule"
       ></ZFormCreate>
     </a-modal>
   </div>
@@ -98,6 +98,20 @@ import { defaultFormConfig, setDefaultFormConfig } from "./data/defaultData.js";
 import { setCompoentId, getRuleItem, setRuleItem } from "@/utils/utils";
 export default {
   name: "zformDesigners",
+  props: {
+    defaultRule: {
+      type: Array,
+      default: () => {
+        return [];
+      },
+    },
+    value: {
+      type: Object,
+      default: () => {
+        return {};
+      },
+    },
+  },
   components: {
     componentsMenu,
     zformDemo,
@@ -119,41 +133,56 @@ export default {
       // componentsConfigApi: {},
       userInfoModel: {},
       formConfig: defaultFormConfig,
-      userInfoRule: [],
+      rule: [],
       activeValue: "",
       ruleItemType: "",
     };
   },
   computed: {
-    slotArr() {
-      const slotArr = [];
-      for (const key in this.$slots) {
-        if (Object.hasOwnProperty.call(this.$slots, key)) {
-          const element = this.$slots[key];
-          console.log(element, key, "element");
-        }
+    // slotArr() {
+    //   const slotArr = [];
+    //   for (const key in this.$slots) {
+    //     if (Object.hasOwnProperty.call(this.$slots, key)) {
+    //       const element = this.$slots[key];
+    //       console.log(element, key, "element");
+    //     }
+    //   }
+    //   return slotArr;
+    // },
+  },
+  watch: {
+    value(newV) {
+      if (Object.keys(newV).length === 0) {
+        this.$emit("input", {
+          setrule: this.setrule,
+        });
       }
-      // this.tableColumns.forEach((v) => {
-      //   if (v.scopedSlots) {
-      //     for (const key in v.scopedSlots) {
-      //       if (Object.hasOwnProperty.call(v.scopedSlots, key)) {
-      //         const element = v.scopedSlots[key];
-      //         slotArr.push({ type: key, name: element });
-      //       }
-      //     }
-      //   }
-      // });
-      return slotArr;
     },
   },
-  watch: {},
   mounted() {
-    const userInfoRule = localStorage.getItem("rule");
-    if (userInfoRule) {
-      this.userInfoRule = JSON.parse(userInfoRule);
+    const rule = localStorage.getItem("rule");
+    if (rule) {
+      this.rule = JSON.parse(rule);
     }
+    this.init();
   },
   methods: {
+    //更新一下rule
+    init() {
+      const length = this.defaultRule.length;
+      this.rule = this.defaultRule;
+      this.$emit("input", {
+        setrule: this.setrule,
+      });
+    },
+    //设置新的userInforRule
+    setrule(newRule) {
+      this.rule = newRule;
+    },
+    //获取rule
+    getRule() {
+      return this.rule;
+    },
     //行点击事件
     handleZformDemoRowClick(fileId) {
       this.$refs.componentsConfig.init(fileId);
@@ -161,10 +190,10 @@ export default {
     //点击下移位置
     handleZformDemoItemDownClick(ruleItem, index) {
       console.log(index, "index");
-      if (index === this.userInfoRule.length - 1) return;
-      const newRuleItem = this.userInfoRule[index + 1];
-      this.userInfoRule.splice(index, 1, newRuleItem);
-      this.userInfoRule.splice(index + 1, 1, ruleItem);
+      if (index === this.rule.length - 1) return;
+      const newRuleItem = this.rule[index + 1];
+      this.rule.splice(index, 1, newRuleItem);
+      this.rule.splice(index + 1, 1, ruleItem);
       this.storageRule();
     },
     //点击上移位置
@@ -172,9 +201,9 @@ export default {
       console.log(index, "index");
 
       if (index === 0) return;
-      const newRuleItem = this.userInfoRule[index - 1];
-      this.userInfoRule.splice(index, 1, newRuleItem);
-      this.userInfoRule.splice(index - 1, 1, ruleItem);
+      const newRuleItem = this.rule[index - 1];
+      this.rule.splice(index, 1, newRuleItem);
+      this.rule.splice(index - 1, 1, ruleItem);
       // console.log(newRuleItem, 'up')
       this.storageRule();
     },
@@ -182,7 +211,7 @@ export default {
     handleZformDemoCopyClick(ruleItem, index) {
       const newRuleItem = JSON.parse(JSON.stringify(ruleItem));
       newRuleItem.fileId = setCompoentId();
-      this.userInfoRule.splice(index, 0, newRuleItem);
+      this.rule.splice(index, 0, newRuleItem);
       this.storageRule();
     },
     //点击设置表单的默认配置
@@ -192,20 +221,21 @@ export default {
     //表单的点击删除事件
     handleZformDemoDelClick({ fileId }, index) {
       if (fileId) {
-        // const { index } = getRuleItem(this.userInfoRule, fileId);
-        this.userInfoRule.splice(index, 1);
+        // const { index } = getRuleItem(this.rule, fileId);
+        this.rule.splice(index, 1);
         this.clickActive = undefined;
         this.storageRule();
       }
     },
     handleRetuenForm(ruleKey, value, ruleItemKey) {
-      const { ruleItem } = getRuleItem(this.userInfoRule, this.activeValue);
+      const { ruleItem } = getRuleItem(this.rule, this.activeValue);
       setRuleItem(ruleItem, ruleKey, value, ruleItemKey);
     },
     //把数据存到 locas
     storageRule() {
       localStorage.removeItem("rule");
-      localStorage.setItem("rule", JSON.stringify(this.userInfoRule));
+      localStorage.setItem("rule", JSON.stringify(this.rule));
+      this.$emit("handleReturnRule", this.rule);
     },
     //   //释放区域的拖拽结束事件
     handleDropEvent($event) {
@@ -219,20 +249,20 @@ export default {
         $event.dataTransfer.dropEffect = "move";
         const data = JSON.parse($event.dataTransfer.getData("text/plain"));
         data.fileId = setCompoentId();
-        this.userInfoRule.push(data);
+        this.rule.push(data);
         this.storageRule();
         return;
       }
       // console.clear()
       // console.dir(toElement, 'className');
       //当是拖动到现有的表单上的时候  就根据查询到的数据 插在那个后面
-      const value = getRuleItem(this.userInfoRule, classList[0]);
+      const value = getRuleItem(this.rule, classList[0]);
       if (value) {
         const { ruleItem, index } = value;
         $event.dataTransfer.dropEffect = "move";
         const data = JSON.parse($event.dataTransfer.getData("text/plain"));
         data.fileId = setCompoentId();
-        this.userInfoRule.splice(index + 1, 0, data);
+        this.rule.splice(index + 1, 0, data);
         this.storageRule();
         return;
       }
@@ -242,7 +272,7 @@ export default {
       $event.preventDefault();
       // const { toElement, dataTransfer } = $event
       // const { classList } = toElement
-      // const value = getRuleItem(this.userInfoRule, classList[0])
+      // const value = getRuleItem(this.rule, classList[0])
       // if (value) {
       //   classList.add("item_hover")
       // }
@@ -256,7 +286,7 @@ export default {
     },
     //当表单的配置项发生修改的时候 newFormConfig
     handleChangeConfig(newFormConfig, fileId) {
-      const value = getRuleItem(this.userInfoRule, fileId);
+      const value = getRuleItem(this.rule, fileId);
       if (value) {
         const { ruleItem, index } = value;
         for (const key in newFormConfig) {
@@ -265,8 +295,7 @@ export default {
             ruleItem[key] = element;
           }
         }
-        // Object.assign(newFormConfig, ruleItem)
-        this.userInfoRule.splice(index, 1, ruleItem);
+        this.rule.splice(index, 1, ruleItem);
         this.storageRule();
       }
     },
@@ -276,9 +305,9 @@ export default {
     },
     //点击下载vue的文件
     handleLookVueCode() {
-      function returnRuleStr(userInfoRule) {
+      function returnRuleStr(rule) {
         let str = "[";
-        userInfoRule.forEach((v) => {
+        rule.forEach((v) => {
           str += JSON.stringify(v) + ",";
         });
         return str + "]";
@@ -304,7 +333,7 @@ export default {
           data() {
             api: {},
             formConfig:${returnFormConfigStr(defaultFormConfig)},
-            rule: ${returnRuleStr(this.userInfoRule)}
+            rule: ${returnRuleStr(this.rule)}
           }
         }
       ` +

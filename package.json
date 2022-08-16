@@ -19,6 +19,7 @@
     "core-js": "^3.6.5",
     "css-loader": "^5.2.7",
     "vue": "^2.6.11",
+    "vue-router": "^3.5.4",
     "z-form-designers": "0.0.8",
     "zformcreate": "0.0.20"
   },

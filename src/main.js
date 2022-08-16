@@ -3,6 +3,7 @@ import App from "./App.vue";
 import "@/utils/installAntdFormCompoent.js";
 import zformcreate from "../zformcreate/index";
 // import zformcreate from "zformcreate";
+import router from "@/router/index.js"
 const requireComponent = require.context(
   "@/components/",
   false,
@@ -22,5 +23,6 @@ Vue.use(zformDesigners);
 Vue.use(zformcreate);
 Vue.config.productionTip = false;
 new Vue({
+  router,
   render: (h) => h(App),
 }).$mount("#app");

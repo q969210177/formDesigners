@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <div
-      class="router_item ml-10"
+      class="router_item ml-20"
       v-for="v in routerArr"
       :key="v.path"
       @click="handleRouterItemClick(v)"
@@ -19,7 +19,7 @@ export default {
     return {
       routerArr: [
         { icon: "", text: "拖拽表单", path: "/zformDesignersView" },
-        // { icon: "", text: "拖拽表单2", path: "/zformDesignersViewsss" },
+        { icon: "", text: "动态表单", path: "/zFormCreateView" },
         // { icon: "", text: "", path: "" },
         // { icon: "", text: "", path: "" },
       ],

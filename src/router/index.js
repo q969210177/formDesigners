@@ -15,9 +15,14 @@
     {
       path:"/zformDesignersView",
       name:"zformDesignersView",
-      // component: () => import("@/views/partner/partnerList.vue"),
       component:()=>import('@/view/zformDesignersView.vue')
+    },
+    {
+      path:"/zFormCreateView",
+      name:"zFormCreateView",
+      component:()=>import('@/view/zFormCreateView.vue')
     }
+    
    ],
  });
 

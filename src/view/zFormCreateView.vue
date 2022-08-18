@@ -19,6 +19,11 @@ export default {
       api: {},
       rule: [
         {
+          type: "hide",
+          value: "武汉需要前端的请联系我",
+          fileId: "workInfo",
+        },
+        {
           type: "input",
           label: "姓名",
           value: "",

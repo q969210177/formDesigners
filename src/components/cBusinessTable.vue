@@ -25,27 +25,29 @@
     <div class="cBusinessTable_btn_group" v-if="$slots.btnGroup">
       <slot name="btnGroup"></slot>
     </div>
-    <div class="cBusinessTable_main">
-      <a-table
-        bordered
-        :pagination="false"
-        :columns="tableColumns"
-        :data-source="tableData"
-        v-bind="$attrs"
-      >
-        <!-- v-slot:[v.name]="value, row, index" -->
-        <template
-          v-for="v in slotArr"
-          :slot="v.name"
-          slot-scope="value, row, index"
-        >
-          <slot
-            :name="v.name"
-            v-bind="returnSlotParams(v.type, { value, row, index })"
-          ></slot>
-        </template>
-      </a-table>
+    <div>
+      {{ tableHeight }}
     </div>
+    <a-table
+      class="cBusinessTable_main"
+      bordered
+      :pagination="false"
+      :columns="tableColumns"
+      :data-source="tableData"
+      v-bind="$attrs"
+    >
+      <!-- v-slot:[v.name]="value, row, index" -->
+      <template
+        v-for="v in slotArr"
+        :slot="v.name"
+        slot-scope="value, row, index"
+      >
+        <slot
+          :name="v.name"
+          v-bind="returnSlotParams(v.type, { value, row, index })"
+        ></slot>
+      </template>
+    </a-table>
     <div class="cBusinessTable_pag">
       <a-pagination
         v-model="pageParams.pageNo"
@@ -64,6 +66,18 @@
 export default {
   name: "cBusinessTable",
   props: {
+    // size	表格大小	default | middle | small
+    // size: {
+    //   type: String,
+    //   validator: (propsSize) => {
+    //
+    //     if (sizeArr.includes(propsSize)) {
+    //       return propsSize;
+    //     }
+    //     return "default";
+    //   },
+    //   default: "default",
+    // },
     // zformCreate的value
     value: {
       type: Object,
@@ -150,6 +164,20 @@ export default {
     },
   },
   computed: {
+    //计算表格出弹窗的高度
+    tableHeight() {
+      // middle | small
+      const sizeArr = ["default", "middle", "small"];
+      if (this.$attrs.size && sizeArr.includes(this.$attrs.size)) {
+        const sizeHeightObj = {
+          default: 54,
+          middle: 46,
+          small: 38,
+        };
+        return this.pageParams.pageLength * sizeHeightObj[this.$attrs.size];
+      }
+      return 54;
+    },
     // 查询按钮的配置
     serachBtnBind() {
       const obj = { size: "default", type: "primary", text: "查询" };
@@ -216,6 +244,7 @@ export default {
     },
     //格式化展示总页数
     showTotal(total, range) {
+      console.log(range, "range");
       return `第${range[0]} 至 ${range[1]} 条 ,共${total}条`;
     },
     // 获取表格数据 type判断是按钮点击还是 分页点击
@@ -263,12 +292,6 @@ export default {
     },
   },
 };
-// export default {
-//   name: "cBusinessTable",
-//   data() {
-//     return {};
-//   },
-// };
 </script>
 <style lang="scss" scoped>
 @import "~@/assets/layout.scss";
@@ -304,6 +327,8 @@ export default {
   .cBusinessTable_main {
     width: 100%;
     flex: 1;
+    border: 1px solid red;
+    // overflow-y: auto;
   }
 
   .cBusinessTable_pag {

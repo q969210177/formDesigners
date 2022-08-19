@@ -21,8 +21,12 @@
       path:"/zFormCreateView",
       name:"zFormCreateView",
       component:()=>import('@/view/zFormCreateView.vue')
+    },
+    {
+      path:"/zBusinessTableView",
+      name:"zBusinessTableView",
+      component:()=>import("@/view/zBusinessTableView.vue")
     }
-    
    ],
  });
 

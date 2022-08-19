@@ -20,8 +20,7 @@ export default {
       routerArr: [
         { icon: "", text: "拖拽表单", path: "/zformDesignersView" },
         { icon: "", text: "动态表单", path: "/zFormCreateView" },
-        // { icon: "", text: "", path: "" },
-        // { icon: "", text: "", path: "" },
+        { icon: "", text: "标准表格", path: "/zBusinessTableView" },
       ],
     };
   },

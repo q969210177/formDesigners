@@ -114,6 +114,14 @@ export default {
             placeholder: "请选择上中学的时间",
           },
         },
+        {
+          type: "alert",
+          props: {
+            message: "111",
+            type: "error",
+          },
+          itemType: "style",
+        },
       ],
     };
   },

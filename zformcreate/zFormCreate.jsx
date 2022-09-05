@@ -8,6 +8,7 @@ import {
   setInstallRule,
 } from "@/utils/utils";
 import { componentsObj } from "./data/compoents.js";
+import { defaultUI} from "./data/defaultData";
 import "./style/zFormCreate.scss";
 import _ from "lodash";
 
@@ -101,8 +102,10 @@ export default {
     getFormData() {
       const formData = {}
       this.copyRule.forEach((i) => {
-        this.$set(this.formData, i.fileId, i.value);
-        this.$set(formData, i.fileId, i.value);
+        if (i.itemType!=="style"&&i.fileId) {
+          this.$set(this.formData, i.fileId, i.value);
+          this.$set(formData, i.fileId, i.value);
+        }
       });
       return formData
     },

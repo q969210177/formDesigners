@@ -14,7 +14,7 @@ import cSwitch from "../components/cSwitch.vue";
 import cTip from "../components/cTip.vue";
 import cTree from "../components/cTree.vue";
 export const componentsObj = {
-  alert: cAlert,
+  alert: "a-alert",
   cascader: cCascader,
   checkbox: cCheckbox,
   datapick: cDataPick,

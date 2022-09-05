@@ -1,8 +1,18 @@
 import zFormCreate from "./zFormCreate.jsx";
 import { componentsObj } from "./data/compoents";
+import { getDataType } from "@/utils/utils.js";
+import { setDefaultUI, UIList } from "./data/defaultData";
 const exportObj = {
-  install: (Vue) => {
+  install: (Vue, options) => {
     Vue.component(zFormCreate.name, zFormCreate);
+    // 当传入的是一个string类型 并且 是在限定的UI库之一的时候
+    if (getDataType(options) === "String" && UIList.includes(options)) {
+      setDefaultUI(options);
+    }
+    // 当传入的是一个obj类型 并且 并且传入了 UI这个字段的时候
+    if (getDataType(options) === "Object" && UIList.includes(options.UI)) {
+      setDefaultUI(options.UI);
+    }
   },
   components: (Vnode) => {
     const attrsArr = [

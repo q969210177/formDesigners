@@ -28,7 +28,7 @@ export default {
             span: 20,
           },
           labelAlign: "left",
-          labelWidth: 130,
+          // labelWidth: 130,
           colonStatus: true,
         };
       },
@@ -188,6 +188,7 @@ export default {
         ),
         prop: ruleItem.fileId,
         rules: ruleItem.rules,
+        label:ruleItem.label
       };
       const labelSlot = {
         label: () => {
@@ -204,11 +205,11 @@ export default {
             text = ruleItem.label;
           }
           //如果需要加冒号就加冒号
-          text = colonStatus ? text + ":" : text;
-          return (
-            <span class={["ZFormCreatetem_label"]} title={ruleItem.label}>
-              {text}
-            </span>
+          // text = colonStatus ? text + ":" : text;
+          return (  {text}
+            // <span class={["ZFormCreatetem_label"]} title={ruleItem.label}>
+            //   {text}
+            // </span>
           );
         },
       };
@@ -223,34 +224,44 @@ export default {
       }
       const com = componentsObj[ruleItem.type];
       const isSlots = returnSlots(this.$scopedSlots,ruleItem.fileId)
+      const formItemNameObj = {
+        "antd":"a-form-model-item", "el":"el-form-item"
+      }
+      // 
+      // scopedSlots:{labelSlot}
+      console.log(formModelItemProps);
+      const dom = h(formItemNameObj[defaultUI],{scopedSlots:{labelSlot}, props:{ ...formModelItemProps }},[h(
+        com,
+        {
+          ...this.returnCompoentsProps(ruleItem),
+          on: {
+            ...eventLoop,
+            input: ($event) => {
+              const value = this.validatorIsEvent(ruleItem.type, $event);
+              this.$set(this.formData, ruleItem.fileId, value);
+              ruleItem.value = value;
+              this.$emit("valueChange");
+            },
+          },
+        },
+        {}
+      )])
       //判断是不是存在插槽
       // if (returnSlots(this.$scopedSlots,ruleItem.fileId)) {
       //   // com= this.$scopedSlots[ruleItem.fileId](ruleItem)
       // }
+      //  {/* 当存在插槽的时候直接渲染插槽 没有插槽才渲染 vnode */}
+
       return (
         <div class="item_form">
-          <a-form-model-item
+          {dom}
+          {/* <a-form-model-item
             scopedSlots={labelSlot}
             props={{ ...formModelItemProps }}
           > 
-            {/* 当存在插槽的时候直接渲染插槽 没有插槽才渲染 vnode */}
-            { isSlots?this.$scopedSlots[ruleItem.fileId](ruleItem): h(
-              com,
-              {
-                ...this.returnCompoentsProps(ruleItem),
-                on: {
-                  ...eventLoop,
-                  input: ($event) => {
-                    const value = this.validatorIsEvent(ruleItem.type, $event);
-                    this.$set(this.formData, ruleItem.fileId, value);
-                    ruleItem.value = value;
-                    this.$emit("valueChange");
-                  },
-                },
-              },
-              {}
-            )}
-          </a-form-model-item>
+       
+            {}
+          </a-form-model-item> */}
         </div>
       );
     },
@@ -289,23 +300,58 @@ export default {
     },
     //设置组件的rule
     // setFormRule(fileId, rule) {},
+    // 根据不同的ui库 渲染不一样的组件
+    defaultUIRender(h){
+      const formConfig = Object.assign(
+        {
+          labelCol: { span: 4 },
+          wrapperCol: {
+            span: 20,
+          },
+          labelAlign: "left",
+          labelWidth: '130px',
+        },
+        this.formConfig
+      );
+      const formNameObj = {
+        "antd":"a-form-model", "el":"el-form"
+      }
+      
+      const dom = this.copyRule.map(i=>{
+        if (i.type !== "hide") {
+          return (
+            <a-col span={i.span ? i.span : 24}>
+              <div
+                class={{
+                  rule_item: true,
+                }}
+                onClick={() => {
+                  this.$emit("rowClick", i.fileId);
+                  this.$emit("update:clickActive", i.fileId);
+                }}
+              >
+                <div class="rule_item_form">
+                  {this.renderCompoents(i.itemType, h, i)}
+                </div>
+              </div>
+            </a-col>
+          );
+        }
+      })
+      if (formNameObj[defaultUI]) {
+        return h(formNameObj[defaultUI],{
+          props:{ model: this.formData, ...formConfig }
+        },dom)
+      }
+    }
   },
   render(h) {
-    const formConfig = Object.assign(
-      {
-        labelCol: { span: 4 },
-        wrapperCol: {
-          span: 20,
-        },
-        labelAlign: "left",
-        labelWidth: 130,
-      },
-      this.formConfig
-    );
+  
     this.getFormData();
     return (
       <div class="zCreateForm" {...{ style: { ...this.$attrs.style } }}>
-        <a-form-model
+        {this.defaultUIRender(h)}
+        {/* <a-form-model
           ref="zCreateForm"
           props={{ model: this.formData, ...formConfig }}
           colon={false}
@@ -333,7 +379,7 @@ export default {
               }
             })}
           </a-row>
-        </a-form-model>
+        </a-form-model> */}
       </div>
     );
   },

@@ -24,7 +24,7 @@ import "z-form-designers/index.css";
 Vue.use(ElementUI);
 Vue.use(zformDesigners);
 // { UI: "el" }
-Vue.use(zformcreate);
+Vue.use(zformcreate, "el");
 
 Vue.config.productionTip = false;
 new Vue({

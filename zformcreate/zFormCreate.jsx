@@ -8,13 +8,19 @@ import {
   setInstallRule,
 } from "@/utils/utils";
 import { componentsObj } from "./data/compoents.js";
+import cForm from "./formLayout/cForm.vue"
+import cFormItem from "./formLayout/cFormItem.vue"
+// 
 import { defaultUI} from "./data/defaultData";
 import "./style/zFormCreate.scss";
 import _ from "lodash";
 
 export default {
   name: "ZFormCreate",
-  components: {},
+  components: {
+    cForm,
+    cFormItem
+  },
   props: {
     rule: {
       type: Array,
@@ -171,100 +177,87 @@ export default {
       return dom;
     },
     //返回form组件
-    returnFormItem(h, ruleItem) {
-      const { colonStatus, labelWidth } = this.formConfig;
-      //设置 formItem的props 并给上默认值
-      const formModelItemProps = {
-        required: isHaveDefaultValue(ruleItem.formProps, "required", false),
-        labelCol: isHaveDefaultValue(
-          ruleItem.formProps,
-          "labelCol",
-          isHaveDefaultValue(this.formConfig, "labelCol", { span: 4 })
-        ),
-        wrapperCol: isHaveDefaultValue(
-          ruleItem.formProps,
-          "wrapperCol",
-          isHaveDefaultValue(this.formConfig, "wrapperCol", { span: 20 })
-        ),
-        prop: ruleItem.fileId,
-        rules: ruleItem.rules,
-        label:ruleItem.label
-      };
-      const labelSlot = {
-        label: () => {
-          //获取字体长度
-          const labelWordWidth = getWordsWidth(ruleItem.label) + 10;
-          //判断这个字体是不是超长的
-          const status = labelWordWidth > labelWidth;
-          let text = "";
-          if (status) {
-            //这里主要是计算一格大概能放下多少个字
-            text =
-              ruleItem.label.slice(0, Math.floor(labelWidth / 12) - 2) + "... ";
-          } else {
-            text = ruleItem.label;
-          }
-          //如果需要加冒号就加冒号
-          // text = colonStatus ? text + ":" : text;
-          return (  {text}
-            // <span class={["ZFormCreatetem_label"]} title={ruleItem.label}>
-            //   {text}
-            // </span>
-          );
-        },
-      };
-      let eventLoop = {};
-      if (ruleItem.on) {
-        eventLoop = {
-          ...returnEvent(this.$listeners, ruleItem.fileId),
-          ...ruleItem.on,
+      returnFormItem(h, ruleItem) {
+        const { colonStatus, labelWidth } = this.formConfig;
+        //设置 formItem的props 并给上默认值
+        const formModelItemProps = {
+          required: isHaveDefaultValue(ruleItem.formProps, "required", false),
+          labelCol: isHaveDefaultValue(
+            ruleItem.formProps,
+            "labelCol",
+            isHaveDefaultValue(this.formConfig, "labelCol", { span: 4 })
+          ),
+          wrapperCol: isHaveDefaultValue(
+            ruleItem.formProps,
+            "wrapperCol",
+            isHaveDefaultValue(this.formConfig, "wrapperCol", { span: 20 })
+          ),
+          prop: ruleItem.fileId,
+          rules: ruleItem.rules,
         };
-      } else {
-        eventLoop = returnEvent(this.$listeners, ruleItem.fileId);
-      }
-      const com = componentsObj[ruleItem.type];
-      const isSlots = returnSlots(this.$scopedSlots,ruleItem.fileId)
-      const formItemNameObj = {
-        "antd":"a-form-model-item", "el":"el-form-item"
-      }
-      // 
-      // scopedSlots:{labelSlot}
-      console.log(formModelItemProps);
-      const dom = h(formItemNameObj[defaultUI],{scopedSlots:{labelSlot}, props:{ ...formModelItemProps }},[h(
-        com,
-        {
-          ...this.returnCompoentsProps(ruleItem),
-          on: {
-            ...eventLoop,
-            input: ($event) => {
-              const value = this.validatorIsEvent(ruleItem.type, $event);
-              this.$set(this.formData, ruleItem.fileId, value);
-              ruleItem.value = value;
-              this.$emit("valueChange");
-            },
+        const labelSlot = {
+          label: () => {
+            //获取字体长度
+            const labelWordWidth = getWordsWidth(ruleItem.label) + 10;
+            //判断这个字体是不是超长的
+            const status = labelWordWidth > labelWidth;
+            let text = "";
+            if (status) {
+              //这里主要是计算一格大概能放下多少个字
+              text =
+                ruleItem.label.slice(0, Math.floor(labelWidth / 12) - 2) + "... ";
+            } else {
+              text = ruleItem.label;
+            }
+            //如果需要加冒号就加冒号
+            text = colonStatus ? text + ":" : text;
+            return (
+              <span class={["ZFormCreatetem_label"]} title={ruleItem.label}>
+                {text}
+              </span>
+            );
           },
-        },
-        {}
-      )])
-      //判断是不是存在插槽
-      // if (returnSlots(this.$scopedSlots,ruleItem.fileId)) {
-      //   // com= this.$scopedSlots[ruleItem.fileId](ruleItem)
-      // }
-      //  {/* 当存在插槽的时候直接渲染插槽 没有插槽才渲染 vnode */}
-
-      return (
-        <div class="item_form">
-          {dom}
-          {/* <a-form-model-item
-            scopedSlots={labelSlot}
-            props={{ ...formModelItemProps }}
-          > 
-       
-            {}
-          </a-form-model-item> */}
-        </div>
-      );
-    },
+        };
+        let eventLoop = {};
+        if (ruleItem.on) {
+          eventLoop = {
+            ...returnEvent(this.$listeners, ruleItem.fileId),
+            ...ruleItem.on,
+          };
+        } else {
+          eventLoop = returnEvent(this.$listeners, ruleItem.fileId);
+        }
+        const com = componentsObj[ruleItem.type];
+        const isSlots = returnSlots(this.$scopedSlots,ruleItem.fileId)
+        //判断是不是存在插槽
+        // if (returnSlots(this.$scopedSlots,ruleItem.fileId)) {
+        //   // com= this.$scopedSlots[ruleItem.fileId](ruleItem)
+        // }
+        return (
+            <cFormItem
+              scopedSlots={labelSlot}
+              props={{ ...formModelItemProps }}
+            > 
+              {/* 当存在插槽的时候直接渲染插槽 没有插槽才渲染 vnode */}
+              { isSlots?this.$scopedSlots[ruleItem.fileId](ruleItem): h(
+                com,
+                {
+                  ...this.returnCompoentsProps(ruleItem),
+                  on: {
+                    ...eventLoop,
+                    input: ($event) => {
+                      const value = this.validatorIsEvent(ruleItem.type, $event);
+                      this.$set(this.formData, ruleItem.fileId, value);
+                      ruleItem.value = value;
+                      this.$emit("valueChange");
+                    },
+                  },
+                },
+                {}
+              )}
+            </cFormItem>
+        );
+      },
     //分发input事件的默认值
     validatorIsEvent(type, event) {
       // const typeArr = ['InputEvent', 'PointerEvent']
@@ -350,7 +343,16 @@ export default {
     this.getFormData();
     return (
       <div class="zCreateForm" {...{ style: { ...this.$attrs.style } }}>
-        {this.defaultUIRender(h)}
+        <cForm ref="zCreateForm"  props={{ model: this.formData,  }}>
+        {this.copyRule.map((i) => {
+              if (i.type !== "hide") {
+                return (
+                  this.renderCompoents(i.itemType, h, i)
+                );
+              }
+            })}
+        </cForm>
+        {/* {this.defaultUIRender(h)} */}
         {/* <a-form-model
           ref="zCreateForm"
           props={{ model: this.formData, ...formConfig }}

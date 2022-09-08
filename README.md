@@ -6,7 +6,7 @@
 #### 软件架构
 1. 这是[源码地址](https://github.com/q969210177/formDesigners)
 2. [规则文档](https://github.com/q969210177/formDesigners/tree/master/lib/zformcreate)
-
+3. [演示地址](https://q969210177.github.io/formDesigners/#/)
 #### 安装教程
 
 1.  npm i zformcreate

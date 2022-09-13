@@ -1,4 +1,4 @@
-
+### 支持的组件可以参考
 ```html
 <!-- 事件监听  fileId-事件名 
     距离 a-change 就是 fileId是a的组件触发的change事件
@@ -10,6 +10,60 @@
       return {
         rule: [
           // datePicker
+        ],
+        model: {},
+      };
+    },
+  };
+</script>
+```
+### 默认的组件完整版
+```html
+<zFormCreate v-model="model" :rule="rule" @a-change="test"></zFormCreate>
+<script>
+  export default {
+    data() {
+      return {
+        rule: [
+          {
+            type: "hide",
+            fileId: "ID", //type 为 hide的时候不会展示在页面上
+            value: "",
+          },
+          {
+            type: "select",
+            label: "下拉框",
+            fileId: "select",
+            value: "",
+            options:[
+              {
+                dictName:"下拉框的名字",
+                dictValue:"下拉框的值"
+              }
+            ],
+            //所有的props 都会传递给组件  attrs 里面也会有props的内容(后续会做区分 把他分开)
+            props: {
+              labelKey: "dictName",// 默认 是label
+              valueKey: "dictValue", // 默认是value
+            },
+            span: 8,// 定义表格的长度
+          },
+          {
+            type: "input",
+            label: "开户银行账号",
+            fileId: "bankAccount",
+            value: "",
+            props: {},
+            span: 8,
+            rules: [
+              { required: true, message: "请输入开户行账号", trigger: "blur" },
+              {
+                pattern: bankAccountReg,
+                message: "仅支持数字和特殊字符",
+                trigger: "blur",
+              },
+            ],
+          },
         ],
         model: {},
       };

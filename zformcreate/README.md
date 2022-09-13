@@ -21,20 +21,41 @@
 ```html
 <zFormCreate v-model="model" :rule="rule" @a-change="test"></zFormCreate>
 <script>
+  const bankAccountReg = new RegExp(/[^\u4e00-\u9fa5a-zA-Z]/);
   export default {
     data() {
       return {
         rule: [
+
           {
             type: "hide",
-            fileId: "ID", //type 为 hide的时候不会展示在页面上
+            fileId: "ID", //type 为 hide的时候不会展示在页面上 但是会参与提交
             value: "",
           },
+          {
+            type: "input",// 渲染什么类型的组件
+            label: "输入框",//form的文字提示部分
+            fileId: "input",// 参与提交的json的key
+            value: "",// 参与提交的json的value
+            props: {},//需要传递给组件的props
+            span: 8,// 定义表格的长度 取值范围 1 - 24
+            itemType:"form",// 有style 和 form 两种模式  默认是form style 不会参与提交 仅做展示
+            rules: [ //参考  async-validator
+              { required: true, message: "请输入开户行账号", trigger: "blur" },//参考
+              {
+                pattern: bankAccountReg,
+                message: "仅支持数字和特殊字符",
+                trigger: "blur",
+              },
+            ],
+          },
+          //{"type":"slider","itemType":"form","value":0,"label":"","props":{"size":"small"},"rules":[],"span":24,"formProps":{"isRequired":false},"fileId":"l7zupdr0377"},{"type":"divider","value":"","itemType":"style","label":"","props":{},"span":24,"fileId":"l7zupfod11f8"},{"type":"alert","value":"","itemType":"style","label":"","props":{"description":"111","showIcon":true,"type":"info"},"span":24,"fileId":"l7zuphghe99"}
           {
             type: "select",
             label: "下拉框",
             fileId: "select",
             value: "",
+            // 当是下拉 或者 tree 这种 需要一个list去循环的组件 请传入一个options(如果rule里面有这个 都会放在props里面传下去)
             options:[
               {
                 dictName:"下拉框的名字",
@@ -46,24 +67,84 @@
               labelKey: "dictName",// 默认 是label
               valueKey: "dictValue", // 默认是value
             },
-            span: 8,// 定义表格的长度
+            span: 8,
           },
           {
-            type: "input",
-            label: "开户银行账号",
-            fileId: "bankAccount",
-            value: "",
-            props: {},
-            span: 8,
-            rules: [
-              { required: true, message: "请输入开户行账号", trigger: "blur" },
+            type: "multipleselect",
+            label: "多选下拉框",
+            fileId: "multipleselect",
+            value: [],//select传参数也可以多选 但是 单独放一个组件出来 更加容易 遵循组件单一原则
+            // 当是下拉 或者 tree 这种 需要一个list去循环的组件 请传入一个options(如果rule里面有这个 都会放在props里面传下去)
+            options:[ // 默认渲染的key是 label 和 value
               {
-                pattern: bankAccountReg,
-                message: "仅支持数字和特殊字符",
-                trigger: "blur",
+                label:"下拉框的名字1",
+                value:"下拉框的值1"
               },
+              {
+                label:"下拉框的名字2",
+                value:"下拉框的值2"
+              }
             ],
+            span: 8,
           },
+          {
+            type: "radio",
+            label: "单选框",
+            fileId: "radio",
+            value: "",
+            options:[ // 默认渲染的key是 label 和 value
+              {
+                label:"单选框的名字1",
+                value:"单选框的值1"
+              },
+              {
+                label:"单选框的名字2",
+                value:"单选框的值2"
+              }
+            ],
+            span: 8,
+          },
+          {
+            type: "checkbox",
+            label: "多选框",
+            fileId: "checkbox",
+            value: [],
+            options:[ 
+              {
+                label:"多选框的名字1",
+                value:"多选框的值1"
+              },
+              {
+                label:"多选框的名字2",
+                value:"多选框的值2"
+              }
+            ],
+            span: 8,
+          },
+          {
+            type:"datapick",
+            label:"时间选择器",
+            fileId:"datapick",
+            value:"",//默认输出的是字符串
+            props:{
+              // isTimestamp 是否输出时间戳开关 打开之后 value 会变成时间戳的数字
+              //type 目前仅支持 "date", "month" 两种 一种是时间模式 一种是月份模式
+            }
+          },
+          {
+            type:"switch",
+            label:"开关",
+            fileId:"switch",
+            value:false,
+            props:{}
+          },
+          {
+            type:"slider",
+            label:"滑块",
+            fileId:"slider",
+            value:0,//number类型
+            props:{}
+          }
         ],
         model: {},
       };

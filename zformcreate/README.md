@@ -1,4 +1,4 @@
-### 支持的组件可以参考
+### [支持的组件可以参考](https://q969210177.github.io/formDesigners/#/zformDesignersView)
 ```html
 <!-- 事件监听  fileId-事件名 
     距离 a-change 就是 fileId是a的组件触发的change事件
@@ -49,7 +49,7 @@
               },
             ],
           },
-          //{"type":"slider","itemType":"form","value":0,"label":"","props":{"size":"small"},"rules":[],"span":24,"formProps":{"isRequired":false},"fileId":"l7zupdr0377"},{"type":"divider","value":"","itemType":"style","label":"","props":{},"span":24,"fileId":"l7zupfod11f8"},{"type":"alert","value":"","itemType":"style","label":"","props":{"description":"111","showIcon":true,"type":"info"},"span":24,"fileId":"l7zuphghe99"}
+          //{"type":"alert","value":"","itemType":"style","label":"","props":{"description":"111","showIcon":true,"type":"info"},"span":24,"fileId":"l7zuphghe99"}
           {
             type: "select",
             label: "下拉框",
@@ -144,11 +144,27 @@
             fileId:"slider",
             value:0,//number类型
             props:{}
-          }
+          },
+          {
+            type:"divider",
+            label:"分割线",
+            fileId:"divider",
+            value:0,//number类型
+            props:{},
+            itemType:"style"
+          },
+          // {"type":"divider","value":"","itemType":"style","label":"","props":{},"span":24,"fileId":"l7zupfod11f8"},
         ],
         model: {},
       };
     },
+    methods:{
+      // 查看提交的数据
+      getFormData(){
+        //所有的操作方法 全部通过v-model 绑定出来 是一个 key=>void 的对象
+        console.log(this.model.getFormData())
+      }
+    }
   };
 </script>
 ```

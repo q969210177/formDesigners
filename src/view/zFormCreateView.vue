@@ -32,7 +32,6 @@ export default {
             {
               required: true,
               message: "请输入姓名",
-              trigger: "blur",
             },
           ],
         },

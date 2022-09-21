@@ -21,7 +21,6 @@
     "git.confirmSync": false,
     "editor.wordWrap": "on",
     "gitlens.views.commits.files.layout": "list",
-    "security.workspace.trust.untrustedFiles": "open",
     "files.associations": {
         "*.vue": "vue"
     },
@@ -49,33 +48,18 @@
     "[typescript]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
-    // "[vue]": {
-    //     "editor.defaultFormatter": "octref.vetur"
-    // },
     "diffEditor.renderSideBySide": false,
     "files.autoSave": "onWindowChange",
     "git.ignoreLegacyWarning": true,
-    // "[vue]": {
-    //   "editor.defaultFormatter": "rvest.vs-code-prettier-eslint"
-    // },
-    "[javascriptreact]": {
-        "editor.defaultFormatter": "rvest.vs-code-prettier-eslint"
-    },
     "[markdown]": {
         "editor.defaultFormatter": "Vue.volar"
     },
     "explorer.confirmDragAndDrop": false,
     "editor.unicodeHighlight.ambiguousCharacters": false,
-    // "[vue]": {
-    //   "editor.defaultFormatter": "octref.vetur"
-    // },
     "[javascript]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
     "[vue]": {
         "editor.defaultFormatter": "octref.vetur"
     },
-    // "[vue]": {
-    //   "editor.defaultFormatter": "esbenp.prettier-vscode"
-    // },
 }

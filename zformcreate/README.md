@@ -150,10 +150,31 @@
             label:"分割线",
             fileId:"divider",
             value:0,//number类型
-            props:{},
+            props:{
+              text:"需要放在分割线里面的标题",
+              // dashed: 是否虚线 boolean 默认false
+              // height 占位的高度 number 默认50
+              // orientation 文字的展示位置  left center right 默认center
+            },
             itemType:"style"
           },
-          // {"type":"divider","value":"","itemType":"style","label":"","props":{},"span":24,"fileId":"l7zupfod11f8"},
+          /** 
+           * banner
+: 
+true
+closable
+: 
+true
+description
+: 
+"111"
+showIcon
+: 
+true
+type
+: 
+"success"
+          */
         ],
         model: {},
       };

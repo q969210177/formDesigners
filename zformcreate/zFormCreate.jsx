@@ -177,47 +177,52 @@ export default {
       return dom;
     },
     //返回form组件
-      returnFormItem(h, ruleItem) {
+    returnFormItem(h, ruleItem) {
         const { colonStatus, labelWidth } = this.formConfig;
         //设置 formItem的props 并给上默认值
-        const formModelItemProps = {
-          required: isHaveDefaultValue(ruleItem.formProps, "required", false),
-          labelCol: isHaveDefaultValue(
-            ruleItem.formProps,
-            "labelCol",
-            isHaveDefaultValue(this.formConfig, "labelCol", { span: 4 })
-          ),
-          wrapperCol: isHaveDefaultValue(
-            ruleItem.formProps,
-            "wrapperCol",
-            isHaveDefaultValue(this.formConfig, "wrapperCol", { span: 20 })
-          ),
+        const formItemProps = {
+          // required: isHaveDefaultValue(ruleItem.formProps, "required", false),
+          label:ruleItem.label,
           prop: ruleItem.fileId,
           rules: ruleItem.rules,
-        };
-        const labelSlot = {
-          label: () => {
-            //获取字体长度
-            const labelWordWidth = getWordsWidth(ruleItem.label) + 10;
-            //判断这个字体是不是超长的
-            const status = labelWordWidth > labelWidth;
-            let text = "";
-            if (status) {
-              //这里主要是计算一格大概能放下多少个字
-              text =
-                ruleItem.label.slice(0, Math.floor(labelWidth / 12) - 2) + "... ";
-            } else {
-              text = ruleItem.label;
-            }
-            //如果需要加冒号就加冒号
-            text = colonStatus ? text + ":" : text;
-            return (
-              <span class={["ZFormCreatetem_label"]} title={ruleItem.label}>
-                {text}
-              </span>
-            );
-          },
-        };
+        }
+        //   required: isHaveDefaultValue(ruleItem.formProps, "required", false),
+        //   labelCol: isHaveDefaultValue(
+        //     ruleItem.formProps,
+        //     "labelCol",
+        //     isHaveDefaultValue(this.formConfig, "labelCol", { span: 4 })
+        //   ),
+        //   wrapperCol: isHaveDefaultValue(
+        //     ruleItem.formProps,
+        //     "wrapperCol",
+        //     isHaveDefaultValue(this.formConfig, "wrapperCol", { span: 20 })
+        //   ),
+        //  
+        //  
+        // };
+        // const labelSlot = {
+        //   label: () => {
+        //     //获取字体长度
+        //     const labelWordWidth = getWordsWidth(ruleItem.label) + 10;
+        //     //判断这个字体是不是超长的
+        //     const status = labelWordWidth > labelWidth;
+        //     let text = "";
+        //     if (status) {
+        //       //这里主要是计算一格大概能放下多少个字
+        //       text =
+        //         ruleItem.label.slice(0, Math.floor(labelWidth / 12) - 2) + "... ";
+        //     } else {
+        //       text = ruleItem.label;
+        //     }
+        //     //如果需要加冒号就加冒号
+        //     text = colonStatus ? text + ":" : text;
+        //     return (
+        //       <span class={["ZFormCreatetem_label"]} title={ruleItem.label}>
+        //         {text}
+        //       </span>
+        //     );
+        //   },
+        // };
         let eventLoop = {};
         if (ruleItem.on) {
           eventLoop = {
@@ -233,10 +238,11 @@ export default {
         // if (returnSlots(this.$scopedSlots,ruleItem.fileId)) {
         //   // com= this.$scopedSlots[ruleItem.fileId](ruleItem)
         // }
+        // scopedSlots={labelSlot}
+        // 
         return (
             <cFormItem
-              scopedSlots={labelSlot}
-              props={{ ...formModelItemProps }}
+              props={{ ...formItemProps }}
             > 
               {/* 当存在插槽的时候直接渲染插槽 没有插槽才渲染 vnode */}
               { isSlots?this.$scopedSlots[ruleItem.fileId](ruleItem): h(
@@ -257,7 +263,7 @@ export default {
               )}
             </cFormItem>
         );
-      },
+    },
     //分发input事件的默认值
     validatorIsEvent(type, event) {
       // const typeArr = ['InputEvent', 'PointerEvent']
@@ -339,18 +345,17 @@ export default {
     }
   },
   render(h) {
-  
     this.getFormData();
     return (
       <div class="zCreateForm" {...{ style: { ...this.$attrs.style } }}>
-        <cForm ref="zCreateForm"  props={{ model: this.formData,  }}>
-        {this.copyRule.map((i) => {
-              if (i.type !== "hide") {
-                return (
-                  this.renderCompoents(i.itemType, h, i)
-                );
-              }
-            })}
+        <cForm ref="zCreateForm"  props={{ model: this.formData,labelWidth:isHaveDefaultValue(this.formConfig,"labelWidth","80px")}}>
+          {this.copyRule.map((i) => {
+            if (i.type !== "hide") {
+              return (
+                this.renderCompoents(i.itemType, h, i)
+              );
+            }
+          })}
         </cForm>
         {/* {this.defaultUIRender(h)} */}
         {/* <a-form-model

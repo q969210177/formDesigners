@@ -349,6 +349,7 @@ export default {
     },
   },
   mounted() {
+    console.log(this.elForm, "elForm");
     if (this.prop) {
       this.dispatch("cForm", "el.form.addField", [this]);
 

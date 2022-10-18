@@ -6,6 +6,11 @@ import ElementUI from "element-ui";
 import "element-ui/lib/theme-chalk/index.css";
 // import zformcreate from "zformcreate";
 import router from "@/router/index.js";
+// import zformDesigners from "../lib/zFormDesigners/index";
+import zformDesigners from "../zformDesigners/index";
+// import zformDesigners from "z-form-designers";
+import "@/assets/iconFont/iconfont.css";
+import "z-form-designers/index.css";
 const requireComponent = require.context(
   "@/components/",
   false,
@@ -16,11 +21,6 @@ requireComponent.keys().forEach((name) => {
   Vue.component(compoents.name, compoents);
   zformcreate.components(compoents);
 });
-// import zformDesigners from "../lib/zFormDesigners/index";
-import zformDesigners from "../zformDesigners/index";
-// import zformDesigners from "z-form-designers";
-import "@/assets/iconFont/iconfont.css";
-import "z-form-designers/index.css";
 Vue.use(ElementUI);
 Vue.use(zformDesigners);
 // { UI: "el" }

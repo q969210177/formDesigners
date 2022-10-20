@@ -1,5 +1,5 @@
 <template>
-  <div class="zFormCreate">
+  <div class="zFormCreateView">
     <div class="operat_box pr-20">
       <a-button @click="$router.push('/')" type="link">返回主页</a-button>
     </div>
@@ -13,7 +13,7 @@
 </template>
 <script>
 export default {
-  name: "zFormCreate",
+  name: "zFormCreateView",
   data() {
     return {
       api: {},
@@ -136,7 +136,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 @import "~@/assets/layout.scss";
-.zFormCreate {
+.zFormCreateView {
   width: 100%;
   height: 100%;
   @include flex-row-c-c;

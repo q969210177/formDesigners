@@ -62,4 +62,7 @@
     "[vue]": {
         "editor.defaultFormatter": "octref.vetur"
     },
+    "[javascriptreact]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
 }

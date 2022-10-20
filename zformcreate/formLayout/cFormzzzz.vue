@@ -1,9 +1,7 @@
 <template>
-  <div class="cForm">
-    <form class="form">
-      <slot></slot>
-    </form>
-  </div>
+  <form class="cForm">
+    <slot></slot>
+  </form>
 </template>
 <script>
 import { objectAssign } from "@/utils/utils";
@@ -12,7 +10,7 @@ export default {
   componentName: "cForm",
   provide() {
     return {
-      cForm: this,
+      elForm: this,
     };
   },
   props: {
@@ -20,10 +18,19 @@ export default {
     rules: Object,
     labelPosition: String,
     labelWidth: String,
+    labelSuffix: {
+      type: String,
+      default: "",
+    },
+    inline: Boolean,
+    inlineMessage: Boolean,
+    statusIcon: Boolean,
     showMessage: {
       type: Boolean,
       default: true,
     },
+    size: String,
+    disabled: Boolean,
     validateOnRuleChange: {
       type: Boolean,
       default: true,
@@ -33,6 +40,18 @@ export default {
       default: false,
     },
   },
+  watch: {
+    rules() {
+      // remove then add event listeners on form-item after form rules change
+      this.fields.forEach((field) => {
+        field.removeValidateEvents();
+        field.addValidateEvents();
+      });
+      if (this.validateOnRuleChange) {
+        this.validate(() => {});
+      }
+    },
+  },
   computed: {
     autoLabelWidth() {
       if (!this.potentialLabelWidthArr.length) return 0;
@@ -40,21 +59,6 @@ export default {
       return max ? `${max}px` : "";
     },
   },
-  watch: {
-    // 当 验证规则发生变化的时候 把子组件的验证全部去掉然后全部重新加一遍
-    rules() {
-      // remove then add event listeners on form-item after form rules change
-      this.fields.forEach((field) => {
-        field.removeValidateEvents();
-        field.addValidateEvents();
-      });
-      //
-      if (this.validateOnRuleChange) {
-        this.validate(() => {});
-      }
-    },
-  },
-
   data() {
     return {
       fields: [],
@@ -64,7 +68,6 @@ export default {
   created() {
     // field是 form-item的实例
     this.$on("c.form.addField", (field) => {
-      debugger;
       if (field) {
         this.fields.push(field);
       }
@@ -76,7 +79,6 @@ export default {
       }
     });
   },
-  mounted() {},
   methods: {
     resetFields() {
       if (!this.model) {
@@ -184,8 +186,5 @@ export default {
 .cForm {
   width: 100%;
   height: 100%;
-  .form {
-    border: 1px solid red;
-  }
 }
 </style>

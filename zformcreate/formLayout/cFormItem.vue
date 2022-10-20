@@ -1,40 +1,6 @@
 <template>
   <div class="cFormItem">
-    <label-wrap
-      :is-auto-width="labelStyle && labelStyle.width === 'auto'"
-      :update-all="form.labelWidth === 'auto'"
-    >
-      <label
-        :for="labelFor"
-        class="el-form-item__label"
-        :style="labelStyle"
-        v-if="label || $slots.label"
-      >
-        <slot name="label">{{ label + form.labelSuffix }}</slot>
-      </label>
-    </label-wrap>
-    <div class="el-form-item__content" :style="contentStyle">
-      <slot></slot>
-      <transition name="el-zoom-in-top">
-        <slot
-          v-if="validateState === 'error' && showMessage && form.showMessage"
-          name="error"
-          :error="validateMessage"
-        >
-          <div
-            class="el-form-item__error"
-            :class="{
-              'el-form-item__error--inline':
-                typeof inlineMessage === 'boolean'
-                  ? inlineMessage
-                  : (cForm && cForm.inlineMessage) || false,
-            }"
-          >
-            {{ validateMessage }}
-          </div>
-        </slot>
-      </transition>
-    </div>
+    <div @click="dispatch('cForm', 'el.form.addField', [this])">222</div>
   </div>
 </template>
 <script>
@@ -49,37 +15,19 @@ function broadcast(componentName, eventName, params) {
     }
   });
 }
-const objectAssign = function (target) {
-  for (let i = 1, j = arguments.length; i < j; i++) {
-    let source = arguments[i] || {};
-    for (let prop in source) {
-      // eslint-disable-next-line no-prototype-builtins
-      if (source.hasOwnProperty(prop)) {
-        let value = source[prop];
-        if (value !== undefined) {
-          target[prop] = value;
-        }
-      }
-    }
-  }
-
-  return target;
-};
 import AsyncValidator from "async-validator";
-import { noop, getPropByPath } from "@/utils/utils";
+import { noop, getPropByPath, objectAssign } from "@/utils/utils";
 import LabelWrap from "./label-wrap";
 export default {
   name: "cFormItem",
   componentName: "cFormItem",
+
   provide() {
     return {
-      elFormItem: this,
+      cFormItem: this,
     };
   },
-  inject: ["elForm"],
-  components: {
-    LabelWrap,
-  },
+  inject: ["cForm"],
   props: {
     label: String,
     labelWidth: String,
@@ -102,97 +50,18 @@ export default {
     },
     size: String,
   },
-  watch: {
-    error: {
-      immediate: true,
-      handler(value) {
-        this.validateMessage = value;
-        this.validateState = value ? "error" : "";
-      },
-    },
-    validateStatus(value) {
-      this.validateState = value;
-    },
-  },
   computed: {
-    labelFor() {
-      return this.for || this.prop;
-    },
-    labelStyle() {
-      const ret = {};
-      if (this.form.labelPosition === "top") return ret;
-      const labelWidth = this.labelWidth || this.form.labelWidth;
-      if (labelWidth) {
-        ret.width = labelWidth;
-      }
-      return ret;
-    },
-    contentStyle() {
-      const ret = {};
-      const label = this.label;
-      if (this.form.labelPosition === "top" || this.form.inline) return ret;
-      if (!label && !this.labelWidth && this.isNested) return ret;
-      const labelWidth = this.labelWidth || this.form.labelWidth;
-      if (labelWidth === "auto") {
-        if (this.labelWidth === "auto") {
-          ret.marginLeft = this.computedLabelWidth;
-        } else if (this.form.labelWidth === "auto") {
-          ret.marginLeft = this.elForm.autoLabelWidth;
-        }
-      } else {
-        ret.marginLeft = labelWidth;
-      }
-      return ret;
-    },
     form() {
       let parent = this.$parent;
       let parentName = parent.$options.componentName;
       while (parentName !== "cForm") {
         if (parentName === "cFormItem") {
-          // eslint-disable-next-line vue/no-side-effects-in-computed-properties
-          this.isNested = true;
+          this.setIsNested();
         }
         parent = parent.$parent;
         parentName = parent.$options.componentName;
       }
       return parent;
-    },
-    fieldValue() {
-      const model = this.form.model;
-      if (!model || !this.prop) {
-        return;
-      }
-
-      let path = this.prop;
-      if (path.indexOf(":") !== -1) {
-        path = path.replace(/:/, ".");
-      }
-
-      return getPropByPath(model, path, true).v;
-    },
-    isRequired() {
-      let rules = this.getRules();
-      let isRequired = false;
-
-      if (rules && rules.length) {
-        rules.every((rule) => {
-          if (rule.required) {
-            isRequired = true;
-            return false;
-          }
-          return true;
-        });
-      }
-      return isRequired;
-    },
-    _formSize() {
-      return this.elForm.size;
-    },
-    elFormItemSize() {
-      return this.size || this._formSize;
-    },
-    sizeClass() {
-      return this.elFormItemSize || (this.$ELEMENT || {}).size;
     },
   },
   data() {
@@ -205,25 +74,36 @@ export default {
       computedLabelWidth: "",
     };
   },
+  mounted() {
+    // this.$emit("c.form.addField");
+    this.dispatch("cForm", "el.form.addField", [this]);
+    // this.$on("el.form.blur", () => {
+    //   console.log(222);
+    // });
+    // this.$on("el.form.change", () => {
+    //   console.log(222);
+    // });
+    // this.validate("change");
+  },
   methods: {
     dispatch(componentName, eventName, params) {
       var parent = this.$parent || this.$root;
       var name = parent.$options.componentName;
-
       while (parent && (!name || name !== componentName)) {
         parent = parent.$parent;
-
         if (parent) {
           name = parent.$options.componentName;
         }
       }
+      console.log(parent);
       if (parent) {
         parent.$emit.apply(parent, [eventName].concat(params));
       }
     },
-    broadcast(componentName, eventName, params) {
-      broadcast.call(this, componentName, eventName, params);
+    setIsNested() {
+      this.isNested = true;
     },
+    // blur or change
     validate(trigger, callback = noop) {
       this.validateDisabled = false;
       const rules = this.getFilteredRule(trigger);
@@ -255,8 +135,8 @@ export default {
           this.validateMessage = errors ? errors[0].message : "";
 
           callback(this.validateMessage, invalidFields);
-          this.cForm &&
-            this.cForm.$emit(
+          this.elForm &&
+            this.elForm.$emit(
               "validate",
               this.prop,
               !errors,
@@ -265,37 +145,18 @@ export default {
         }
       );
     },
-    clearValidate() {
-      this.validateState = "";
-      this.validateMessage = "";
-      this.validateDisabled = false;
-    },
-    resetField() {
-      this.validateState = "";
-      this.validateMessage = "";
-
-      let model = this.form.model;
-      let value = this.fieldValue;
-      let path = this.prop;
-      if (path.indexOf(":") !== -1) {
-        path = path.replace(/:/, ".");
-      }
-
-      let prop = getPropByPath(model, path, true);
-
-      this.validateDisabled = true;
-      if (Array.isArray(value)) {
-        prop.o[prop.k] = [].concat(this.initialValue);
-      } else {
-        prop.o[prop.k] = this.initialValue;
-      }
-
-      // reset validateDisabled after onFieldChange triggered
-      this.$nextTick(() => {
-        this.validateDisabled = false;
-      });
-
-      this.broadcast("ElTimeSelect", "fieldReset", this.initialValue);
+    getFilteredRule(trigger) {
+      const rules = this.getRules();
+      return rules
+        .filter((rule) => {
+          if (!rule.trigger || trigger === "") return true;
+          if (Array.isArray(rule.trigger)) {
+            return rule.trigger.indexOf(trigger) > -1;
+          } else {
+            return rule.trigger === trigger;
+          }
+        })
+        .map((rule) => objectAssign({}, rule));
     },
     getRules() {
       let formRules = this.form.rules;
@@ -308,70 +169,12 @@ export default {
 
       return [].concat(selfRules || formRules || []).concat(requiredRule);
     },
-    getFilteredRule(trigger) {
-      const rules = this.getRules();
-
-      return rules
-        .filter((rule) => {
-          if (!rule.trigger || trigger === "") return true;
-          if (Array.isArray(rule.trigger)) {
-            return rule.trigger.indexOf(trigger) > -1;
-          } else {
-            return rule.trigger === trigger;
-          }
-        })
-        .map((rule) => objectAssign({}, rule));
-    },
-    onFieldBlur() {
-      this.validate("blur");
-    },
-    onFieldChange() {
-      if (this.validateDisabled) {
-        this.validateDisabled = false;
-        return;
-      }
-
-      this.validate("change");
-    },
-    updateComputedLabelWidth(width) {
-      this.computedLabelWidth = width ? `${width}px` : "";
-    },
-    addValidateEvents() {
-      const rules = this.getRules();
-
-      if (rules.length || this.required !== undefined) {
-        this.$on("el.form.blur", this.onFieldBlur);
-        this.$on("el.form.change", this.onFieldChange);
-      }
-    },
-    removeValidateEvents() {
-      this.$off();
-    },
-  },
-  mounted() {
-    console.log(this.elForm, "elForm");
-    if (this.prop) {
-      this.dispatch("cForm", "el.form.addField", [this]);
-
-      let initialValue = this.fieldValue;
-      if (Array.isArray(initialValue)) {
-        initialValue = [].concat(initialValue);
-      }
-      Object.defineProperty(this, "initialValue", {
-        value: initialValue,
-      });
-
-      this.addValidateEvents();
-    }
-  },
-  beforeDestroy() {
-    this.dispatch("cForm", "el.form.removeField", [this]);
   },
 };
 </script>
 <style lang="scss" scoped>
 .cFormItem {
   width: 100%;
-  //   height: 100%;
+  height: 100%;
 }
 </style>

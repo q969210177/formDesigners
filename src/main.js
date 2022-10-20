@@ -25,7 +25,7 @@ Vue.use(ElementUI);
 Vue.use(zformDesigners);
 // { UI: "el" }
 Vue.use(zformcreate, "el");
-
+zformcreate.components(ElementUI.Input);
 Vue.config.productionTip = false;
 new Vue({
   router,

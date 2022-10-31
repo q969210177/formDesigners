@@ -129,7 +129,7 @@ export default {
       ruleItem.options = data;
       // this.updateRule()
     },
-    //返回组件的某一个字段的属性
+    //返回组件的某一个字段的属性   111
     getRuleItemSomeOne(fileId, ruleItemkey) {
       const { ruleItem } = getRuleItem(this.copyRule, fileId);
       if (ruleItem[ruleItemkey]) {

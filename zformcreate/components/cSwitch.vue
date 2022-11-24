@@ -1,37 +1,50 @@
 <template>
   <div class="cSwitch">
-    <a-switch v-bind="$attrs" v-on="$listeners" v-model="activeValue" @change="handleSwitchChange" />
+    <a-switch
+      v-bind="$attrs"
+      v-on="listeners"
+      v-model="activeValue"
+      @change="handleSwitchChange"
+    />
   </div>
 </template>
 <script>
 export default {
-  name: 'cSwitch',
+  name: "cSwitch",
   props: {
     value: {
       type: [Boolean, Number],
-      require: true
-    }
+      require: true,
+    },
   },
   watch: {
     value(newV) {
-      this.activeValue = newV
-    }
+      this.activeValue = newV;
+    },
+  },
+  computed: {
+    listeners() {
+      if (this.$listeners.change) {
+        delete this.$listeners.change;
+      }
+      return {};
+    },
   },
   data() {
     return {
-      activeValue: false
-    }
+      activeValue: false,
+    };
   },
   mounted() {
-    this.activeValue = this.value
+    this.activeValue = this.value;
   },
   methods: {
     handleSwitchChange(v) {
-      this.$emit('input', v)
-      this.$emit('change', v)
-    }
-  }
-}
+      this.$emit("input", v);
+      this.$emit("change", v);
+    },
+  },
+};
 </script>
 <style lang="scss" scoped>
 .cSwitch {

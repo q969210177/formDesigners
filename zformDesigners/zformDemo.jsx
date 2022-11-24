@@ -55,6 +55,10 @@ export default {
     rule(newV) {
       this.copyRule = this.rule;
     },
+    // formData(newV){
+    //   console.log(newV,"newV");
+    //   this.$emit("formDataChange",newV)
+    // }
   },
   data() {
     return {
@@ -82,7 +86,7 @@ export default {
       const formData={}
       this.copyRule.forEach((i) => {
         formData[i.fileId] = i.value
-        // this.$set(this.formData, i.fileId, i.value);
+        this.$set(this.formData, i.fileId, i.value);
       });
       return  formData
     },
@@ -119,7 +123,6 @@ export default {
     },
     //返回组件
     renderCompoents(type, h, ruleItem,index) {
-      console.log(returnSlots(this.$slots,ruleItem.fileId));
       const returnObj = {
         form: this.returnFormItem,
         style: this.returnStyleItem,
@@ -245,7 +248,6 @@ export default {
     },
     //分发input事件的默认值
     validatorIsEvent(type, event) {
-      // const typeArr = ['InputEvent', 'PointerEvent']
       if (event instanceof Event) {
         const {
           target: { value },
@@ -283,8 +285,6 @@ export default {
           <span
             title="下降"
             onClick={() => {
-              console.log(index,"index");
-
               this.$emit("handleZformDemoDownClick", ruleItem,index);
             }}
             class="square_box_btn "
@@ -349,7 +349,6 @@ export default {
         >
           <a-row>
             {this.copyRule.map((ruleItem, k) => {
-              let eventLoop = {};
               // if (ruleItem.on) {
               //   eventLoop = {
               //     ...returnEvent(this.$listeners, ruleItem.fileId),
@@ -363,7 +362,6 @@ export default {
                 return (
                   <a-col span={ruleItem.span ? ruleItem.span : 24}>
                     <div
-                     
                       class="rule_item"
                       onClick={() => {
                         this.$emit("rowClick", ruleItem.fileId);

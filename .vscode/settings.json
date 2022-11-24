@@ -1,8 +1,68 @@
 {
-    "files.autoSave": "onFocusChange",
+    "editor.autoClosingBrackets": "beforeWhitespace",
+    "editor.autoClosingDelete": "auto",
+    "editor.comments.insertSpace": true,
     "editor.formatOnSave": true,
+    "workbench.iconTheme": "vscode-icons-mac",
+    "editor.acceptSuggestionOnCommitCharacter": true,
+    "editor.codeActionsOnSave": {
+        "source.fixAll": true
+    },
+    "eslint.validate": [
+        "javascript",
+        "vue",
+        "html",
+        "markdown"
+    ],
+    "explorer.confirmDelete": false,
+    "javascript.updateImportsOnFileMove.enabled": "always",
+    "explorer.compactFolders": false,
+    "git.enableSmartCommit": true,
+    "git.confirmSync": false,
+    "editor.wordWrap": "on",
+    "gitlens.views.commits.files.layout": "list",
+    "files.associations": {
+        "*.vue": "vue"
+    },
+    "[typescriptreact]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[json]": {
+        "editor.defaultFormatter": "rvest.vs-code-prettier-eslint"
+    },
+    "[less]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[jsonc]": {
+        "editor.defaultFormatter": "vscode.json-language-features"
+    },
+    "[scss]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[html]": {
+        "editor.defaultFormatter": "vscode.html-language-features"
+    },
+    "editor.unicodeHighlight.allowedCharacters": {
+        "！": true
+    },
+    "[typescript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "diffEditor.renderSideBySide": false,
+    "files.autoSave": "onWindowChange",
+    "git.ignoreLegacyWarning": true,
+    "[markdown]": {
+        "editor.defaultFormatter": "Vue.volar"
+    },
+    "explorer.confirmDragAndDrop": false,
+    "editor.unicodeHighlight.ambiguousCharacters": false,
+    "[javascript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
     "[vue]": {
-        // "editor.defaultFormatter": "esbenp.prettier-vscode"
         "editor.defaultFormatter": "octref.vetur"
+    },
+    "[javascriptreact]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
 }

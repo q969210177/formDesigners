@@ -2,7 +2,7 @@
   <div class="cTree">
     <a-tree
       v-bind="$attrs"
-      v-on="$listeners"
+      v-on="listeners"
       @check="handleCheckChange"
       v-model="checkedKeys"
       :tree-data="options"
@@ -24,6 +24,14 @@ export default {
   watch: {
     value() {
       this.checkedKeys = this.value;
+    },
+  },
+  computed: {
+    listeners() {
+      if (this.$listeners.check) {
+        delete this.$listeners.check;
+      }
+      return {};
     },
   },
   mounted() {

@@ -233,6 +233,9 @@ export let compoentsRule = [
     fileId: "allowClear",
     value: false,
     span: 24,
+    on: {
+      change: () => {},
+    },
     attrArr: ["input", "select", "multipleselect", "datapick", "cascader"],
   },
   {
@@ -240,6 +243,9 @@ export let compoentsRule = [
     label: "默认提示语",
     fileId: "placeholder",
     value: "",
+    on: {
+      blur: () => {},
+    },
     span: 24,
     attrArr: ["input", "datapick", "rangePicker", "select", "cascader"],
   },
@@ -257,6 +263,9 @@ export let compoentsRule = [
     fileId: "maxLength",
     value: 10,
     span: 24,
+    on: {
+      change: () => {},
+    },
     attrArr: ["input"],
   },
   {
@@ -265,6 +274,9 @@ export let compoentsRule = [
     fileId: "disabled",
     value: false,
     span: 24,
+    on: {
+      change: () => {},
+    },
     attrArr: [
       "input",
       "datapick",
@@ -284,6 +296,9 @@ export let compoentsRule = [
     fileId: "size",
     value: "",
     span: 24,
+    on: {
+      change: () => {},
+    },
     options: [
       {
         label: "默认",
@@ -298,7 +313,6 @@ export let compoentsRule = [
     attrArr: ["input", "datapick", "rangePicker", "select", "switch", "radio"],
   },
   // input结束
-
   //select结束开始
   {
     type: "setSelectOption",
@@ -306,6 +320,9 @@ export let compoentsRule = [
     fileId: "options",
     value: [],
     span: 24,
+    on: {
+      handleSubmitOptions: () => {},
+    },
     attrArr: ["select", "checkbox", "radio", "multipleselect"],
   },
   {
@@ -314,6 +331,9 @@ export let compoentsRule = [
     fileId: "maxTagTextLength",
     value: 0,
     span: 24,
+    on: {
+      change: () => {},
+    },
     attrArr: ["select", "multipleselect"],
   },
   // select结束
@@ -325,6 +345,9 @@ export let compoentsRule = [
     fileId: "maxTagCount",
     value: 5,
     span: 24,
+    on: {
+      change: () => {},
+    },
     attrArr: ["multipleselect"],
   },
   // multipleselect结束
@@ -340,6 +363,9 @@ export let compoentsRule = [
       { label: "radio", value: "radio" },
     ],
     span: 24,
+    on: {
+      change: () => {},
+    },
     attrArr: ["radio"],
   },
   // radio结束
@@ -353,6 +379,9 @@ export let compoentsRule = [
     fileId: "formatArr",
     label: "配置时间格式",
     value: [],
+    on: {
+      change: () => {},
+    },
     options: [
       { label: "年", value: "YYYY-" },
       { label: "月", value: "MM-" },
@@ -368,6 +397,9 @@ export let compoentsRule = [
     fileId: "type",
     label: "展示模式",
     value: "",
+    on: {
+      change: () => {},
+    },
     options: [
       { label: "日期选择器", value: "date" },
       { label: "月份选择器", value: "month" },
@@ -382,6 +414,9 @@ export let compoentsRule = [
     fileId: "unCheckedChildren",
     value: "",
     span: 24,
+    on: {
+      blur: () => {},
+    },
     props: {
       maxLength: 2,
     },
@@ -393,6 +428,9 @@ export let compoentsRule = [
     fileId: "checkedChildren",
     value: "",
     span: 24,
+    on: {
+      blur: () => {},
+    },
     props: {
       maxLength: 2,
     },
@@ -408,6 +446,9 @@ export let compoentsRule = [
     label: "是否显示tooltip",
     value: false,
     span: 24,
+    on: {
+      change: () => {},
+    },
     attrArr: ["slider"],
   },
   {
@@ -416,6 +457,9 @@ export let compoentsRule = [
     fileId: "max",
     value: 10,
     span: 24,
+    on: {
+      change: () => {},
+    },
     attrArr: ["slider"],
   },
   {
@@ -424,6 +468,9 @@ export let compoentsRule = [
     fileId: "min",
     value: 0,
     span: 24,
+    on: {
+      change: () => {},
+    },
     attrArr: ["slider"],
   },
   //slider结束
@@ -435,6 +482,9 @@ export let compoentsRule = [
     fileId: "checkable",
     value: false,
     span: 24,
+    on: {
+      change: () => {},
+    },
     attrArr: ["tree"],
   },
   {
@@ -443,6 +493,11 @@ export let compoentsRule = [
     fileId: "options",
     value: [],
     span: 24,
+    on: {
+      handleSubmitOptions: () => {
+        console.log(111);
+      },
+    },
     attrArr: ["tree", "cascader"],
   },
   {
@@ -451,6 +506,9 @@ export let compoentsRule = [
     label: "子节点是否独占一行",
     value: false,
     span: 24,
+    on: {
+      change: () => {},
+    },
     attrArr: ["tree"],
   },
   {
@@ -458,6 +516,9 @@ export let compoentsRule = [
     fileId: "showLine",
     label: "是否展示连线",
     value: false,
+    on: {
+      change: () => {},
+    },
     span: 24,
     attrArr: ["tree"],
   },
@@ -475,16 +536,24 @@ export let compoentsRule = [
     type: "switch",
     fileId: "changeOnSelect",
     value: false,
+    on: {
+      change: () => {},
+    },
     label: "是否每级都可选择",
     attrArr: ["cascader"],
   },
   //cascader结束
+
+  //divider开始
   {
     type: "input",
     label: "展示的标题",
     fileId: "text",
     value: "",
     span: 24,
+    on: {
+      blur: () => {},
+    },
     attrArr: ["divider"],
   },
   {
@@ -493,27 +562,20 @@ export let compoentsRule = [
     fileId: "height",
     value: 50,
     span: 24,
-
+    on: {
+      change: () => {},
+    },
     attrArr: ["divider"],
   },
-
-  // {
-  //   type: "setTreeRuleData",
-  //   label: "配置数据",
-  //   fileId: "options",
-  //   value: [],
-  //   span: 24,
-  //   attrArr: ["cascader"],
-  // },
-
-  //
   {
     type: "switch",
     label: "是否虚线",
     fileId: "dashed",
     value: false,
     span: 24,
-
+    on: {
+      change: () => {},
+    },
     attrArr: ["divider"],
   },
   {
@@ -522,6 +584,9 @@ export let compoentsRule = [
     fileId: "orientation",
     value: "",
     span: 24,
+    on: {
+      change: () => {},
+    },
     options: [
       { label: "左", value: "left" },
       { label: "中", value: "center" },
@@ -530,8 +595,81 @@ export let compoentsRule = [
 
     attrArr: ["divider"],
   },
-
-  // max
+  //divider结束
+  //alert 开始
+  {
+    type: "switch",
+    label: "是否用作顶部公告",
+    fileId: "banner",
+    value: false,
+    span: 24,
+    on: {
+      change: () => {},
+    },
+    attrArr: ["alert"],
+  },
+  {
+    type: "switch",
+    label: "显示关闭按钮",
+    fileId: "closable",
+    value: false,
+    span: 24,
+    on: {
+      change: () => {},
+    },
+    attrArr: ["alert"],
+  },
+  // {
+  //   type: "switch",
+  //   label: "closeText",
+  //   fileId: "closeText",
+  //   value: false,
+  //   span: 24,
+  //   on: {
+  //     change: () => {},
+  //   },
+  //   attrArr: ["alert"],
+  // },
+  {
+    type: "input",
+    label: "提示的文字",
+    fileId: "description",
+    value: "",
+    span: 24,
+    on: {
+      blur: () => {},
+    },
+    attrArr: ["alert"],
+  },
+  {
+    type: "switch",
+    label: "是否显示辅助图标",
+    fileId: "showIcon",
+    value: false,
+    span: 24,
+    on: {
+      change: () => {},
+    },
+    attrArr: ["alert"],
+  },
+  {
+    type: "radio",
+    label: "提示展示类型",
+    fileId: "type",
+    value: "",
+    options: [
+      { label: "成功", value: "success" },
+      { label: "普通", value: "info" },
+      { label: "警告", value: "warning" },
+      { label: "错误", value: "error" },
+    ],
+    span: 24,
+    on: {
+      change: () => {},
+    },
+    attrArr: ["alert"],
+  },
+  //alert结束
 ];
 export const setCompoentsRule = (newRule) => {
   compoentsRule.concat(newRule);

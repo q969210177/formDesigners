@@ -43,13 +43,13 @@ async function writeFileType() {
   `,
     async () => {
       await console.log("运行完毕 writeFileType");
-      shell.exec(`
-      cd ./lib/zformcreate/;
-      npm publish
-      cd ../
-      cd ../
-      ls -l;
-      `);
+      // shell.exec(`
+      // cd ./lib/zformcreate/;
+      // npm publish
+      // cd ../
+      // cd ../
+      // ls -l;
+      // `);
     }
   );
 }

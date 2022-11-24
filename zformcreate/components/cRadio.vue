@@ -23,7 +23,7 @@
         @change="handleChange"
         v-bind="attrs"
         buttonStyle="solid"
-        v-on="$listeners"
+        v-on="listeners"
       >
         <a-radio
           :value="v[valueKey]"
@@ -77,6 +77,12 @@ export default {
         delete this.$attrs.options;
       }
       return this.$attrs;
+    },
+    listeners() {
+      if (this.$listeners.change) {
+        delete this.$listeners.change;
+      }
+      return this.$listeners;
     },
   },
   watch: {

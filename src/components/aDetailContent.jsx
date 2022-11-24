@@ -5,9 +5,9 @@ export default {
   components: {
     aDetailContentItem,
   },
-  label: "客户名称",
-  key: "a",
-  col: 3,
+  // label: "客户名称",
+  // key: "a",
+  // col: 3,
   // showLable: true,
   props: {
     //详情展示规则
@@ -37,7 +37,7 @@ export default {
       },
     },
     //没用数据的时候的展示内容
-    DefaultCopy: {
+    defaultCopy: {
       type: String,
       default: "暂无数据",
     },
@@ -52,6 +52,7 @@ export default {
       default: 20,
     },
   },
+
   methods: {
     //判断显示的内容
     setShowData(key) {
@@ -121,11 +122,7 @@ export default {
           rowCount={rowCount}
           rule={i.itemRule}
           data={i.data}
-        >
-          {/* <template slot="zzz" slot-scope="i">
-                111
-            </template> */}
-        </aDetailContent>
+        ></aDetailContent>
       );
     },
   },

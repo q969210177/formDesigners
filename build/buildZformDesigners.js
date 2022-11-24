@@ -3,7 +3,7 @@ const ProgressBarPlugin = require("progress-bar-webpack-plugin");
 const VueLoaderPlugin = require("vue-loader/lib/plugin");
 const TerserPlugin = require("terser-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 module.exports = {
   mode: "production",
   entry: {
@@ -103,10 +103,10 @@ module.exports = {
   plugins: [
     new ProgressBarPlugin(),
     new VueLoaderPlugin(),
-    // new CssMinimizerPlugin(),
     new MiniCssExtractPlugin({
       filename: "./index.css",
     }),
+    new CleanWebpackPlugin(),
   ],
 };
 // module.exports = {

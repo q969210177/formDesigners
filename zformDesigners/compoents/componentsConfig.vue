@@ -2,12 +2,12 @@
   <div class="componentsConfig">
     <header class="header">
       组件配置{{ ruleItemType }}
-      <a-button type="primary" size="small" @click="handleChangeModel"
-        >确定</a-button
-      >
+      <!-- <a-button type="primary" size="small" @click="handleChangeModel">
+        确定
+        </a-button> -->
     </header>
     <main class="main">
-      <div class="form_config">
+      <div class="form_config" v-show="formRule.length > 1">
         <h3>表单项配置</h3>
         <ZFormCreate
           v-model="formModel"
@@ -26,11 +26,6 @@
         </ZFormCreate>
       </div>
     </main>
-    <!-- <footer>
-      <div>
-
-      </div>
-    </footer> -->
   </div>
 </template>
 <script>
@@ -70,18 +65,19 @@ export default {
       },
       compoentsRule: [],
       formRule: [],
+      eventObj: {},
     };
   },
   created() {
-    // this.init()
+    // this.init();
   },
   mounted() {},
   methods: {
     init(activeValue) {
       const value = getRuleItem(this.rule, activeValue);
-      console.log(this.activeValue, "this.activeValue ");
       if (activeValue && value) {
         const { ruleItem } = value;
+        console.log(ruleItem, "ruleItem");
         this.setCompoentsRule(ruleItem);
         this.setFormRule(ruleItem);
       }
@@ -90,10 +86,24 @@ export default {
     setCompoentsRule(ruleItem) {
       const props = ruleItem.props;
       const propsKey = Object.keys(props);
-      console.log(ruleItem, "ruleItem");
       this.compoentsRule = compoentsRule.filter((item) => {
+        if (item.on) {
+          for (const key in item.on) {
+            if (Object.hasOwnProperty.call(item.on, key)) {
+              const callback = item.on[key];
+              item.on[key] = (...arg) => {
+                callback(...arg);
+                this.handleChangeModel();
+                return;
+              };
+            }
+          }
+        }
         if (propsKey.includes(item.fileId)) {
           item.value = props[item.fileId];
+        }
+        if (item.fileId === "options" && ruleItem.options) {
+          item.value = ruleItem.options;
         }
         if (item.attrArr.includes(ruleItem.type)) {
           return item;
@@ -101,14 +111,20 @@ export default {
       });
     },
     setFormRule(ruleItem) {
+      const defaultArr = ["fileId", "label", "rules", "span"];
       const defaultFormRule = [
         {
-          type: "input",
+          type: ruleItem.itemType === "style" ? "hide" : "input",
           label: "fileId",
           fileId: "fileId",
           value: ruleItem.fileId,
           props: {
             disabled: ruleItem.itemType === "style",
+          },
+          on: {
+            blur: () => {
+              this.handleChangeModel();
+            },
           },
           span: 24,
           attrArr: ["form", "style"],
@@ -118,6 +134,11 @@ export default {
           label: "label",
           fileId: "label",
           value: "",
+          on: {
+            blur: () => {
+              this.handleChangeModel();
+            },
+          },
           span: 24,
           attrArr: ["form"],
         },
@@ -137,6 +158,11 @@ export default {
           type: "slider",
           label: "长度",
           fileId: "span",
+          on: {
+            afterChange: () => {
+              this.handleChangeModel();
+            },
+          },
           value: 1,
           span: 24,
           props: {
@@ -148,6 +174,18 @@ export default {
       ].concat(formRule);
       this.formRule = defaultFormRule.filter((item) => {
         item.value = ruleItem[item.fileId];
+        if (item.on && !defaultArr.includes(item.fileId)) {
+          for (const key in item.on) {
+            if (Object.hasOwnProperty.call(item.on, key)) {
+              const callback = item.on[key];
+              item.on[key] = (...arg) => {
+                callback(...arg);
+                this.handleChangeModel();
+                return;
+              };
+            }
+          }
+        }
         if (item.attrArr.includes(ruleItem.itemType)) {
           return item;
         }
@@ -177,15 +215,9 @@ export default {
           ...componentsFormData,
         },
       };
-      console.log(this.compoentsRule, "11");
-      console.log(componentsFormData, "newRuleItem");
       if (componentsFormData.options) {
         newRuleItem.options = componentsFormData.options;
-        // delete componentsFormData.options
       }
-      // if (['select', 'checkbox', 'radio'].includes(this.ruleItemType)) {
-      //   newRuleItem.options = this.setSelectModel
-      // }
       this.$emit("handleChangeConfig", newRuleItem, this.activeValue);
     },
   },
@@ -205,7 +237,7 @@ export default {
     font-size: 18px;
     border-bottom: 1px solid #ececec;
     padding: 0 8px;
-    @include flex-row-sb-c;
+    @include flex-row-c-c;
   }
 
   .main {

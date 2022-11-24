@@ -4,13 +4,14 @@
       :getPopupContainer="() => $el"
       v-model="defaultValue"
       v-bind="$attrs"
-      v-on="$listeners"
+      v-on="listeners"
       @change="handleSelectChange"
       style="width: 100%"
     >
       <a-select-option
-        :key="v[valueKey] + k"
-        v-for="(v, k) in options"
+        :key="v[valueKey]"
+        v-for="v in options"
+        v-bind="v"
         :value="v[valueKey]"
       >
         {{ v[labelKey] }}
@@ -39,7 +40,7 @@ export default {
     },
     value: {
       require: true,
-      default: "",
+      default: undefined,
     },
   },
   data() {
@@ -47,20 +48,28 @@ export default {
       defaultValue: "",
     };
   },
+  computed: {
+    listeners() {
+      if (this.$listeners.change) {
+        delete this.$listeners.change;
+      }
+      return {};
+    },
+  },
   watch: {
     value(newV) {
       this.defaultValue = newV;
-      console.log(newV, "select");
-      this.$emit("change", newV);
+      // this.defaultValue = newV === "" ? undefined : newV;
     },
   },
   mounted() {
     this.defaultValue = this.value;
+    // this.defaultValue = this.value === "" ? undefined : this.value;
   },
   methods: {
-    handleSelectChange(v) {
+    handleSelectChange(v, selectNode) {
       this.$emit("input", v);
-      this.$emit("change", v);
+      this.$emit("change", v, selectNode, this.options);
     },
   },
 };

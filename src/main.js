@@ -2,7 +2,10 @@ import Vue from "vue";
 import App from "./App.vue";
 import "@/utils/installAntdFormCompoent.js";
 import zformcreate from "../zformcreate/index";
+import ElementUI from "element-ui";
+import "element-ui/lib/theme-chalk/index.css";
 // import zformcreate from "zformcreate";
+import router from "@/router/index.js";
 const requireComponent = require.context(
   "@/components/",
   false,
@@ -18,9 +21,13 @@ import zformDesigners from "../zformDesigners/index";
 // import zformDesigners from "z-form-designers";
 import "@/assets/iconFont/iconfont.css";
 import "z-form-designers/index.css";
+Vue.use(ElementUI);
 Vue.use(zformDesigners);
-Vue.use(zformcreate);
+// { UI: "el" }
+Vue.use(zformcreate, "el");
+zformcreate.components(ElementUI.Input);
 Vue.config.productionTip = false;
 new Vue({
+  router,
   render: (h) => h(App),
 }).$mount("#app");
